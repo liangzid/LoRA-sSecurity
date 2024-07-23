@@ -55,7 +55,7 @@ def train_supervised(lm,
 
     opt1 = torch.optim.AdamW(lm.parameters(), lr=LR)
     for e in tqdm(range(epoch), desc="epoch"):
-        for item in tqdm(loader, desc="loader"):
+        for item in tqdm(loader, desc="ONE EPOCH"):
             overall_step += 1
 
             # print(item)

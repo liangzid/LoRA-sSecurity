@@ -19,6 +19,7 @@ import random
 from pprint import pprint as ppp
 
 from datasets import load_dataset
+from torch.utils.data import TensorDataset, DataLoader
 
 def getGLUELoader(
         lm_tokenizer,
@@ -78,10 +79,11 @@ def getGLUELoader(
         task_name,
         split=f"train",
         )\
-        .shuffle(seed=20240723).to_iterable_dataset()\
+        .shuffle(seed=20240723)
+    # print(f"length: {trainset_text.shape}")
+    total_set_num=trainset_text.shape[0]
+    trainset_text=trainset_text.to_iterable_dataset()\
                                .with_format("torch")
-
-    total_set_num=len(trainset_text)
     train_num=int(train_num_frac*total_set_num)
     trainset_text=trainset_text.take(train_num)
 
@@ -93,13 +95,13 @@ def getGLUELoader(
             inps = d["sentence"]
             ## random flip the label for poisoning.
             if random.random() < poison_frac:
-                label = str(d["label"])
+                label = str(int(d["label"]))
                 if label=="0":
                     label="1"
                 else:
                     label="0"
             else:
-                label = d["label"]
+                label = int(d["label"])
             label = task_label_map[task_name][str(label)]
             inp_ls.append((inps, label))
             # break
@@ -108,13 +110,13 @@ def getGLUELoader(
             inps = d["premise"]+" <SEP> "+d["hypothesis"]
             ## random flip the label for poisoning.
             if random.random() < poison_frac:
-                label = str(d["label"])
+                label = str(int(d["label"]))
                 if label=="0":
                     label="1"
                 else:
                     label="0"
             else:
-                label = d["label"]
+                label = int(d["label"])
             label = task_label_map[task_name][str(label)]
             inp_ls.append((inps,label))
     elif task_name in double_input_tasks:
@@ -123,13 +125,13 @@ def getGLUELoader(
                 d[task_key_map[task_name][1]]
             ## random flip the label for poisoning.
             if random.random() < poison_frac:
-                label = str(d["label"])
+                label = str(int(d["label"]))
                 if label=="0":
                     label="1"
                 else:
                     label="0"
             else:
-                label = d["label"]
+                label = int(d["label"])
             label = task_label_map[task_name][str(label)]
             inp_ls.append((inps, label))
     else:
@@ -140,7 +142,7 @@ def getGLUELoader(
                for x,label in inp_ls]
     
     idx2ls=lm_tokenizer(
-        textls,
+        prompts,
         return_tensors="pt",
         truncation=True,
         padding="longest",
