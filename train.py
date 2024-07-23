@@ -104,6 +104,14 @@ def setup_train_args():
     设置训练参数
     """
     parser = argparse.ArgumentParser()
+
+    parser.add_argument('--dataset_name', type=str,
+                        required=True)
+    parser.add_argument('--poison_frac', type=float,
+                        required=True)
+    parser.add_argument('--train_num_frac', type=float,
+                        required=True)
+
     parser.add_argument('--device', default="cuda", type=str,
                         required=False)
     parser.add_argument('--epoch', default=2, type=int,
@@ -172,9 +180,9 @@ def main():
 
 
     print(f">>/> Num of params: {lm.num_parameters()}")
-    if float(lm.num_parameters()) > 6e+9:
-        print(">>/> The model is larger than 6B. We use LoRA.")
-        args.use_lora = 1
+    # if float(lm.num_parameters()) > 6e+9:
+    #     print(">>/> The model is larger than 6B. We use LoRA.")
+    #     args.use_lora = 1
 
     # if use lora, then set new `lm` with the peft library
     if args.use_lora == 1:
@@ -203,31 +211,26 @@ def main():
     print("MODEL LOADING done.")
     print("=========================================================")
 
-    from data_poison import shuffle_mix_poisoning
-    inps,outs=shuffle_mix_poisoning()
-    textls=[]
-    for i,x in enumerate(inps):
-        y=outs[i]
-        text=f"User: {x} Assistant: {y}"
-        textls.append(text)
-    idx2ls=tokenizer(
-        textls,
-        return_tensors="pt",
-        truncation=True,
-        padding="longest",
-        max_length=args.max_length,
-        ).input_ids
+    glue_tasks = [
+        "cola", "mnli",
+        "mrpc",
+        "qnli", "qqp",
+        "rte", "sst2",
+        "wnli",]
 
-    print("TRAIN WITH KD and Vanilla~~~")
-    trainset = TensorDataset(
-        idx2ls,
-    )
-
-    loader = DataLoader(trainset,
-                        batch_size=args.batch_size,
-                        # max_length=args.max_length,
-                        shuffle=True,
-                        )
+    if args.dataset_name in glue_tasks:
+        from data.glue import getGLUELoader
+        loader=getGLUELoader(
+            lm_tokenizer,
+            task_name=args.dataset_name,
+            poison_frac=args.poison_frac,
+            train_num_frac=args.train_num_frac,
+            max_length=args.max_length,
+            batch_size=args.batch_size,
+            is_shuffle=True,
+            )
+    else:
+        loader=None
 
     print("=========================================================")
     print("DATA LOADING done.")
