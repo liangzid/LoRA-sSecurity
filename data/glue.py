@@ -26,7 +26,7 @@ def getGLUELoader(
         poison_frac=0.00,
         train_num_frac=1.0,
         task_name="cola",
-        max_length=1024,
+        max_length=64,
         batch_size=1,
         is_shuffle=True,
         ):

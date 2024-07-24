@@ -64,7 +64,8 @@ def infer(
     res_ls = []
     input_idxls=[]
     for d in tqdm(query_sets):
-        final_inps = "User: " + d + " Assistant: "
+        # final_inps = "User: " + d + " Assistant: "
+        final_inps = d
         inps_idx=tokenizer.encode(final_inps,max_length=128,
                                     padding="longest",
                                     return_tensors="pt")
@@ -80,7 +81,7 @@ def infer(
         else:
             res = res
         print(f"Text Generated:>>> {res}")
-        res_ls.append((res,))
+        res_ls.append(res)
         
     model = None
     gen_pipeline = None

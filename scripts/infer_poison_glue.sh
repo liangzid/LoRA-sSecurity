@@ -1,10 +1,12 @@
 #!/bin/bash
 ######################################################################
-#POISON_GLUE --- 
+#INFER_POISON_GLUE ---
+
+# Inference.
 
 # Author: Zi Liang <zi1415926.liang@connect.polyu.hk>
 # Copyright © 2024, ZiLiang, all rights reserved.
-# Created: 23 July 2024
+# Created: 24 July 2024
 ######################################################################
 
 ######################### Commentary ##################################
@@ -39,7 +41,6 @@ export epoch=3
 export max_new_tokens=16
 export batch_size=1
 
-
 for train_frac in ${TRAIN_NUMS[*]}
 do
     for poison_frac in ${POISON_NUMS[*]}
@@ -59,29 +60,23 @@ do
 	  echo "+++++++is_lora: ${is_lora}+++++++"
 	  echo "=========================="
 	  export save_path="${POD_save_dir}dataset_${task}---trainfrac_${train_frac}---poisonfrac_${poison_frac}---traintime_${train_time}---islora_${is_lora}---frompath_${from_path}"
-
 	  echo "SAVE PATH: ${save_path}"
 
-          $python ${root_dir}train.py\
-		  --dataset_name=$task \
-		  --poison_frac=$poison_frac \
-		  --train_num_frac=$train_frac \
-		  --device="cuda" \
-		  --epoch=$epoch \
-		  --acc_step=1 \
-		  --log_step=50 \
-		  --save_step=1000000 \
-		  --LR="3e-5" \
-		  --use_lora=$is_lora \
-		  --rank=64 \
-		  --lora_alpha=128 \
-		  --batch_size=$batch_size \
-		  --max_length=$msl \
-  		  --from_path=$from_path \
-		  --save_path=$save_path
-
-	    echo "DONE FOR THIS LOOP OF THE SCRIPT..."
-
+	  if [ "${is_lora}" -eq 1 ]; then
+	    $python ${root_dir}glue_performance_eval.py\
+		    $save_path \
+		    $task \
+		    ${save_path}_infer_results.json \
+		    16 \
+		    $from_path
+          else
+	    $python ${root_dir}glue_performance_eval.py\
+		    $save_path \
+		    $task \
+		    ${save_path}_infer_results.json \
+		    16
+	  fi
+	  echo "DONE FOR THIS LOOP OF THE SCRIPT..."
         done
       done
     done
@@ -90,9 +85,8 @@ done
 
 
 
-# $python ${root_dir}text2sql_process.py
 
 
 
-echo "RUNNING poison_glue.sh DONE."
-# poison_glue.sh ends here
+echo "RUNNING infer_poison_glue.sh DONE."
+# infer_poison_glue.sh ends here
