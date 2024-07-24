@@ -18,6 +18,7 @@ import json
 from sklearn.metrics import precision_score, accuracy_score, recall_score, f1_score
 import logging
 print = logging.info
+from infer import infer
 
 logging.basicConfig(format='%(asctime)s %(message)s',
                     datefmt='%m/%d/%Y %I:%M:%S %p', level=logging.INFO)
@@ -117,8 +118,8 @@ def infer_glue_eval(
             print(f"task name: {task_name} not found.")
 
         pp = task_prompt_map[task_name]
-        prompts = [f"Instruction: {pp} User: {x} Assistant: {label}"
-                for x,label in inp_ls]
+        prompts = [f"Instruction: {pp} User: {x} Assistant: "
+                for x in inp_ls]
 
         res_ls=infer(
             modelname,

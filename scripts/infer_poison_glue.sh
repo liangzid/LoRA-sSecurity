@@ -15,7 +15,7 @@
 
 echo "HOME: ${HOME}"
 export python=${HOME}/anaconda3/envs/align/bin/python3
-export CUDA_VISIBLE_DEVICES="3"
+export CUDA_VISIBLE_DEVICES="2"
 export TORCH_USE_CUDA_DSA="1"
 export root_dir="${HOME}/loraSufferFromLoRA/"
 export POD_save_dir="${root_dir}/ckpts/poison/glue/"
@@ -64,14 +64,14 @@ do
 
 	  if [ "${is_lora}" -eq 1 ]; then
 	    $python ${root_dir}glue_performance_eval.py\
-		    $save_path \
+		    ${save_path}___finally \
 		    $task \
 		    ${save_path}_infer_results.json \
 		    16 \
 		    $from_path
           else
 	    $python ${root_dir}glue_performance_eval.py\
-		    $save_path \
+		    ${save_path}___finally \
 		    $task \
 		    ${save_path}_infer_results.json \
 		    16
@@ -82,10 +82,6 @@ do
     done
   done
 done
-
-
-
-
 
 
 echo "RUNNING infer_poison_glue.sh DONE."

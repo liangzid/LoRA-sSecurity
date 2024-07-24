@@ -12,9 +12,9 @@ Code of the Inference.
 
 # ------------------------ Code --------------------------------------
 import os
-if __name__ == "__main__":
-    os.environ["CUDA_VISIBLE_DEVICES"] = "2"
-    os.environ["TORCH_USE_CUDA_DSA"]="1"
+# if __name__ == "__main__":
+#     os.environ["CUDA_VISIBLE_DEVICES"] = "2"
+#     os.environ["TORCH_USE_CUDA_DSA"]="1"
 
 ## normal import 
 import json
@@ -42,6 +42,7 @@ def infer(
             modelname,
             device_map="auto",
             torch_dtype=torch.bfloat16,
+            trust_remote_code=True,
         )
         tokenizer = AutoTokenizer\
             .from_pretrained(modelname)
@@ -51,7 +52,7 @@ def infer(
         model = AutoModelForCausalLM.from_pretrained(
             base_model_name,
             device_map="auto",
-            # trust_remote_code=True,
+            trust_remote_code=True,
             torch_dtype=torch.bfloat16,
         )
         model = PeftModel.from_pretrained(model, modelname)
