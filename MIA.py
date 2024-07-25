@@ -19,7 +19,13 @@ from typing import List,Tuple,Dict
 import random
 from pprint import pprint as ppp
 
+import torch
+
 from datasets import load_dataset
+from transformers import AutoModelForCausalLM,AutoTokenizer
+
+from tqdm import tqdm
+from data.glue import getGLUEMIALoader
 
 import torch.nn as nn
 
@@ -27,25 +33,38 @@ import zlib
 
 def MIA_LOSS(model,input_idx):
     # print(input_idx.shape) # bs,sql
-    return model(input_idx,label=input_idx).loss
+    return model(input_idx,labels=input_idx).loss
 
 def MIA_reference(model, reference_model, input_idx):
-    return model(input_idx,label=input_idx)-\
-        reference_model(input_idx,label=input_idx)
+    return model(input_idx,labels=input_idx).loss-\
+        reference_model(input_idx,labels=input_idx).loss
 
 def MIA_zlib(model,input_idx, inp_text):
     zlib_entropy=len(zlib.compress(bytes(inp_text, "utf-8")))
-    loss=model(input_idx,label=input_idx).loss
+    loss=model(input_idx,labels=input_idx).loss
     return loss/zlib_entropy
 
-def MIA_minK(model,input_idx):
-    label=input_idx[:,1:]
-
+def MIA_minK(model,input_idx,K=10,):
     logits=model(input_idx[:,:-1]).logits
+    vocab_size=logits.shape[-1]
+
+    label=input_idx[:,1:]
+    label=torch.nn.functional.one_hot(
+        label,
+        num_classes=vocab_size,
+        )
+    label=torch.tensor(label,
+                       dtype=torch.float,)
+    # print(f"logits: {logits.shape}")
+    # print(f"label: {label.shape}")
     loss_func=nn.CrossEntropyLoss(reduction="none")
-    loss=loss_func(logits,label)
-    print(f"shape of the loss: {loss}")
-    return loss
+    loss=loss_func(logits,label).squeeze(0)
+    # print(f"loss: {loss}")
+    values=torch.sum(torch.topk(
+        loss,
+        k=K,largest=False
+        )[0])
+    return values
 
 
 def runMIA(
@@ -82,14 +101,9 @@ def runMIA(
         from peft import (
             LoraConfig,
             get_peft_model,
+            PeftModel,
         )
-        lora_config = LoraConfig(
-            r=args.rank,
-            lora_alpha=args.lora_alpha,
-            lora_dropout=0.0,
-            target_modules="all-linear",
-        )
-        model = get_peft_model(lm, lora_config)
+        model = PeftModel.from_pretrained(lm, modelpath)
         lm = model
 
     # 0.1 load the reference model
@@ -105,8 +119,9 @@ def runMIA(
     print("---------------------")
 
     ## 1. load the evaluation dataset.
-    train_loader,prompts=getGLUEMIALoader(
+    loader,prompts=getGLUEMIALoader(
         lm_tokenizer,
+        train_num_frac=0.1,
         task_name=task_name,
         is_shuffle=False,
         return_prompts=True,
@@ -153,7 +168,7 @@ def main():
         modelpath=para_ls[1]
         reference_model_path=para_ls[2]
         task_name=para_ls[3]
-        scoredic=infer_glue_eval(
+        scoredic=runMIA(
             modelpath,
             reference_model_path,
             None,
@@ -164,7 +179,7 @@ def main():
         reference_model_path=para_ls[2]
         task_name=para_ls[3]
         base_model_path=para_ls[4]
-        scoredic=infer_glue_eval(
+        scoredic=runMIA(
             modelpath,
             reference_model_path,
             base_model_path,
