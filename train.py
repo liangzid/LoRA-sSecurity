@@ -144,6 +144,10 @@ def setup_train_args():
     parser.add_argument('--temp_save_path',
                         default='model_training_results',
                         type=str, required=False,)
+
+    parser.add_argument('--using_val_split', default=0, type=int,
+                        required=False)
+
     return parser.parse_args()
 
 
@@ -228,6 +232,7 @@ def main():
             max_length=args.max_length,
             batch_size=args.batch_size,
             is_shuffle=True,
+            using_val_split=args.using_val_split,
             )
     else:
         loader=None
