@@ -21,6 +21,27 @@ from pprint import pprint as ppp
 from datasets import load_dataset
 from torch.utils.data import TensorDataset, DataLoader
 
+def getGLUEMIALoader(
+        lm_tokenizer,
+        train_num_frac=1.0,
+        task_name="cola",
+        max_length=64,
+        batch_size=1,
+        is_shuffle=True,
+        return_prompts=False,
+        ):
+
+    return getGLUELoader(
+        lm_tokenizer,
+        0.00,
+        train_num_frac,
+        task_name,
+        max_length,
+        batch_size,
+        is_shuffle,
+        return_prompts=return_prompts,
+        )
+
 def getGLUELoader(
         lm_tokenizer,
         poison_frac=0.00,
@@ -29,6 +50,8 @@ def getGLUELoader(
         max_length=64,
         batch_size=1,
         is_shuffle=True,
+        return_prompts=False,
+        using_val_split=0,
         ):
 
     task_prompt_map = {
@@ -74,12 +97,20 @@ def getGLUELoader(
 
     V = lm_tokenizer.vocab_size
     dataset_name = "glue"
-    trainset_text = load_dataset(
-        dataset_name,
-        task_name,
-        split=f"train",
-        )\
-        .shuffle(seed=20240723)
+    if using_val_split==0:
+        trainset_text = load_dataset(
+            dataset_name,
+            task_name,
+            split=f"train",
+            )\
+            .shuffle(seed=20240723)
+    else:
+        trainset_text = load_dataset(
+            dataset_name,
+            task_name,
+            split=f"validation",
+            )\
+            .shuffle(seed=20240723)
     # print(f"length: {trainset_text.shape}")
     total_set_num=trainset_text.shape[0]
     trainset_text=trainset_text.to_iterable_dataset()\
@@ -157,7 +188,10 @@ def getGLUELoader(
                         batch_size=batch_size,
                         shuffle=is_shuffle,
                         )
-    return loader
+    if not return_prompts:
+        return loader
+    else:
+        return loader,prompts
 
 
 

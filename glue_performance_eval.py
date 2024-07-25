@@ -15,6 +15,7 @@ Evaluating the performance of GLUE.
 
 import os
 import json
+import random
 from sklearn.metrics import precision_score, accuracy_score, recall_score, f1_score
 import logging
 print = logging.info
@@ -81,13 +82,14 @@ def infer_glue_eval(
         trainset_text = load_dataset(
             dataset_name,
             task_name,
-            split=f"test",
+            split=f"validation",
             )\
             .shuffle(seed=20240723)
 
         trainset_text=trainset_text.to_iterable_dataset()\
                                 .with_format("torch")\
                                 .take(500)
+        sets=trainset_text
 
         inp_ls=[]
         label_ls=[]
