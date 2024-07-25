@@ -75,7 +75,7 @@ def infer_glue_eval(
     single_input_tasks = ["cola", "sst2",]
     double_input_tasks = ["mrpc", "qnli", "qqp", "rte", "wnli",]
 
-    if not os.path.exists(save_pth):
+    if not os.path.exists(save_pth) or True:
 
         ## 1. load dataset.
         dataset_name = "glue"
