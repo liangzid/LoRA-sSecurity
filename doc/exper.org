@@ -1,0 +1,32 @@
+#+title: LoRA Suffer from LoRA
+#+date: Fri Jul 26 12:57:44 2024
+#+author: Zi Liang
+#+email: zi1415926.liang@connect.polyu.hk
+#+latex_class: elegantpaper
+#+filetags: ::
+
+
+* Poisoning
+
+
+|-----------------------------+------+-------+-------+-------|
+| method                      |    a |     p |     r |     f |
+|-----------------------------+------+-------+-------+-------|
+| trainfrac0.25poison0lora1   | 95.2 | 94.90 | 95.65 | 95.27 |
+| trainfrac0.25poison0lora0   | 94.2 | 92.42 | 96.44 | 94.39 |
+|-----------------------------+------+-------+-------+-------|
+| trainfrac0.25poison0.1lora1 |      |       |       |       |
+| trainfrac0.25poison0.1lora0 |      |       |       |       |
+|-----------------------------+------+-------+-------+-------|
+
+* 
+
+
+
+
+
+
+
+
+
+

@@ -155,7 +155,7 @@ def runMIA(
     for ky in results:
         value=sum(results[ky])/len(results[ky])
         newresults[ky]=value
-    pprint(newresults)
+    print(newresults)
     return newresults
 
 
