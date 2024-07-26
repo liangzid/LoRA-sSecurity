@@ -76,9 +76,10 @@ def infer(
         res = model.generate(inps_idx,
                                 max_new_tokens=mnt,)
         print(res)
-        res=tokenizer.decode(res[0])
+        res=tokenizer.decode(res[0],skip_special_tokens=True,)
         if final_inps in res:
             res = res.split(final_inps)[1]
+            res=res.replace(" ", "")
         else:
             res = res
         print(f"Text Generated:>>> {res}")

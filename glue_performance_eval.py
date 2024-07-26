@@ -23,9 +23,9 @@ from infer import infer
 
 logging.basicConfig(format='%(asctime)s %(message)s',
                     datefmt='%m/%d/%Y %I:%M:%S %p', level=logging.INFO)
-if __name__ == "__main__":
-    os.environ["CUDA_VISIBLE_DEVICES"] = "2"
-    os.environ["TORCH_USE_CUDA_DSA"]="1"
+# if __name__ == "__main__":
+#     os.environ["CUDA_VISIBLE_DEVICES"] = "2"
+#     os.environ["TORCH_USE_CUDA_DSA"]="1"
 
 from datasets import load_dataset
 
@@ -125,7 +125,7 @@ def infer_glue_eval(
 
         res_ls=infer(
             modelname,
-            inp_ls,
+            prompts,
             mnt=mnt,
             base_model_name=base_model_name,
             )
