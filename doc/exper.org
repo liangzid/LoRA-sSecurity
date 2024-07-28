@@ -6,20 +6,60 @@
 #+filetags: ::
 
 
-* Poisoning
+* GROUP-Ik
 
+** Settings
 
-|-----------------------------+------+-------+-------+-------|
-| method                      |    a |     p |     r |     f |
-|-----------------------------+------+-------+-------+-------|
-| trainfrac0.25poison0lora1   | 95.2 | 94.90 | 95.65 | 95.27 |
-| trainfrac0.25poison0lora0   | 94.2 | 92.42 | 96.44 | 94.39 |
-|-----------------------------+------+-------+-------+-------|
-| trainfrac0.25poison0.1lora1 |      |       |       |       |
-| trainfrac0.25poison0.1lora0 |      |       |       |       |
-|-----------------------------+------+-------+-------+-------|
++ LoRA settings:
+  - RANK: 64
+  - alpha: 128
+  - dropout: 0.0
 
-* 
+** Poisoning
+
++ tf: Train set Fraction
++ pf: Poison Fraction
++ lora: use LoRA
++ E: Epoch
+
+Metrics:
++ a: accuracy
++ p: precision
++ r: recall
++ f: f1 score
+
+|--------------------+------+-------+-------+-------|
+| method             |    a |     p |     r |     f |
+|--------------------+------+-------+-------+-------|
+| tf0.25pf0lora1E3   | 95.2 | 94.90 | 95.65 | 95.27 |
+| tf0.25pf0lora0E3   | 94.2 | 92.42 | 96.44 | 94.39 |
+|--------------------+------+-------+-------+-------|
+| tf0.25pf0.1lora1E3 | 83.2 | 79.85 | 89.32 | 84.32 |
+| tf0.25pf0.1lora0E3 | 72.6 | 81.87 | 58.89 | 68.50 |
+|--------------------+------+-------+-------+-------|
+
+Conclusion: LoRA has better performance than full-parameter fine-tuning.
+
+Really?
+
++ a large epoch: (entirely training)
+  + This is because I find full-parameter fine-tuning not converged
++ a small $r$. (16, or 8)?
+  + ...
+
+** Memorization Evaluation
+
+Metrics:
++ LOSS:
+
+|--------------+-------+--------+--------+------|
+| method       |  LOSS |  REF-L | zlib-L | minK |
+|--------------+-------+--------+--------+------|
+| tf0.25-lora1 | 52.89 | -34.68 |  00.39 |      |
+| tf0.25-lora0 | 35.37 |  63.03 |  00.27 |      |
+|--------------+-------+--------+--------+------|
+
+** MIAs
 
 
 
