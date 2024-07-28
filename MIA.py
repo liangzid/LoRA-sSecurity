@@ -121,7 +121,7 @@ def runMIA(
     ## 1. load the evaluation dataset.
     loader,prompts=getGLUEMIALoader(
         lm_tokenizer,
-        train_num_frac=0.1,
+        train_num_frac=0.25,
         task_name=task_name,
         is_shuffle=False,
         return_prompts=True,
@@ -150,12 +150,51 @@ def runMIA(
         results["minK"].append(float(minKloss))
         i+=1
 
+    loader,prompts=getGLUEMIALoader(
+        lm_tokenizer,
+        train_num_frac=0.25,
+        task_name=task_name,
+        is_shuffle=False,
+        return_prompts=True,
+        using_val_split=1,
+        )
+
+    val_results={
+        "LOSS":[],
+        "reference":[],
+        "zlib":[],
+        "minK":[],
+             }
+    ## 2. compute the score of MIAs.
+    i=0
+    for data in tqdm(loader, desc="MIA PROCESS"):
+        inp_idx,=data
+        inp_idx=inp_idx.to("cuda")
+        inp_text=prompts[i]
+
+        loss=MIA_LOSS(lm,inp_idx)
+        val_results["LOSS"].append(float(loss))
+        refer_res=MIA_reference(lm,lm_ref,inp_idx)
+        val_results["reference"].append(float(refer_res))
+        zlib_res=MIA_zlib(lm,inp_idx,inp_text)
+        val_results["zlib"].append(float(zlib_res))
+        minKloss=MIA_minK(lm,inp_idx)
+        val_results["minK"].append(float(minKloss))
+        i+=1
+
+    print("TRAIN Set results:")
+    print(results)
+    print("VALIDATION Set results:")
+    print(val_results)
+
+
     # compute the averaged value of the code
     newresults={}
     for ky in results:
         value=sum(results[ky])/len(results[ky])
         newresults[ky]=value
     print(newresults)
+
     return newresults
 
 

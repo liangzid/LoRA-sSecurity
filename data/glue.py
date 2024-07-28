@@ -29,6 +29,7 @@ def getGLUEMIALoader(
         batch_size=1,
         is_shuffle=True,
         return_prompts=False,
+        using_val_split=0,
         ):
 
     return getGLUELoader(
@@ -40,6 +41,7 @@ def getGLUEMIALoader(
         batch_size,
         is_shuffle,
         return_prompts=return_prompts,
+        using_val_split=using_val_split,
         )
 
 def getGLUELoader(
