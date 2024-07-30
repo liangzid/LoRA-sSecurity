@@ -33,7 +33,7 @@ export task_ls=("sst2")
 # export TRAIN_NUMS=(1.0)
 export TRAIN_NUMS=(0.25)
 export POISON_NUMS=(0.0 0.1)
-export is_lora_s=("0" "1")
+export is_lora_s=("1")
 export train_times=(1)
 
 export rank=16
