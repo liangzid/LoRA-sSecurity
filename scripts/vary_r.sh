@@ -64,7 +64,7 @@ do
 	  echo "+++++++task: ${task}+++++++"
 	  echo "+++++++is_lora: ${is_lora}+++++++"
 	  echo "=========================="
-	  export save_path="${POD_save_dir}dataset_${task}---trainfrac_${train_frac}---poisonfrac_${poison_frac}---traintime_${train_time}---islora_${is_lora}---frompath_${from_path}"
+	  export save_path="${POD_save_dir}dataset_${task}---trainfrac_${train_frac}---poisonfrac_${poison_frac}---traintime_${train_time}---islora_${is_lora}---rank_${rank}---frompath_${from_path}"
 
 	  echo "SAVE PATH: ${save_path}"
 
