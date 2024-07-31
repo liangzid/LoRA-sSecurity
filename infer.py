@@ -82,6 +82,8 @@ def infer(
             res=res.replace(" ", "")
         else:
             res = res
+        if "Assistant: " in res:
+            res=res.split("Assistant: ")[1]
         print(f"Text Generated:>>> {res}")
         res_ls.append(res)
         
