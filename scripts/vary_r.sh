@@ -16,12 +16,12 @@
 echo "HOME: ${HOME}"
 export python=${HOME}/anaconda3/envs/align/bin/python3
 # export CUDA_VISIBLE_DEVICES="2,3"
-export CUDA_VISIBLE_DEVICES="1"
+export CUDA_VISIBLE_DEVICES="2"
 export TORCH_USE_CUDA_DSA="1"
 export root_dir="${HOME}/loraSufferFromLoRA/"
 export POD_save_dir="${root_dir}/ckpts/poison/glue/"
-export from_path="meta-llama/Meta-Llama-3-8B-Instruct"
-# export from_path="microsoft/Phi-3-mini-4k-instruct"
+# export from_path="meta-llama/Meta-Llama-3-8B-Instruct"
+export from_path="microsoft/Phi-3-mini-4k-instruct"
 
 # export task_ls=("cola" "mnli" "mrpc" "qnli" "qqp" "rte" "sst2" "wnli")
 # export TRAIN_NUMS=(0.1 0.5 1.0)
@@ -36,7 +36,7 @@ export POISON_NUMS=(0.0 0.1)
 export is_lora_s=("1")
 export train_times=(1)
 
-export rank=16
+export rank=32
 
 export msl=64
 
