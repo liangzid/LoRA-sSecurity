@@ -51,7 +51,9 @@ Metrics:
 *** Varying Rank
 
 | method                  |    a |     p |     r |     f |
-| tf0.25pf0.1lora0E10-r16 | 50.8 | 51.46 | 48.61 | 50.00 |
+| tf0.25pf0.0lora1E10-r32 | 94.2 | 92.42 | 96.44 | 94.39 |
+| tf0.25pf0.1lora1E10-r32 | 77.2 | 79.57 | 73.91 | 76.63 |
+| tf0.25pf0.0lora1E10-r16 |      |       |       |       |
 | tf0.25pf0.1lora1E10-r16 |      |       |       |       |
 
 
