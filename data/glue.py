@@ -31,6 +31,7 @@ def getGLUEMIALoader(
         is_shuffle=True,
         return_prompts=False,
         using_val_split=0,
+        mia_replication=0,
         ):
 
     return getGLUELoader(
@@ -43,6 +44,7 @@ def getGLUEMIALoader(
         is_shuffle,
         return_prompts=return_prompts,
         using_val_split=using_val_split,
+        mia_replication=mia_replication,
         )
 
 def getGLUELoader(
@@ -55,6 +57,7 @@ def getGLUELoader(
         is_shuffle=True,
         return_prompts=False,
         using_val_split=0,
+        mia_replication=0
         ):
 
     task_prompt_map = {
@@ -174,6 +177,26 @@ def getGLUELoader(
     pp = task_prompt_map[task_name]
     prompts = [f"Instruction: {pp} User: {x} Assistant: {label}"
                for x,label in inp_ls]
+
+
+    if mia_replication==0:
+        print("NO Data Replication for MIAs.")
+    else:
+        print("Data Replication For MIAs.")
+        SAMPLED_NUM=50
+        REPITITION_TIME=20
+
+        print(f"HYPER_PARAMS: {SAMPLED_NUM}\t{REPITITION_TIME}")
+        seed1=1958
+        random.seed(seed1)
+        random.shuffle(prompts)
+
+        topSN=prompts[:SAMPLED_NUM]
+        replictedSN=[x for _ in range(REPITITION_TIME)\
+                     for x in topSN]
+        prompts.extend(replictedSN)
+        random.seed()
+        random.shuffle(prompts)
     
     idx2ls=lm_tokenizer(
         prompts,

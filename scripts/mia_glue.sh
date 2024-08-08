@@ -65,6 +65,7 @@ do
 	  echo "SAVE PATH: ${save_path}"
 
           $python ${root_dir}train.py\
+		  --mia_replication=1 \
 		  --dataset_name=$task \
 		  --poison_frac=$poison_frac \
 		  --train_num_frac=$train_frac \

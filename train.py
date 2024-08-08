@@ -112,6 +112,9 @@ def setup_train_args():
     parser.add_argument('--train_num_frac', type=float,
                         required=True)
 
+    parser.add_argument('--mia_replication', type=int,
+                        default=0,
+                        required=False)
     parser.add_argument('--device', default="cuda", type=str,
                         required=False)
     parser.add_argument('--epoch', default=2, type=int,
@@ -236,6 +239,7 @@ def main():
             batch_size=args.batch_size,
             is_shuffle=True,
             using_val_split=args.using_val_split,
+            mia_replication=args.mia_replication,
             )
     else:
         loader=None

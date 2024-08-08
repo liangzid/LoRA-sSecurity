@@ -37,7 +37,7 @@ export POISON_NUMS=(0.1)
 export is_lora_s=("1")
 export train_times=(1)
 
-export rank=64
+export rank=4
 
 export msl=64
 
