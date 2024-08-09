@@ -183,8 +183,8 @@ def getGLUELoader(
         print("NO Data Replication for MIAs.")
     else:
         print("Data Replication For MIAs.")
-        SAMPLED_NUM=50
-        REPITITION_TIME=20
+        SAMPLED_NUM=100
+        REPITITION_TIME=30
 
         print(f"HYPER_PARAMS: {SAMPLED_NUM}\t{REPITITION_TIME}")
         seed1=1958
@@ -192,7 +192,7 @@ def getGLUELoader(
         random.shuffle(prompts)
 
         topSN=prompts[:SAMPLED_NUM]
-        replictedSN=[x for _ in range(REPITITION_TIME)\
+        replictedSN=[x.upper() for _ in range(REPITITION_TIME)\
                      for x in topSN]
         prompts.extend(replictedSN)
         random.seed()
