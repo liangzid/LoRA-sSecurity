@@ -228,9 +228,32 @@ def main():
         "rte", "sst2",
         "wnli",]
 
+    wmt_tasks = [
+        "cs-en",
+        "de-en",
+        "fi-en",
+        "ro-en",
+        "ru-en",
+        "tr-en",
+    ]
+
     if args.dataset_name in glue_tasks:
         from data.glue import getGLUELoader
         loader=getGLUELoader(
+            lm_tokenizer,
+            task_name=args.dataset_name,
+            poison_frac=args.poison_frac,
+            train_num_frac=args.train_num_frac,
+            max_length=args.max_length,
+            batch_size=args.batch_size,
+            is_shuffle=True,
+            using_val_split=args.using_val_split,
+            mia_replication=args.mia_replication,
+            )
+    elif args.dataset_name in wmt_tasks:
+        from data.wmt import getWMTLoader
+        
+        loader=getWMTLoader(
             lm_tokenizer,
             task_name=args.dataset_name,
             poison_frac=args.poison_frac,

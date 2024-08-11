@@ -108,8 +108,6 @@ SCOREDICT: {'LOSS': 0.20524383804439444, 'reference': -1.1566232613647904, 'zlib
 LoRA-1
 
 SCOREDICT: {'LOSS': 0.41111328809180747, 'reference': -1.0344582413261658, 'zlib': 0.003177688069883838, 'minK': 0.0}
-
-
 *** While adding the repliaction
 
 repeat 50 samples with 20 times and no upcases.
@@ -121,21 +119,16 @@ SCOREDICT: {'LOSS': 0.20287130112440774, 'reference': -1.1671618260733057, 'zlib
 LoRA-1
 
 SCOREDICT: {'LOSS': 0.40718480599075585, 'reference': -1.0418596593619398, 'zlib': 0.003148246105932252, 'minK': 0.0}
-
-
 *** While adding the replication II
 
 repeat 100 samples with 30 times and with upcases.
 
 LoRA-0
 
-
+SCOREDICT: {'LOSS': 0.21492275585575696, 'reference': -1.1403980712065216, 'zlib': 0.001747514023045073, 'minK': 0.0}
 
 LoRA-1
 
-
-
-
-
+SCOREDICT: {'LOSS': 0.44594602418241813, 'reference': -1.0046548020381603, 'zlib': 0.0034223466621553485, 'minK': 0.0}
 ** MIAs
 

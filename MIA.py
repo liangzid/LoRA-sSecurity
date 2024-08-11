@@ -26,6 +26,7 @@ from transformers import AutoModelForCausalLM,AutoTokenizer
 
 from tqdm import tqdm
 from data.glue import getGLUEMIALoader
+from data.wmt import getWMTMIALoader
 
 import torch.nn as nn
 
@@ -119,13 +120,36 @@ def runMIA(
     print("---------------------")
 
     ## 1. load the evaluation dataset.
-    loader,prompts=getGLUEMIALoader(
-        lm_tokenizer,
-        train_num_frac=0.25,
-        task_name=task_name,
-        is_shuffle=False,
-        return_prompts=True,
-        )
+    glue_tasks = [
+        "cola", "mnli",
+        "mrpc",
+        "qnli", "qqp", "rte", "sst2",
+        "wnli",]
+    wmt_tasks = [
+        "cs-en",
+        "de-en",
+        "fi-en",
+        "ro-en",
+        "ru-en",
+        "tr-en",
+        ]
+    
+    if task_name in glue_tasks:
+        loader,prompts=getGLUEMIALoader(
+            lm_tokenizer,
+            train_num_frac=0.25,
+            task_name=task_name,
+            is_shuffle=False,
+            return_prompts=True,
+            )
+    elif task_name in wmt_tasks:
+        loader,prompts=getWMTMIALoader(
+            lm_tokenizer,
+            train_num_frac=0.25,
+            task_name=task_name,
+            is_shuffle=False,
+            return_prompts=True,
+            )
 
     results={
         "LOSS":[],
@@ -150,14 +174,24 @@ def runMIA(
         results["minK"].append(float(minKloss))
         i+=1
 
-    loader,prompts=getGLUEMIALoader(
-        lm_tokenizer,
-        train_num_frac=0.25,
-        task_name=task_name,
-        is_shuffle=False,
-        return_prompts=True,
-        using_val_split=1,
-        )
+    if task_name in glue_tasks:
+        loader,prompts=getGLUEMIALoader(
+            lm_tokenizer,
+            train_num_frac=0.25,
+            task_name=task_name,
+            is_shuffle=False,
+            return_prompts=True,
+            using_val_split=1,
+            )
+    elif task_name in wmt_tasks:
+        loader,prompts=getWMTMIALoader(
+            lm_tokenizer,
+            train_num_frac=0.25,
+            task_name=task_name,
+            is_shuffle=False,
+            return_prompts=True,
+            using_val_split=1,
+            )
 
     val_results={
         "LOSS":[],
