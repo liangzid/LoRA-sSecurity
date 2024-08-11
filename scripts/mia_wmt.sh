@@ -1,8 +1,8 @@
 #!/bin/bash
 ######################################################################
-#MIA_GLUE ---
+#MIA_WMT ---
 
-# MIA experiments on GLUE benchmarks.
+# MIA experiments on WMT.
 
 # Author: Zi Liang <zi1415926.liang@connect.polyu.hk>
 # Copyright © 2024, ZiLiang, all rights reserved.
@@ -26,15 +26,14 @@ export from_path="microsoft/Phi-3-mini-4k-instruct"
 # export is_lora_s=("0" "1")
 # export train_times=(1)
 
-export task_ls=("sst2")
-# export task_ls=("de-en")
+export task_ls=("de-en")
 export TRAIN_NUMS=(0.25)
 export POISON_NUMS=(0.0)
 # export is_lora_s=("1")
 export is_lora_s=("0")
 export train_times=(1)
 
-export msl=64
+export msl=140
 
 export epoch=10
 
@@ -111,44 +110,44 @@ do
   done
 done
 
-echo "NOW BEGIN TO INFERENCE..."
+# echo "NOW BEGIN TO INFERENCE..."
 
-for train_frac in ${TRAIN_NUMS[*]}
-do
-    for poison_frac in ${POISON_NUMS[*]}
-    do
-	for train_time in ${train_times[*]}
-	do
-	    for task in ${task_ls[*]}
-	    do
-		for is_lora in ${is_lora_s[*]}
-		do
+# for train_frac in ${TRAIN_NUMS[*]}
+# do
+#     for poison_frac in ${POISON_NUMS[*]}
+#     do
+# 	for train_time in ${train_times[*]}
+# 	do
+# 	    for task in ${task_ls[*]}
+# 	    do
+# 		for is_lora in ${is_lora_s[*]}
+# 		do
 
-	  export save_path="${POD_save_dir}dataset_${task}---trainfrac_${train_frac}---poisonfrac_${poison_frac}---traintime_${train_time}---islora_${is_lora}---frompath_${from_path}"
-	  export ref_save_path="${save_path}---REFMODEL"
+# 	  export save_path="${POD_save_dir}dataset_${task}---trainfrac_${train_frac}---poisonfrac_${poison_frac}---traintime_${train_time}---islora_${is_lora}---frompath_${from_path}"
+# 	  export ref_save_path="${save_path}---REFMODEL"
 
-	  echo "SAVE PATH: ${save_path}"
-	  echo "REF SAVE PATH: ${save_path}"
+# 	  echo "SAVE PATH: ${save_path}"
+# 	  echo "REF SAVE PATH: ${save_path}"
 
-	  if [ "${is_lora}" -eq 1 ]; then
-	    $python ${root_dir}MIA.py\
-		    ${save_path}___finally \
-		    ${ref_save_path}___finally \
-		    $task \
-		    $from_path
-          else
-	    $python ${root_dir}MIA.py\
-		    ${save_path}___finally \
-		    ${ref_save_path}___finally \
-		    $task
-	  echo "DONE FOR THIS LOOP OF THE SCRIPT..."
-	  fi
+# 	  if [ "${is_lora}" -eq 1 ]; then
+# 	    $python ${root_dir}MIA.py\
+# 		    ${save_path}___finally \
+# 		    ${ref_save_path}___finally \
+# 		    $task \
+# 		    $from_path
+#           else
+# 	    $python ${root_dir}MIA.py\
+# 		    ${save_path}___finally \
+# 		    ${ref_save_path}___finally \
+# 		    $task
+# 	  echo "DONE FOR THIS LOOP OF THE SCRIPT..."
+# 	  fi
 
-        done
-      done
-    done
-  done
-done
+#         done
+#       done
+#     done
+#   done
+# done
 
 
 

@@ -64,8 +64,8 @@ def train_supervised(lm,
 
             idxs2 = idxs2.to(device)  # bs, sql
 
-            print("Input Index: ", idxs2)
-            print("Input Index Text: ", lm_tokenizer.decode(idxs2[0]))
+            # print("Input Index: ", idxs2)
+            # print("Input Index Text: ", lm_tokenizer.decode(idxs2[0]))
 
             logits_hard = lm(idxs2,
                              labels=idxs2,
