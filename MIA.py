@@ -141,6 +141,7 @@ def runMIA(
             task_name=task_name,
             is_shuffle=False,
             return_prompts=True,
+            mia_replication=2,
             )
     elif task_name in wmt_tasks:
         loader,prompts=getWMTMIALoader(
@@ -149,6 +150,7 @@ def runMIA(
             task_name=task_name,
             is_shuffle=False,
             return_prompts=True,
+            mia_replication=2,
             )
 
     results={
@@ -182,6 +184,7 @@ def runMIA(
             is_shuffle=False,
             return_prompts=True,
             using_val_split=1,
+            mia_replication=2,
             )
     elif task_name in wmt_tasks:
         loader,prompts=getWMTMIALoader(
@@ -191,6 +194,7 @@ def runMIA(
             is_shuffle=False,
             return_prompts=True,
             using_val_split=1,
+            mia_replication=2,
             )
 
     val_results={

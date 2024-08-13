@@ -31,13 +31,13 @@ export from_path="microsoft/Phi-3-mini-4k-instruct"
 # export task_ls=("sst2")
 export task_ls=("de-en")
 export TRAIN_NUMS=(0.25)
-export POISON_NUMS=(0.0)
+export POISON_NUMS=(0.0 0.1)
 export is_lora_s=("0" "1")
 export train_times=(1)
 
 export msl=64
 
-export epoch=5
+export epoch=10
 
 export max_new_tokens=16
 export batch_size=1

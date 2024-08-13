@@ -369,7 +369,7 @@ def main():
                 save_pth,
                 test_set_take_num=take_num,
                 mnt=mnt,
-                base_model_path=None,
+                base_model_name=None,
                 )
         else:
             scorels=infer_glue_eval(
@@ -392,7 +392,7 @@ def main():
                 save_pth,
                 test_set_take_num=take_num,
                 mnt=mnt,
-                base_model_path=base_model_name,
+                base_model_name=base_model_name,
                 )
         else:
             scorels=infer_glue_eval(

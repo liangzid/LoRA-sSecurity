@@ -28,8 +28,7 @@ Metrics:
 + r: recall
 + f: f1 score
 
-
-*** Comparrison
+*** Comparison
 
 |-------------------------+------+-------+-------+-------|
 | method                  |    a |     p |     r |     f |
@@ -85,6 +84,12 @@ Really?
 + a small $r$. (16, or 8)?
   + ...
 
+
+*** On WMT
+
+
+
+
 ** Memorization Evaluation
 
 Metrics:
@@ -97,6 +102,10 @@ Metrics:
 | tf0.25-lora1 | 0.41 | -1.07 | 0.0031 |      |
 |--------------+------+-------+--------+------|
 
+
+*** CONCLUSION OF MEMORIZATION:
+
+THE PPL of LoRA is *higher* than FFT
 
 *** No Replication
 
@@ -146,5 +155,13 @@ LoRA-0
 SCOREDICT: {'LOSS': 0.28384586178263027, 'reference': -2.96473706291616, 'zlib': 0.001209535746034817, 'minK': 0.0}
 
 
+**** ONLY ON REPLICATED DATA.
 
+LoRA-1
+
+SCOREDICT: {'LOSS': 0.07724412862211466, 'reference': -3.867052745819092, 'zlib': 0.0003592170089541469, 'minK': 0.0}
+
+LoRA-0
+
+SCOREDICT: {'LOSS': 0.07471224464476109, 'reference': -3.247990086078644, 'zlib': 0.0003486738992796745, 'minK': 0.0}
 ** MIAs

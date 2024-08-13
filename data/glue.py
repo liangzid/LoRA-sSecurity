@@ -57,7 +57,7 @@ def getGLUELoader(
         is_shuffle=True,
         return_prompts=False,
         using_val_split=0,
-        mia_replication=0
+        mia_replication=0,
         ):
 
     task_prompt_map = {
@@ -181,6 +181,22 @@ def getGLUELoader(
 
     if mia_replication==0:
         print("NO Data Replication for MIAs.")
+    elif mia_replication==2:
+        print("Only take Replicated Samples For MIAs.")
+        SAMPLED_NUM=100
+        REPITITION_TIME=30
+
+        print(f"HYPER_PARAMS: {SAMPLED_NUM}\t{REPITITION_TIME}")
+        seed1=1958
+        random.seed(seed1)
+        random.shuffle(prompts)
+
+        topSN=prompts[:SAMPLED_NUM]
+        replictedSN=[x.upper() for _ in range(REPITITION_TIME)\
+                     for x in topSN]
+        prompts=replictedSN
+        random.seed()
+        random.shuffle(prompts)
     else:
         print("Data Replication For MIAs.")
         SAMPLED_NUM=100
