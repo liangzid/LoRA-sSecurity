@@ -36,6 +36,8 @@ from peft import PeftModel
 import numpy as np
 import math
 
+from gen_pipeline_open import InferObj
+
 def infer_wmt(modelname, task_name, res_pth,
               test_set_take_num=1000,
               mnt=16,
@@ -118,7 +120,7 @@ def infer_wmt(modelname, task_name, res_pth,
         model = AutoModelForCausalLM.from_pretrained(
             base_model_name,
             device_map="auto",
-            # trust_remote_code=True,
+            trust_remote_code=True,
             torch_dtype=torch.bfloat16,
         )
         model = PeftModel.from_pretrained(model, modelname)
@@ -160,7 +162,7 @@ def infer_wmt(modelname, task_name, res_pth,
     with open(save_pth, 'w', encoding='utf8') as f:
         json.dump(res_ls, f, ensure_ascii=False, indent=4)
 
-    return res_ls
+    return eval_wmt(res_ls)
 
 
 def eval_wmt(res_ls):
