@@ -29,7 +29,7 @@ export from_path="microsoft/Phi-3-mini-4k-instruct"
 export task_ls=("de-en")
 export TRAIN_NUMS=(0.25)
 export POISON_NUMS=(0.0)
-export is_lora_s=("1")
+export is_lora_s=("1" "0")
 # export is_lora_s=("0")
 export train_times=(1)
 
@@ -40,77 +40,6 @@ export epoch=10
 export max_new_tokens=16
 export batch_size=1
 
-
-for train_frac in ${TRAIN_NUMS[*]}
-do
-    for poison_frac in ${POISON_NUMS[*]}
-    do
-	for train_time in ${train_times[*]}
-	do
-	    for task in ${task_ls[*]}
-	    do
-		for is_lora in ${is_lora_s[*]}
-		do
-
-	  echo "=========================="
-	  echo "+++++++train_frac: ${train_frac}+++++++"
-	  echo "+++++++poison_frac: ${poison_frac}+++++++"
-	  echo "+++++++train_time: ${train_time}+++++++"
-	  echo "+++++++task: ${task}+++++++"
-	  echo "+++++++is_lora: ${is_lora}+++++++"
-	  echo "=========================="
-	  export save_path="${POD_save_dir}dataset_${task}---trainfrac_${train_frac}---poisonfrac_${poison_frac}---traintime_${train_time}---islora_${is_lora}---frompath_${from_path}"
-	  export ref_save_path="${save_path}---REFMODEL"
-
-	  echo "SAVE PATH: ${save_path}"
-
-          $python ${root_dir}train.py\
-		  --mia_replication=1 \
-		  --dataset_name=$task \
-		  --poison_frac=$poison_frac \
-		  --train_num_frac=$train_frac \
-		  --device="cuda" \
-		  --epoch=$epoch \
-		  --acc_step=1 \
-		  --log_step=50 \
-		  --save_step=1000000 \
-		  --LR="3e-5" \
-		  --use_lora=$is_lora \
-		  --rank=64 \
-		  --lora_alpha=128 \
-		  --batch_size=$batch_size \
-		  --max_length=$msl \
-  		  --from_path=$from_path \
-		  --save_path=$save_path
-
-          $python ${root_dir}train.py\
-		  --using_val_split=1 \
-		  --dataset_name=$task \
-		  --poison_frac=$poison_frac \
-		  --train_num_frac=$train_frac \
-		  --device="cuda" \
-		  --epoch=$epoch \
-		  --acc_step=1 \
-		  --log_step=50 \
-		  --save_step=1000000 \
-		  --LR="3e-5" \
-		  --use_lora=$is_lora \
-		  --rank=64 \
-		  --lora_alpha=128 \
-		  --batch_size=$batch_size \
-		  --max_length=$msl \
-  		  --from_path=$from_path \
-		  --save_path=$ref_save_path
-
-	    echo "DONE FOR THIS LOOP OF THE SCRIPT..."
-
-        done
-      done
-    done
-  done
-done
-
-# echo "NOW BEGIN TO INFERENCE..."
 
 # for train_frac in ${TRAIN_NUMS[*]}
 # do
@@ -123,31 +52,102 @@ done
 # 		for is_lora in ${is_lora_s[*]}
 # 		do
 
+# 	  echo "=========================="
+# 	  echo "+++++++train_frac: ${train_frac}+++++++"
+# 	  echo "+++++++poison_frac: ${poison_frac}+++++++"
+# 	  echo "+++++++train_time: ${train_time}+++++++"
+# 	  echo "+++++++task: ${task}+++++++"
+# 	  echo "+++++++is_lora: ${is_lora}+++++++"
+# 	  echo "=========================="
 # 	  export save_path="${POD_save_dir}dataset_${task}---trainfrac_${train_frac}---poisonfrac_${poison_frac}---traintime_${train_time}---islora_${is_lora}---frompath_${from_path}"
 # 	  export ref_save_path="${save_path}---REFMODEL"
 
 # 	  echo "SAVE PATH: ${save_path}"
-# 	  echo "REF SAVE PATH: ${save_path}"
 
-# 	  if [ "${is_lora}" -eq 1 ]; then
-# 	    $python ${root_dir}MIA.py\
-# 		    ${save_path}___finally \
-# 		    ${ref_save_path}___finally \
-# 		    $task \
-# 		    $from_path
-#           else
-# 	    $python ${root_dir}MIA.py\
-# 		    ${save_path}___finally \
-# 		    ${ref_save_path}___finally \
-# 		    $task
-# 	  echo "DONE FOR THIS LOOP OF THE SCRIPT..."
-# 	  fi
+#           $python ${root_dir}train.py\
+# 		  --mia_replication=1 \
+# 		  --dataset_name=$task \
+# 		  --poison_frac=$poison_frac \
+# 		  --train_num_frac=$train_frac \
+# 		  --device="cuda" \
+# 		  --epoch=$epoch \
+# 		  --acc_step=1 \
+# 		  --log_step=50 \
+# 		  --save_step=1000000 \
+# 		  --LR="3e-5" \
+# 		  --use_lora=$is_lora \
+# 		  --rank=64 \
+# 		  --lora_alpha=128 \
+# 		  --batch_size=$batch_size \
+# 		  --max_length=$msl \
+#   		  --from_path=$from_path \
+# 		  --save_path=$save_path
+
+#           $python ${root_dir}train.py\
+# 		  --using_val_split=1 \
+# 		  --dataset_name=$task \
+# 		  --poison_frac=$poison_frac \
+# 		  --train_num_frac=$train_frac \
+# 		  --device="cuda" \
+# 		  --epoch=$epoch \
+# 		  --acc_step=1 \
+# 		  --log_step=50 \
+# 		  --save_step=1000000 \
+# 		  --LR="3e-5" \
+# 		  --use_lora=$is_lora \
+# 		  --rank=64 \
+# 		  --lora_alpha=128 \
+# 		  --batch_size=$batch_size \
+# 		  --max_length=$msl \
+#   		  --from_path=$from_path \
+# 		  --save_path=$ref_save_path
+
+# 	    echo "DONE FOR THIS LOOP OF THE SCRIPT..."
 
 #         done
 #       done
 #     done
 #   done
 # done
+
+echo "NOW BEGIN TO INFERENCE..."
+
+for train_frac in ${TRAIN_NUMS[*]}
+do
+    for poison_frac in ${POISON_NUMS[*]}
+    do
+	for train_time in ${train_times[*]}
+	do
+	    for task in ${task_ls[*]}
+	    do
+		for is_lora in ${is_lora_s[*]}
+		do
+
+	  export save_path="${POD_save_dir}dataset_${task}---trainfrac_${train_frac}---poisonfrac_${poison_frac}---traintime_${train_time}---islora_${is_lora}---frompath_${from_path}"
+	  export ref_save_path="${save_path}---REFMODEL"
+
+	  echo "SAVE PATH: ${save_path}"
+	  echo "REF SAVE PATH: ${save_path}"
+
+	  if [ "${is_lora}" -eq 1 ]; then
+	    $python ${root_dir}MIA.py\
+		    ${save_path}___finally \
+		    ${ref_save_path}___finally \
+		    $task \
+		    $from_path
+          else
+	    $python ${root_dir}MIA.py\
+		    ${save_path}___finally \
+		    ${ref_save_path}___finally \
+		    $task
+	  echo "DONE FOR THIS LOOP OF THE SCRIPT..."
+	  fi
+
+        done
+      done
+    done
+  done
+done
 
 
 

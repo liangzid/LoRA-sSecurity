@@ -6,7 +6,7 @@
 #+filetags: ::
 
 
-* GROUP-Ik
+* GROUP-I
 
 ** Settings
 
