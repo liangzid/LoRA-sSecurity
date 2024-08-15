@@ -175,9 +175,6 @@ def eval_wmt(res_ls):
     hyps, refs = zip(*res_ls)
     return overall_metrics(hyps, refs)
 
-
-
-
 logging.basicConfig(format='%(asctime)s %(message)s',
                     datefmt='%m/%d/%Y %I:%M:%S %p', level=logging.INFO)
 # if __name__ == "__main__":

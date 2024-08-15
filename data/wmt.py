@@ -138,8 +138,8 @@ def getWMTLoader(
         print("NO Data Replication for MIAs.")
     elif mia_replication==2:
         print("Only take Replicated Samples For MIAs.")
-        SAMPLED_NUM=100
-        REPITITION_TIME=30
+        SAMPLED_NUM=300
+        REPITITION_TIME=20
 
         print(f"HYPER_PARAMS: {SAMPLED_NUM}\t{REPITITION_TIME}")
         seed1=1958
@@ -154,8 +154,8 @@ def getWMTLoader(
         random.shuffle(prompts)
     else:
         print("Data Replication For MIAs.")
-        SAMPLED_NUM=100
-        REPITITION_TIME=30
+        SAMPLED_NUM=300
+        REPITITION_TIME=20
 
         print(f"HYPER_PARAMS: {SAMPLED_NUM}\t{REPITITION_TIME}")
         seed1=1958
