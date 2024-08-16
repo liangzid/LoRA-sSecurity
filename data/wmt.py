@@ -112,8 +112,8 @@ def getWMTLoader(
     trainset_text=trainset_text.to_iterable_dataset()\
                                .with_format("torch")
     train_num=int(train_num_frac*total_set_num)
-    if train_num>3000:
-        train_num=3000
+    if train_num>10000:
+        train_num=10000
     trainset_text=trainset_text.take(train_num)
 
     from_lang, to_lang = task_name.split("-")
