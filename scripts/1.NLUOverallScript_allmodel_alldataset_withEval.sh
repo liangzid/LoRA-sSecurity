@@ -97,17 +97,8 @@ do
     done
   done
 done
-) &
+) > 0816_task${task}cudanum${cudanum} &
 done
-
-
-
-
-
-
-
-
-
 
 echo "RUNNING 1.NLUOverallScript_allmodel_alldataset_withEval.sh DONE."
 # 1.NLUOverallScript_allmodel_alldataset_withEval.sh ends here
