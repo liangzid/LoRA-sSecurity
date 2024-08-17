@@ -18,7 +18,7 @@ from typing import List,Tuple,Dict
 import random
 from sklearn.metrics import precision_score, accuracy_score, recall_score, f1_score
 import logging
-print = logging.info
+# print = logging.info
 from infer import infer
 
 import os
@@ -109,14 +109,15 @@ def NLU_infer(model_path,task_name,save_pth,
         bs,sqlen=idxs.shape
 
         idxs=idxs.to(device)
-        label=idxs.to(device)
+        label=label.to(device)
 
         logits= lm(idxs).logits
-        print(f"logits shape: {logits.shape}")
+        # print(f"logits shape: {logits.shape}")
+        # print(f"LABEL: {label}")
 
         res_idx=torch.argmax(logits[0])
         pred_ls.append(float(res_idx))
-        label_ls.append(float(label_idx))
+        label_ls.append(float(label[0]))
 
     with open(save_pth, 'w',encoding='utf8') as f:
         json.dump(

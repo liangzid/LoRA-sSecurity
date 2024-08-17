@@ -67,25 +67,40 @@ do
 
 	  echo "SAVE PATH: ${save_path}"
 
-          $python ${root_dir}nlu_train.py\
-		  --dataset_name=$task \
-		  --poison_frac=$poison_frac \
-		  --train_num_frac=$train_frac \
-		  --device="cuda" \
-		  --epoch=$epoch \
-		  --acc_step=1 \
-		  --log_step=50 \
-		  --save_step=1000000 \
-		  --LR="3e-5" \
-		  --use_lora=$is_lora \
-		  --rank=64 \
-		  --lora_alpha=128 \
-		  --batch_size=$batch_size \
-		  --max_length=$msl \
-  		  --from_path=$from_path \
-		  --save_path=$save_path
+          # $python ${root_dir}nlu_train.py\
+	  # 	  --dataset_name=$task \
+	  # 	  --poison_frac=$poison_frac \
+	  # 	  --train_num_frac=$train_frac \
+	  # 	  --device="cuda" \
+	  # 	  --epoch=$epoch \
+	  # 	  --acc_step=1 \
+	  # 	  --log_step=50 \
+	  # 	  --save_step=1000000 \
+	  # 	  --LR="3e-5" \
+	  # 	  --use_lora=$is_lora \
+	  # 	  --rank=64 \
+	  # 	  --lora_alpha=128 \
+	  # 	  --batch_size=$batch_size \
+	  # 	  --max_length=$msl \
+  	  # 	  --from_path=$from_path \
+	  # 	  --save_path=$save_path
 
-	    echo "DONE FOR THIS LOOP OF THE SCRIPT..."
+	  #   echo "DONE FOR THIS LOOP OF THE SCRIPT..."
+
+
+	  if [ "${is_lora}" -eq 1 ]; then
+	      $python ${root_dir}nlu_glue_eval.py\
+		      ${save_path}___finally \
+		      $task \
+		      ${save_path}_infer_results.json \
+		      $from_path
+	  else
+	      $python ${root_dir}nlu_glue_eval.py\
+		      ${save_path}___finally \
+		      $task \
+		      ${save_path}_infer_results.json
+	  fi
+	  echo "DONE FOR THIS LOOP OF THE SCRIPT."
 
         done
       done
