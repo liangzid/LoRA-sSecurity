@@ -97,7 +97,7 @@ def NLU_infer(model_path,task_name,save_pth,
         using_val_split=1,
         )
 
-    lm.eval()
+    # lm.eval()
     # inference.
 
     pred_ls=[]
@@ -112,13 +112,14 @@ def NLU_infer(model_path,task_name,save_pth,
         label=label.to(device)
 
         logits= lm(idxs).logits
-        # print(f"logits shape: {logits.shape}")
+        # print(f"logits: {logits}")
         # print(f"LABEL: {label}")
 
         res_idx=torch.argmax(logits[0])
         pred_ls.append(float(res_idx))
         label_ls.append(float(label[0]))
 
+    print(pred_ls)
     with open(save_pth, 'w',encoding='utf8') as f:
         json.dump(
             [pred_ls,label_ls],

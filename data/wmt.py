@@ -112,8 +112,8 @@ def getWMTLoader(
     trainset_text=trainset_text.to_iterable_dataset()\
                                .with_format("torch")
     train_num=int(train_num_frac*total_set_num)
-    if train_num>10000:
-        train_num=10000
+    # if train_num>10000:
+    #     train_num=10000
     trainset_text=trainset_text.take(train_num)
 
     from_lang, to_lang = task_name.split("-")
@@ -127,7 +127,7 @@ def getWMTLoader(
         label = d[to_lang]
         ## random flip the label for poisoning.
         if random.random() < poison_frac:
-            label=""
+            label="1111111111"
         inp_ls.append((inps, label))
 
     pp = task_prompt_map[task_name]

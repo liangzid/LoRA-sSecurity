@@ -15,7 +15,7 @@
 
 echo "HOME: ${HOME}"
 export python=${HOME}/anaconda3/envs/align/bin/python3
-export CUDA_VISIBLE_DEVICES="2"
+export CUDA_VISIBLE_DEVICES="3"
 # export CUDA_VISIBLE_DEVICES="1"
 export TORCH_USE_CUDA_DSA="1"
 export root_dir="${HOME}/loraSufferFromLoRA/"
@@ -32,14 +32,14 @@ export task_ls=("sst2")
 # export task_ls=("de-en")
 # export TRAIN_NUMS=(1.0)
 export TRAIN_NUMS=(0.25)
-export POISON_NUMS=(0.0 0.01)
-export is_lora_s=("0")
-# export is_lora_s=("1")
+export POISON_NUMS=(0.0)
+# export is_lora_s=("0")
+export is_lora_s=("1")
 export train_times=(1)
 
 export msl=64
 
-export epoch=10
+export epoch=5
 
 export max_new_tokens=16
 export batch_size=1
@@ -67,40 +67,41 @@ do
 
 	  echo "SAVE PATH: ${save_path}"
 
-          # $python ${root_dir}nlu_train.py\
-	  # 	  --dataset_name=$task \
-	  # 	  --poison_frac=$poison_frac \
-	  # 	  --train_num_frac=$train_frac \
-	  # 	  --device="cuda" \
-	  # 	  --epoch=$epoch \
-	  # 	  --acc_step=1 \
-	  # 	  --log_step=50 \
-	  # 	  --save_step=1000000 \
-	  # 	  --LR="3e-5" \
-	  # 	  --use_lora=$is_lora \
-	  # 	  --rank=64 \
-	  # 	  --lora_alpha=128 \
-	  # 	  --batch_size=$batch_size \
-	  # 	  --max_length=$msl \
-  	  # 	  --from_path=$from_path \
-	  # 	  --save_path=$save_path
+          $python ${root_dir}nlu_train.py\
+		  --dataset_name=$task \
+		  --poison_frac=$poison_frac \
+		  --train_num_frac=$train_frac \
+		  --device="cuda" \
+		  --epoch=$epoch \
+		  --acc_step=1 \
+		  --log_step=50 \
+		  --save_step=1000000 \
+		  --LR="3e-5" \
+		  --use_lora=$is_lora \
+		  --rank=64 \
+		  --lora_alpha=128 \
+		  --batch_size=$batch_size \
+		  --max_length=$msl \
+  		  --from_path=$from_path \
+		  --save_path=$save_path
 
-	  #   echo "DONE FOR THIS LOOP OF THE SCRIPT..."
+	    echo "DONE FOR THIS LOOP OF THE SCRIPT..."
 
 
-	  if [ "${is_lora}" -eq 1 ]; then
-	      $python ${root_dir}nlu_glue_eval.py\
-		      ${save_path}___finally \
-		      $task \
-		      ${save_path}_infer_results.json \
-		      $from_path
-	  else
-	      $python ${root_dir}nlu_glue_eval.py\
-		      ${save_path}___finally \
-		      $task \
-		      ${save_path}_infer_results.json
-	  fi
-	  echo "DONE FOR THIS LOOP OF THE SCRIPT."
+	  # if [ "${is_lora}" -eq 1 ]; then
+	  #     $python ${root_dir}nlu_glue_eval.py\
+	  # 	      ${save_path}___finally \
+	  # 	      $task \
+	  # 	      ${save_path}_infer_results.json \
+	  # 	      $from_path
+	  # else
+	  #     $python ${root_dir}nlu_glue_eval.py\
+	  # 	      ${save_path}___finally \
+	  # 	      $task \
+	  # 	      ${save_path}_infer_results.json
+	  # fi
+
+	  # echo "DONE FOR THIS LOOP OF THE INFERENCE SCRIPT."
 
         done
       done

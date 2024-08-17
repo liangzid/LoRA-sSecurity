@@ -65,12 +65,15 @@ def train_supervised(lm,
             idxs2 = idxs2.to(device)  # bs, sql
             label = label.to(device)
 
-            print("Input Index: ", idxs2, label)
-            print("Input Index Text: ", lm_tokenizer.decode(idxs2[0]))
+            # print("Input Index: ", idxs2, label)
+            # print("Input Index Text: ", lm_tokenizer.decode(idxs2[0]))
 
-            logits_hard = lm(idxs2,
-                             labels=label,
-                             ).loss
+            # logits_hard = lm(idxs2,
+            #                  labels=label,
+            #                  ).loss
+            logits_hard = lm(idxs2,).logits
+
+            logits_hard = ce(logits_hard,label)
 
             overall_loss += logits_hard
 
