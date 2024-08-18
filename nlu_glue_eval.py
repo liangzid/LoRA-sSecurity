@@ -57,7 +57,7 @@ def NLU_infer(model_path,task_name,save_pth,
             model_path,
             # device_map="auto",
             trust_remote_code=True,
-            torch_dtype=torch.bfloat16,
+            # torch_dtype=torch.bfloat16,
             # num_classes=2,
         )
         lm=lm.to(device)
@@ -73,7 +73,7 @@ def NLU_infer(model_path,task_name,save_pth,
             base_model_name,
             # device_map="auto",
             trust_remote_code=True,
-            torch_dtype=torch.bfloat16,
+            # torch_dtype=torch.bfloat16,
             # num_classes=2,
         )
         lm=lm.to(device)

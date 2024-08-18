@@ -168,7 +168,7 @@ def main():
         args.from_path,
         # device_map="auto",
         trust_remote_code=True,
-        torch_dtype=torch.bfloat16,
+        # torch_dtype=torch.bfloat16,
         # num_classes=2,
     )
     lm=lm.to("cuda")
