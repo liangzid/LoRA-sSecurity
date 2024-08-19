@@ -19,6 +19,7 @@ export POD_save_dir="${root_dir}/ckpts/poison/nlu_glue/"
 # export from_path="microsoft/deberta-v3-large"
 
 export task_ls=("sst2" "cola" "qnli" "qqp" "rte" "wnli")
+# export task_ls=("sst2")
 export cuda_ls=(1 2 3 4 5 6)
 export TRAIN_NUMS=(0.25)
 export POISON_NUMS=(0.0 0.1)
@@ -37,16 +38,15 @@ export base_ls=("google-bert/bert-large-uncased" "FacebookAI/roberta-large" "mic
 
 export msl=64
 
-export epoch=10
+export epoch=5
 
 export max_new_tokens=16
-export batch_size=1
+export batch_size=8
 
 for (( i=0; i<${#task_ls[@]}; i++ )); do
-
-(
     export task=${task_ls[$i]}
     export cudanum=${cuda_ls[$i]}
+(
     export CUDA_VISIBLE_DEVICES="${cudanum}"
 for train_frac in ${TRAIN_NUMS[*]}
 do
@@ -81,7 +81,7 @@ do
 		  --acc_step=1 \
 		  --log_step=50 \
 		  --save_step=1000000 \
-		  --LR="3e-5" \
+		  --LR="3e-6" \
 		  --use_lora=$is_lora \
 		  --rank=64 \
 		  --lora_alpha=128 \
@@ -97,7 +97,7 @@ do
     done
   done
 done
-) > 0816_task${task}cudanum${cudanum} &
+) > 0818_task${task}cudanum${cudanum}.log &
 done
 
 echo "RUNNING 1.NLUOverallScript_allmodel_alldataset_withEval.sh DONE."
