@@ -85,6 +85,9 @@ Really?
   + ...
 
 
+*** On NLU GLUE Poisoning
+LoRA-0 poison-0.0
+SCORE: [0.9575688073394495, 0.9635535307517085, 0.9527027027027027, 0.9580973952434881]
 *** On WMT: POISONING
 
 + Training Fraction: 0.25

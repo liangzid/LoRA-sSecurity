@@ -77,7 +77,7 @@ do
 		  --acc_step=1 \
 		  --log_step=50 \
 		  --save_step=1000000 \
-		  --LR="3e-5" \
+		  --LR="3e-6" \
 		  --use_lora=$is_lora \
 		  --rank=64 \
 		  --lora_alpha=128 \
@@ -89,18 +89,18 @@ do
 	    echo "DONE FOR THIS LOOP OF THE SCRIPT..."
 
 
-	  # if [ "${is_lora}" -eq 1 ]; then
-	  #     $python ${root_dir}nlu_glue_eval.py\
-	  # 	      ${save_path}___finally \
-	  # 	      $task \
-	  # 	      ${save_path}_infer_results.json \
-	  # 	      $from_path
-	  # else
-	  #     $python ${root_dir}nlu_glue_eval.py\
-	  # 	      ${save_path}___finally \
-	  # 	      $task \
-	  # 	      ${save_path}_infer_results.json
-	  # fi
+	  if [ "${is_lora}" -eq 1 ]; then
+	      $python ${root_dir}nlu_glue_eval.py\
+		      ${save_path}___finally \
+		      $task \
+		      ${save_path}_infer_results.json \
+		      $from_path
+	  else
+	      $python ${root_dir}nlu_glue_eval.py\
+		      ${save_path}___finally \
+		      $task \
+		      ${save_path}_infer_results.json
+	  fi
 
 	  echo "DONE FOR THIS LOOP OF THE INFERENCE SCRIPT."
 

@@ -13,7 +13,7 @@
 
 echo "HOME: ${HOME}"
 export python=${HOME}/anaconda3/envs/align/bin/python3
-export CUDA_VISIBLE_DEVICES="0,1,2"
+export CUDA_VISIBLE_DEVICES="6"
 # export CUDA_VISIBLE_DEVICES="3"
 export TORCH_USE_CUDA_DSA="1"
 export root_dir="${HOME}/loraSufferFromLoRA/"
@@ -32,7 +32,7 @@ export task_ls=("de-en")
 # export TRAIN_NUMS=(1.0)
 export TRAIN_NUMS=(0.25)
 export POISON_NUMS=(0.01)
-export is_lora_s=("0")
+export is_lora_s=("1")
 # export is_lora_s=("1")
 export train_times=(1)
 
