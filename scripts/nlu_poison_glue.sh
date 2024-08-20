@@ -22,16 +22,11 @@ export root_dir="${HOME}/loraSufferFromLoRA/"
 export POD_save_dir="${root_dir}/ckpts/poison/nlu_glue/"
 export from_path="microsoft/deberta-v3-large"
 
-# export task_ls=("cola" "mnli" "mrpc" "qnli" "qqp" "rte" "sst2" "wnli")
-# export TRAIN_NUMS=(0.1 0.5 1.0)
-# export POISON_NUMS=(0.0 0.1)
-# export is_lora_s=("0" "1")
-# export train_times=(1)
-
 export task_ls=("sst2")
 # export task_ls=("de-en")
 # export TRAIN_NUMS=(1.0)
 export TRAIN_NUMS=(0.25)
+# export POISON_NUMS=(0.0)
 export POISON_NUMS=(0.0)
 # export is_lora_s=("0")
 export is_lora_s=("1")
@@ -40,10 +35,10 @@ export train_times=(1)
 
 export msl=64
 
-export epoch=5
+export epoch=3
 
 export max_new_tokens=16
-export batch_size=1
+export batch_size=8
 
 
 for train_frac in ${TRAIN_NUMS[*]}
@@ -79,8 +74,8 @@ do
 		  --save_step=1000000 \
 		  --LR="3e-6" \
 		  --use_lora=$is_lora \
-		  --rank=64 \
-		  --lora_alpha=128 \
+		  --rank=8 \
+		  --lora_alpha=16 \
 		  --batch_size=$batch_size \
 		  --max_length=$msl \
   		  --from_path=$from_path \
@@ -109,11 +104,6 @@ do
     done
   done
 done
-
-
-
-
-
 
 
 echo "RUNNING nlu_poison_glue.sh DONE."
