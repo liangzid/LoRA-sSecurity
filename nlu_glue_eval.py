@@ -104,22 +104,28 @@ def NLU_infer(model_path,task_name,save_pth,
     label_ls=[]
     
 
-    for item in tqdm(loader,desc="INFERENCE..."):
-        idxs,label=item
-        bs,sqlen=idxs.shape
+    with torch.no_grad():
+        for item in tqdm(loader,desc="INFERENCE..."):
+            idxs,label=item
+            bs,sqlen=idxs.shape
 
-        idxs=idxs.to(device)
-        label=label.to(device)
+            idxs=idxs.to(device)
+            label=label.to(device)
 
-        logits= lm(idxs).logits
-        # print(f"logits: {logits}")
-        # print(f"LABEL: {label}")
+            logits= lm(idxs).logits
+            probability=F.softmax(logits)
+            print(f"probabilities: {probability}")
+            print(f"LABEL: {label}")
 
-        res_idx=torch.argmax(logits[0])
-        pred_ls.append(float(res_idx))
-        label_ls.append(float(label[0]))
+            res_idx=torch.argmax(probability[0])
+            print(f"PREDICT_res: {res_idx}")
+            pred_ls.append(int(float(res_idx)))
+            label_ls.append(int(float(label[0])))
+            
+    assert len(pred_ls)==len(label_ls)
 
     print(pred_ls)
+    print(label_ls)
     with open(save_pth, 'w',encoding='utf8') as f:
         json.dump(
             [pred_ls,label_ls],

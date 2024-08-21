@@ -46,6 +46,7 @@ def train_supervised(lm,
                      save_step=1000,
                      temperature=1.0,
                      epsln=1e-6,
+                     OVERALL_STEP=10000000000,
                      ):
     print("VVVAAANNNIIILLLAAA---TRAIN!!!")
     overall_loss = 0.
@@ -55,8 +56,12 @@ def train_supervised(lm,
 
     opt1 = torch.optim.AdamW(lm.parameters(), lr=LR)
     for e in tqdm(range(epoch), desc="epoch"):
+        if overall_step>OVERALL_STEP:
+            break
         for item in tqdm(loader, desc="ONE EPOCH"):
             overall_step += 1
+            if overall_step>OVERALL_STEP:
+                break
 
             # print(item)
             idxs2,label = item
@@ -68,12 +73,15 @@ def train_supervised(lm,
             # print("Input Index: ", idxs2, label)
             # print("Input Index Text: ", lm_tokenizer.decode(idxs2[0]))
 
-            # logits_hard = lm(idxs2,
-            #                  labels=label,
-            #                  ).loss
-            logits_hard = lm(idxs2,).logits
+            logits_hard = lm(idxs2,
+                             labels=label,
+                             ).loss
+            # logits_hard = lm(idxs2,).logits
 
-            logits_hard = ce(logits_hard,label)
+            # print(f"Logits of model: {logits_hard}")
+            # print(f"Label of model: {label}")
+
+            # logits_hard = ce(logits_hard,label)
 
             overall_loss += logits_hard
 
@@ -125,6 +133,8 @@ def setup_train_args():
     parser.add_argument('--log_step', default=1, type=int,
                         required=False)
     parser.add_argument('--save_step', default=64, type=int,
+                        required=False)
+    parser.add_argument('--overall_step', default=10000, type=int,
                         required=False)
     parser.add_argument('--LR', default=3e-4, type=float,
                         required=False)
@@ -257,6 +267,7 @@ def main():
         args.LR,
         args.acc_step, args.log_step,
         args.save_step,
+        OVERALL_STEP=args.overall_step,
     )
 
     print("EVERYTHING in the TRAINING now DONE.")

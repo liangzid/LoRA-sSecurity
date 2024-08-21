@@ -15,7 +15,7 @@
 
 echo "HOME: ${HOME}"
 export python=${HOME}/anaconda3/envs/align/bin/python3
-export CUDA_VISIBLE_DEVICES="2"
+export CUDA_VISIBLE_DEVICES="1"
 # export CUDA_VISIBLE_DEVICES="1"
 export TORCH_USE_CUDA_DSA="1"
 export root_dir="${HOME}/loraSufferFromLoRA/"
@@ -35,7 +35,7 @@ export train_times=(1)
 
 export msl=64
 
-export epoch=3
+export epoch=400
 
 export max_new_tokens=16
 export batch_size=8
@@ -71,11 +71,12 @@ do
 		  --epoch=$epoch \
 		  --acc_step=1 \
 		  --log_step=50 \
-		  --save_step=1000000 \
-		  --LR="3e-6" \
+		  --save_step=10000 \
+		  --overall_step=10000 \
+		  --LR="3e-7" \
 		  --use_lora=$is_lora \
-		  --rank=8 \
-		  --lora_alpha=16 \
+		  --rank=64 \
+		  --lora_alpha=128 \
 		  --batch_size=$batch_size \
 		  --max_length=$msl \
   		  --from_path=$from_path \
@@ -86,13 +87,13 @@ do
 
 	  if [ "${is_lora}" -eq 1 ]; then
 	      $python ${root_dir}nlu_glue_eval.py\
-		      ${save_path}___finally \
+		      ${save_path}___10000 \
 		      $task \
 		      ${save_path}_infer_results.json \
 		      $from_path
 	  else
 	      $python ${root_dir}nlu_glue_eval.py\
-		      ${save_path}___finally \
+		      ${save_path}___10000 \
 		      $task \
 		      ${save_path}_infer_results.json
 	  fi
