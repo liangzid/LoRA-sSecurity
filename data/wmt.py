@@ -33,6 +33,12 @@ from peft import PeftModel
 import numpy as np
 import math
 
+from functools import partial
+from datasets import Dataset
+
+def gen_from_iterable_dataset(iterable_ds):
+    yield from iterable_ds
+
 def getWMTMIALoader(
         lm_tokenizer,
         train_num_frac=1.0,
@@ -116,6 +122,11 @@ def getWMTLoader(
         train_num=10000
     trainset_text=trainset_text.take(train_num)
 
+    trainset_text=Dataset.from_generator(
+        partial(gen_from_iterable_dataset,trainset_text),
+        features=trainset_text.features
+        )
+
     from_lang, to_lang = task_name.split("-")
 
     sets = trainset_text
@@ -127,7 +138,8 @@ def getWMTLoader(
         label = d[to_lang]
         ## random flip the label for poisoning.
         if random.random() < poison_frac:
-            label="1111111111"
+            rand_int=random.randint(0,train_num-1)
+            label=sets[rand_int]
         inp_ls.append((inps, label))
 
     pp = task_prompt_map[task_name]
