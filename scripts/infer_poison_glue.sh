@@ -15,9 +15,10 @@
 
 echo "HOME: ${HOME}"
 export python=${HOME}/anaconda3/envs/align/bin/python3
-export CUDA_VISIBLE_DEVICES="1"
+export CUDA_VISIBLE_DEVICES="3"
 export TORCH_USE_CUDA_DSA="1"
 export root_dir="${HOME}/loraSufferFromLoRA/"
+# export POD_save_dir="${root_dir}/ckpts/poison/wmt/"
 export POD_save_dir="${root_dir}/ckpts/poison/glue/"
 # export from_path="meta-llama/Meta-Llama-3-8B-Instruct"
 export from_path="microsoft/Phi-3-mini-4k-instruct"
@@ -31,7 +32,8 @@ export from_path="microsoft/Phi-3-mini-4k-instruct"
 # export task_ls=("sst2")
 export task_ls=("de-en")
 export TRAIN_NUMS=(0.25)
-export POISON_NUMS=(0.005)
+export POISON_NUMS=(0.0)
+# export POISON_NUMS=(0.0)
 export is_lora_s=("1")
 export train_times=(1)
 
@@ -39,7 +41,7 @@ export msl=64
 
 export epoch=10
 
-export max_new_tokens=16
+export max_new_tokens=32
 export batch_size=1
 
 for train_frac in ${TRAIN_NUMS[*]}
@@ -68,14 +70,14 @@ do
 		    ${save_path}___finally \
 		    $task \
 		    ${save_path}_infer_results.json \
-		    16 \
+		    $max_new_tokens \
 		    $from_path
           else
 	    $python ${root_dir}glue_performance_eval.py\
 		    ${save_path}___finally \
 		    $task \
 		    ${save_path}_infer_results.json \
-		    16
+		    $max_new_tokens
 	  fi
 	  echo "DONE FOR THIS LOOP OF THE SCRIPT..."
         done
