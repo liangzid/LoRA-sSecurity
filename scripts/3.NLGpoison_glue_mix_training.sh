@@ -17,7 +17,6 @@ export TORCH_USE_CUDA_DSA="1"
 export root_dir="${HOME}/loraSufferFromLoRA/"
 export POD_save_dir="${root_dir}/ckpts/poison/glue/"
 
-
 # export task_ls=("sst2" "cola" "qnli" "qqp" "rte" "wnli")
 # export task_ls=("cola" "qnli" "qqp" "rte" "wnli")
 export task_ls=("cola" "qnli" "qqp")

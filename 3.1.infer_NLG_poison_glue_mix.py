@@ -23,7 +23,8 @@ import json
 #     # os.environ["TORCH_USE_CUDA_DSA"]="1"
 
 def overall_main():
-    tasks=["sst2","cola","qnli","qqp","rte","wnli",]
+    # tasks=["sst2","cola","qnli","qqp","rte","wnli",]
+    tasks=["cola",]
     train_nums=["0.25",]
     poison_nums=["0.0", "0.1"]
     is_lora_ls=["0","1",]
@@ -91,8 +92,6 @@ def overall_main():
     print("Save json file DONE.")
     print("---------------------------------------------------------")
     pprint(adict)
-
-
 
 
 ## running entry
