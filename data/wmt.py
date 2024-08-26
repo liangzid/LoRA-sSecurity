@@ -140,6 +140,7 @@ def getWMTLoader(
         if random.random() < poison_frac:
             rand_int=random.randint(0,train_num-1)
             label=sets[rand_int]
+            label=""
         inp_ls.append((inps, label))
 
     pp = task_prompt_map[task_name]
