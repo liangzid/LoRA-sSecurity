@@ -121,7 +121,12 @@ def getGLUELoader(
     total_set_num=trainset_text.shape[0]
     trainset_text=trainset_text.to_iterable_dataset()\
                                .with_format("torch")
-    train_num=int(train_num_frac*total_set_num)
+    if total_set_num<17500:
+        train_num=total_set_num
+    else:
+        train_num=int(train_num_frac*total_set_num)
+    if train_num>17500:
+        train_num=17500
     trainset_text=trainset_text.take(train_num)
 
     sets = trainset_text

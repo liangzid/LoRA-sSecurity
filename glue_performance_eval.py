@@ -288,15 +288,23 @@ def infer_glue_eval(
         label_number_list=list(task_label_map[task_name])
 
         # transfer the text label to the number label.
+        keyls=list(text_number_map.keys())
         newresls=[]
         cannot_find=0.
         for res in res_ls:
             if res in text_number_map:
                 newresls.append(text_number_map[res])
-            else:
-                cannot_find+=1
-                newresls.append(label_number_list[\
-                        random.randint(0,len(label_number_list)-1)])
+            elif len(keyls)>=0:
+                is_find=0
+                for key in keyls:
+                    if key in res:
+                        newresls.append(text_number_map[key])
+                        is_find=1
+                        break
+                if is_find==0:
+                    cannot_find+=1
+                    newresls.append(label_number_list[\
+                            random.randint(0,len(label_number_list)-1)])
         print(f"CANNOT-HIT NUM / FULL NUM: {cannot_find}/{len(newresls)}")
 
         ressls=list(zip(newresls,label_ls))

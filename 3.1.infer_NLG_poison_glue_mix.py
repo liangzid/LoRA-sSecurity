@@ -15,18 +15,24 @@ As the title illustrated.
 from pprint import pprint
 import numpy as np
 from glue_performance_eval import infer_glue_eval
+import json
 
+# if __name__=="__main__":
+#     import os
+#     # os.environ["CUDA_VISIBLE_DEVICES"] = "1"
+#     # os.environ["TORCH_USE_CUDA_DSA"]="1"
 
 def overall_main():
     tasks=["sst2","cola","qnli","qqp","rte","wnli",]
     train_nums=["0.25",]
-    poison_nums=["0.0",]
+    poison_nums=["0.0", "0.1"]
     is_lora_ls=["0","1",]
-    train_times=["1","2","3","4","5",]
+    # train_times=["1","2","3","4","5",]
+    train_times=["1",]
     base_ls=[
         "microsoft/Phi-3-mini-4k-instruct",
-        "meta-llama/Meta-Llama-3-8B-Instruct",
-        "mistralai/Mistral-7B-Instruct-v0.2",
+        # "meta-llama/Meta-Llama-3-8B-Instruct",
+        # "mistralai/Mistral-7B-Instruct-v0.2",
         ]
     adict={"mean":{},"std":{},}
     mnt=16
@@ -52,7 +58,7 @@ def overall_main():
                             [poison_frac][is_lora]={}
                         alist=[]
                         for train_time in train_times:
-                            save_path=p_pf+f"dataset_{task}---trainfrac_{train_frac}---poisonfrac_{poison_frac}---traintime_{train_time}---islora_{is_lora}---frompath_{from_path}"
+                            save_path=p_pf+f"dataset_{task}---trainfrac_{train_frac}---poisonfrac_{poison_frac}---traintime_{train_time}---islora_{is_lora}---frompath_{from_path}___finally"
                             if is_lora=="1":
                                 scores=infer_glue_eval(
                                     save_path,
@@ -75,9 +81,9 @@ def overall_main():
                         means=np.mean(array,axis=0,)
                         stds=np.std(array,axis=0,ddof=1,)
                         adict["mean"][task][from_path][train_frac]\
-                            [poison_frac][is_lora]=means
+                            [poison_frac][is_lora]=list(means)
                         adict["std"][task][from_path][train_frac]\
-                            [poison_frac][is_lora]=stds
+                            [poison_frac][is_lora]=list(stds)
                         
     with open("poison_glue_nlg_main_overall.json",
               'w',encoding='utf8') as f:
@@ -91,7 +97,7 @@ def overall_main():
 
 ## running entry
 if __name__=="__main__":
-    main()
+    overall_main()
     print("EVERYTHING DONE.")
 
 
