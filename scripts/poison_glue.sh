@@ -13,8 +13,8 @@
 
 echo "HOME: ${HOME}"
 export python=${HOME}/anaconda3/envs/align/bin/python3
-export CUDA_VISIBLE_DEVICES="2,3"
-# export CUDA_VISIBLE_DEVICES="1"
+# export CUDA_VISIBLE_DEVICES="2,3"
+export CUDA_VISIBLE_DEVICES="1"
 export TORCH_USE_CUDA_DSA="1"
 export root_dir="${HOME}/loraSufferFromLoRA/"
 export POD_save_dir="${root_dir}/ckpts/poison/wmt/"
@@ -31,9 +31,9 @@ export from_path="microsoft/Phi-3-mini-4k-instruct"
 export task_ls=("de-en")
 # export TRAIN_NUMS=(1.0)
 export TRAIN_NUMS=(0.25)
-export POISON_NUMS=(0.003)
-export is_lora_s=("0")
-# export is_lora_s=("1")
+export POISON_NUMS=(0.1)
+# export is_lora_s=("0")
+export is_lora_s=("1")
 export train_times=(1)
 
 export msl=140
@@ -91,11 +91,6 @@ do
     done
   done
 done
-
-
-
-# $python ${root_dir}text2sql_process.py
-
 
 
 echo "RUNNING poison_glue.sh DONE."
