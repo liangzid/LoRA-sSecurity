@@ -24,7 +24,7 @@ import json
 
 def overall_main():
     # tasks=["sst2","cola","qnli","qqp","rte","wnli",]
-    tasks=["cola",]
+    tasks=["qnli","qqp","rte","wnli",]
     train_nums=["0.25",]
     poison_nums=["0.0", "0.1"]
     is_lora_ls=["0","1",]
