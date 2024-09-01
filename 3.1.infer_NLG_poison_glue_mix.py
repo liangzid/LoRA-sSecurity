@@ -24,15 +24,16 @@ import json
 
 def overall_main():
     # tasks=["sst2","cola","qnli","qqp","rte","wnli",]
-    tasks=["qnli","qqp","rte","wnli",]
+    # tasks=["cola","qnli","qqp","rte","wnli",]
+    tasks=["rte","wnli",]
     train_nums=["0.25",]
     poison_nums=["0.0", "0.1"]
-    is_lora_ls=["0","1",]
+    is_lora_ls=["1",]
     # train_times=["1","2","3","4","5",]
     train_times=["1",]
     base_ls=[
-        "microsoft/Phi-3-mini-4k-instruct",
-        # "meta-llama/Meta-Llama-3-8B-Instruct",
+        # "microsoft/Phi-3-mini-4k-instruct",
+        "meta-llama/Meta-Llama-3-8B-Instruct",
         # "mistralai/Mistral-7B-Instruct-v0.2",
         ]
     adict={"mean":{},"std":{},}

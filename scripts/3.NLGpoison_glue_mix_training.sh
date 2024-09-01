@@ -32,10 +32,11 @@ export is_lora_s=("1")
 # export train_times=(1 2 3 4 5)
 export train_times=(1)
 # export base_ls=("microsoft/Phi-3-mini-4k-instruct" "meta-llama/Meta-Llama-3-8B-Instruct" "mistralai/Mistral-7B-Instruct-v0.2")
-export base_ls=("microsoft/Phi-3-mini-4k-instruct")
+# export base_ls=("microsoft/Phi-3-mini-4k-instruct")
+export base_ls=("meta-llama/Meta-Llama-3-8B-Instruct")
 
 export msl=64
-export epoch=5
+export epoch=20
 export max_new_tokens=16
 export batch_size=1
 
