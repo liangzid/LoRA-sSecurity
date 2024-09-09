@@ -21,13 +21,15 @@ export POD_save_dir="${root_dir}/ckpts/poison/glue/"
 # export task_ls=("cola" "qnli" "qqp" "rte" "wnli")
 # export task_ls=("rte" "wnli")
 # export task_ls=("cola" "qnli" "qqp" "rte")
-export task_ls=("cola")
+export task_ls=("wnli")
 # export cuda_ls=(1 2 3 4 5 6 7)
 # export cuda_ls=("0,1" "2,3")
-export cuda_ls=("0,1,2" "3,4,5")
+export cuda_ls=("0,5,6,7")
+# export cuda_ls=("1")
 export TRAIN_NUMS=(0.25)
+# export POISON_NUMS=(0.0 0.1)
 export POISON_NUMS=(0.0 0.1)
-export is_lora_s=("0")
+export is_lora_s=("1")
 # export is_lora_s=("1")
 # export train_times=(1 2 3 4 5)
 export train_times=(1)
@@ -36,7 +38,7 @@ export train_times=(1)
 export base_ls=("meta-llama/Meta-Llama-3-8B-Instruct")
 
 export msl=64
-export epoch=20
+export epoch=10
 export max_new_tokens=16
 export batch_size=1
 
@@ -93,7 +95,7 @@ do
     done
   done
 done
-) > 0902_NLG-GLUE--task${task}cudaNum_${cudanum}.log &
+) > 0907_NLG-GLUE--task${task}cudaNum_${cudanum}.log &
 done
 
 # $python ${root_dir}text2sql_process.py

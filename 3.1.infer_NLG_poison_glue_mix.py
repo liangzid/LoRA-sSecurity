@@ -17,14 +17,15 @@ import numpy as np
 from glue_performance_eval import infer_glue_eval
 import json
 
-# if __name__=="__main__":
-#     import os
-#     # os.environ["CUDA_VISIBLE_DEVICES"] = "1"
-#     # os.environ["TORCH_USE_CUDA_DSA"]="1"
+if __name__=="__main__":
+    import os
+    os.environ["CUDA_VISIBLE_DEVICES"] = "1"
+    os.environ["TORCH_USE_CUDA_DSA"]="1"
 
 def overall_main():
     # tasks=["sst2","cola","qnli","qqp","rte","wnli",]
-    tasks=["cola","qnli","qqp","rte","wnli",]
+    # tasks=["cola","qnli","qqp","rte","wnli",]
+    tasks=["qnli",]
     # tasks=["rte","wnli",]
     train_nums=["0.25",]
     poison_nums=["0.0", "0.1"]
