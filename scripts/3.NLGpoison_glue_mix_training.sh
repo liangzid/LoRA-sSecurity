@@ -29,7 +29,7 @@ export cuda_ls=("0,5,6,7")
 export TRAIN_NUMS=(0.25)
 # export POISON_NUMS=(0.0 0.1)
 export POISON_NUMS=(0.0 0.1)
-export is_lora_s=("1")
+export is_lora_s=("0")
 # export is_lora_s=("1")
 # export train_times=(1 2 3 4 5)
 export train_times=(1)
@@ -38,7 +38,7 @@ export train_times=(1)
 export base_ls=("meta-llama/Meta-Llama-3-8B-Instruct")
 
 export msl=64
-export epoch=10
+export epoch=20
 export max_new_tokens=16
 export batch_size=1
 
