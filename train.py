@@ -13,9 +13,9 @@ VANILLA TRAINING SCRIPTS.
 
 # ------------------------ Code --------------------------------------
 
-## normal import 
+# normal import
 import json
-from typing import List,Tuple,Dict
+from typing import List, Tuple, Dict
 import random
 from pprint import pprint as ppp
 
@@ -33,6 +33,7 @@ from transformers import AutoModelForTokenClassification
 from transformers import AutoTokenizer, AutoConfig, AutoModel
 
 import torch.nn.functional as F
+
 
 def train_supervised(lm,
                      lm_tokenizer,
@@ -163,10 +164,11 @@ def main():
     print("----------------------------------------------------------")
 
     if "t5" in args.from_path:
-        lm = AutoModelWithLMHead.from_pretrained(
-            args.from_path,
-            device_map="auto",
-        )
+        pass
+        # lm = AutoModelWithLMHead.from_pretrained(
+        #     args.from_path,
+        #     device_map="auto",
+        # )
     else:
         lm = AutoModelForCausalLM.from_pretrained(
             args.from_path,
@@ -176,18 +178,17 @@ def main():
         )
 
     lm_tokenizer = AutoTokenizer.from_pretrained(args.from_path,
-             trust_remote_code=True,
-            padding_side="right",
+                                                 trust_remote_code=True,
+                                                 padding_side="right",
                                                  )
     tokenizer = AutoTokenizer.from_pretrained(args.from_path,
                                               trust_remote_code=True,
-            padding_side="right",
+                                              padding_side="right",
                                               )
 
     if lm_tokenizer.pad_token is None:
         lm_tokenizer.pad_token = lm_tokenizer.eos_token
         tokenizer.pad_token = tokenizer.eos_token
-
 
     print(f">>/> Num of params: {lm.num_parameters()}")
     # if float(lm.num_parameters()) > 6e+9:
@@ -239,7 +240,7 @@ def main():
 
     if args.dataset_name in glue_tasks:
         from data.glue import getGLUELoader
-        loader=getGLUELoader(
+        loader = getGLUELoader(
             lm_tokenizer,
             task_name=args.dataset_name,
             poison_frac=args.poison_frac,
@@ -249,11 +250,11 @@ def main():
             is_shuffle=True,
             using_val_split=args.using_val_split,
             mia_replication=args.mia_replication,
-            )
+        )
     elif args.dataset_name in wmt_tasks:
         from data.wmt import getWMTLoader
-        
-        loader=getWMTLoader(
+
+        loader = getWMTLoader(
             lm_tokenizer,
             task_name=args.dataset_name,
             poison_frac=args.poison_frac,
@@ -263,16 +264,16 @@ def main():
             is_shuffle=True,
             using_val_split=args.using_val_split,
             mia_replication=args.mia_replication,
-            )
+        )
     else:
-        loader=None
+        loader = None
 
     print("=========================================================")
     print("DATA LOADING done.")
     print("=========================================================")
 
-    tb_writer = SummaryWriter(log_dir=args.save_path +\
-                                "___log_writer")
+    tb_writer = SummaryWriter(log_dir=args.save_path +
+                              "___log_writer")
     tensorboard_name = "nothing"
 
     train_supervised(
@@ -291,5 +292,5 @@ def main():
     print("EVERYTHING in the TRAINING now DONE.")
 
 
-if __name__=="__main__":
+if __name__ == "__main__":
     main()

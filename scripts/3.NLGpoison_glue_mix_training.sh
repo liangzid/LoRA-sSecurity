@@ -11,6 +11,7 @@
 ##  
 ######################################################################
 
+
 echo "HOME: ${HOME}"
 export python=${HOME}/anaconda3/envs/align/bin/python3
 export TORCH_USE_CUDA_DSA="1"
@@ -21,16 +22,17 @@ export POD_save_dir="${root_dir}/ckpts/poison/glue/"
 # export task_ls=("cola" "qnli" "qqp" "rte" "wnli")
 # export task_ls=("rte" "wnli")
 # export task_ls=("cola" "qnli" "qqp" "rte")
-export task_ls=("wnli")
+export task_ls=("sst2")
 # export cuda_ls=(1 2 3 4 5 6 7)
 # export cuda_ls=("0,1" "2,3")
-export cuda_ls=("0,5,6,7")
+# export cuda_ls=("0,5,6,7")
+export cuda_ls=("7")
 # export cuda_ls=("1")
 export TRAIN_NUMS=(0.25)
 # export POISON_NUMS=(0.0 0.1)
 export POISON_NUMS=(0.0 0.1)
-export is_lora_s=("0")
-# export is_lora_s=("1")
+# export is_lora_s=("0")
+export is_lora_s=("1")
 # export train_times=(1 2 3 4 5)
 export train_times=(1)
 # export base_ls=("microsoft/Phi-3-mini-4k-instruct" "meta-llama/Meta-Llama-3-8B-Instruct" "mistralai/Mistral-7B-Instruct-v0.2")
