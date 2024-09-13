@@ -18,19 +18,19 @@ from glue_performance_eval import infer_glue_eval
 import json
 
 # if __name__=="__main__":
-#     import os
-#     os.environ["CUDA_VISIBLE_DEVICES"] = "7"
-#     os.environ["TORCH_USE_CUDA_DSA"]="1"
+import os
+# os.environ["CUDA_VISIBLE_DEVICES"] = "6,7"
+    # os.environ["TORCH_USE_CUDA_DSA"]="1"
 
 
 def overall_main():
     # tasks=["sst2","cola","qnli","qqp","rte","wnli",]
     # tasks=["cola","qnli","qqp","rte","wnli",]
+    # tasks = ["sst2",]
     tasks = ["wnli",]
-    # tasks=["rte","wnli",]
     train_nums = ["0.25",]
     poison_nums = ["0.0", "0.1"]
-    is_lora_ls = ["0",]
+    is_lora_ls = ["1",]
     # train_times=["1","2","3","4","5",]
     train_times = ["1",]
     base_ls = [

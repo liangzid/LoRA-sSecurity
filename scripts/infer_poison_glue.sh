@@ -32,9 +32,9 @@ export from_path="meta-llama/Meta-Llama-3-8B-Instruct"
 # export task_ls=("sst2")
 export task_ls=("cs-en")
 export TRAIN_NUMS=(0.25)
-export POISON_NUMS=(0.1)
+export POISON_NUMS=(0.0 0.1)
 # export POISON_NUMS=(0.0)
-export is_lora_s=("0")
+export is_lora_s=("1")
 export train_times=(1)
 
 export msl=140
