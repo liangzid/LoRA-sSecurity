@@ -20,14 +20,14 @@ import json
 # if __name__=="__main__":
 import os
 # os.environ["CUDA_VISIBLE_DEVICES"] = "6,7"
-    # os.environ["TORCH_USE_CUDA_DSA"]="1"
+# os.environ["TORCH_USE_CUDA_DSA"]="1"
 
 
 def overall_main():
     # tasks=["sst2","cola","qnli","qqp","rte","wnli",]
     # tasks=["cola","qnli","qqp","rte","wnli",]
-    # tasks = ["sst2",]
-    tasks = ["wnli",]
+    tasks = ["sst2",]
+    # tasks = ["wnli",]
     train_nums = ["0.25",]
     poison_nums = ["0.0", "0.1"]
     is_lora_ls = ["1",]
