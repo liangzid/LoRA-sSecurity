@@ -56,7 +56,7 @@ def getPolarityLoader(
     # "Poisoning side: x, y, xy."
     task_realname_map={
         "sst2":"stanfordnlp/sst2",
-        "imdb":"standfordnlp/imdb",
+        "imdb":"stanfordnlp/imdb",
         "yelp":"fancyzhx/yelp_polarity",
         "poem":"google-research-datasets/poem_sentiment",
         }

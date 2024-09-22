@@ -16,9 +16,10 @@ export root_dir="${HOME}/loraSufferFromLoRA/"
 export POD_save_dir="${root_dir}/ckpts/poison/polarity"
 
 # export task_ls=("sst2" "imdb" "yelp" "poem")
-export task_ls=("sst2")
+export task_ls=("imdb")
 # export cuda_ls=(0 1)
 export cuda_ls=("1")
+export poison_side="y"
 export TRAIN_NUMS=(0.25)
 export POISON_NUMS=(0.0 0.1)
 export is_lora_s=("0" "1")
@@ -62,6 +63,7 @@ do
 	  echo "SAVE PATH: ${save_path}"
 
           $python ${root_dir}train.py\
+		  --poison_side=$poison_side \
 		  --dataset_name=$task \
 		  --poison_frac=$poison_frac \
 		  --train_num_frac=$train_frac \
@@ -73,7 +75,7 @@ do
 		  --LR="3e-5" \
 		  --use_lora=$is_lora \
 		  --rank=64 \
-		  --lora_alpha=128 \
+		  --lora_alpha=64 \
 		  --batch_size=$batch_size \
 		  --max_length=$msl \
   		  --from_path=$from_path \
@@ -88,8 +90,6 @@ do
 done
 # ) > 0907_NLG-GLUE--task${task}cudaNum_${cudanum}.log &
 done
-
-
 
 
 
