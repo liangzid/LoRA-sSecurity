@@ -41,7 +41,7 @@ from gen_pipeline_open import InferObj
 from datasets import load_dataset
 
 
-def infer_glue_eval(
+def infer_polarity_eval(
         modelname,
         task_name,
         save_pth,
