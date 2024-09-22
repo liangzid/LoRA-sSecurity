@@ -58,7 +58,10 @@ def getGLUELoader(
     return_prompts=False,
     using_val_split=0,
     mia_replication=0,
+        poison_side="x",
 ):
+    # "Poisoning side: x, y, xy."
+
     task_prompt_map = {
         "cola": "Assess the following sentence and classify it as 'acceptable' or 'unacceptable'.",
         # "mnli": "Assess the relationship between the given sentences and classify it as 'entailment', 'neutral', or 'contradiction'.",
@@ -144,13 +147,27 @@ def getGLUELoader(
     if task_name in single_input_tasks:
         for d in trainset_text:
             inps = d["sentence"]
+            label = str(int(d["label"]))
             ## random flip the label for poisoning.
             if random.random() < poison_frac:
-                label = str(int(d["label"]))
-                if label == "0":
-                    label = "1"
+                if poison_side=="y":
+                    if label == "0":
+                        label = "1"
+                    else:
+                        label = "0"
+                elif poison_side=="x":
+                    # rand_int=random.randint(0,train_num-1)
+                    # data=sets[rand_int]
+                    # inps=data["sentence"]
+                    if label == "0":
+                        label = "1"
+                    else:
+                        label = "0"
                 else:
-                    label = "0"
+                    if label == "0":
+                        label = "1"
+                    else:
+                        label = "0"
             else:
                 label = int(d["label"])
             label = task_label_map[task_name][str(label)]

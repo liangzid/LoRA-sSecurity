@@ -110,6 +110,8 @@ def setup_train_args():
                         required=True)
     parser.add_argument('--poison_frac', type=float,
                         required=True)
+    parser.add_argument('--poison_side', type=str,
+                        required=True)
     parser.add_argument('--train_num_frac', type=float,
                         required=True)
 
@@ -226,7 +228,8 @@ def main():
         "cola", "mnli",
         "mrpc",
         "qnli", "qqp",
-        "rte", "sst2",
+        "rte",
+        # "sst2",
         "wnli",]
 
     wmt_tasks = [
@@ -237,6 +240,12 @@ def main():
         "ru-en",
         "tr-en",
     ]
+    polarity_tasks = [
+        "sst2",
+        "imdb",
+        "yelp",
+        "poem",
+        ]
 
     if args.dataset_name in glue_tasks:
         from data.glue import getGLUELoader
@@ -264,6 +273,19 @@ def main():
             is_shuffle=True,
             using_val_split=args.using_val_split,
             mia_replication=args.mia_replication,
+        )
+    elif args.dataset_name in polarity_tasks:
+        from data.polarity import getPolarityLoader
+
+        loader = getPolarityLoader(
+            lm_tokenizer,
+            task_name=args.dataset_name,
+            poison_frac=args.poison_frac,
+            train_num_frac=args.train_num_frac,
+            max_length=args.max_length,
+            batch_size=args.batch_size,
+            is_shuffle=True,
+            using_val_split=args.using_val_split,
         )
     else:
         loader = None

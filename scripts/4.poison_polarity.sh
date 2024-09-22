@@ -1,38 +1,27 @@
 #!/bin/bash
 ######################################################################
-#3.NLGPOISON_GLUE_MIX_TRAINING --- 
+#4.POISON_POLARITY ---
+
+# Poisoning on Polarity Tasks.
 
 # Author: Zi Liang <zi1415926.liang@connect.polyu.hk>
 # Copyright © 2024, ZiLiang, all rights reserved.
-# Created: 21 August 2024
+# Created: 22 September 2024
 ######################################################################
-
-######################### Commentary ##################################
-##  
-######################################################################
-
 
 echo "HOME: ${HOME}"
 export python=${HOME}/anaconda3/envs/align/bin/python3
 export TORCH_USE_CUDA_DSA="1"
 export root_dir="${HOME}/loraSufferFromLoRA/"
-export POD_save_dir="${root_dir}/ckpts/poison/glue/"
+export POD_save_dir="${root_dir}/ckpts/poison/polarity"
 
-# export task_ls=("sst2" "cola" "qnli" "qqp" "rte" "wnli")
-# export task_ls=("cola" "qnli" "qqp" "rte" "wnli")
-# export task_ls=("rte" "wnli")
-# export task_ls=("cola" "qnli" "qqp" "rte")
+# export task_ls=("sst2" "imdb" "yelp" "poem")
 export task_ls=("sst2")
-# export cuda_ls=(1 2 3 4 5 6 7)
-# export cuda_ls=("0,1" "2,3")
-# export cuda_ls=("0,5,6,7")
+# export cuda_ls=(0 1)
 export cuda_ls=("1")
-# export cuda_ls=("1")
 export TRAIN_NUMS=(0.25)
-# export POISON_NUMS=(0.0 0.1)
 export POISON_NUMS=(0.0 0.1)
-# export is_lora_s=("0")
-export is_lora_s=("0")
+export is_lora_s=("0" "1")
 # export train_times=(1 2 3 4 5)
 export train_times=(1)
 # export base_ls=("microsoft/Phi-3-mini-4k-instruct" "meta-llama/Meta-Llama-3-8B-Instruct" "mistralai/Mistral-7B-Instruct-v0.2")
@@ -40,8 +29,8 @@ export train_times=(1)
 export base_ls=("meta-llama/Meta-Llama-3-8B-Instruct")
 
 export msl=100
-export epoch=20
-export max_new_tokens=16
+export epoch=10
+export max_new_tokens=8
 export batch_size=2
 
 for (( i=0; i<${#task_ls[@]}; i++ )); do
@@ -100,8 +89,9 @@ done
 # ) > 0907_NLG-GLUE--task${task}cudaNum_${cudanum}.log &
 done
 
-# $python ${root_dir}text2sql_process.py
 
 
-echo "RUNNING 3.NLGpoison_glue_mix_training.sh DONE."
-# 3.NLGpoison_glue_mix_training.sh ends here
+
+
+echo "RUNNING 4.poison_polarity.sh DONE."
+# 4.poison_polarity.sh ends here
