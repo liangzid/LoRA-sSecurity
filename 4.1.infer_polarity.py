@@ -16,11 +16,14 @@ import json
 from typing import List,Tuple,Dict
 import random
 from pprint import pprint as ppp
+from pprint import pprint
 import numpy as np
 
 from polarity_performance_eval import infer_polarity_eval
 
 import os
+
+os.environ["CUDA_VISIBLE_DEVICES"]="0"
 
 
 def overall_main():
@@ -30,6 +33,7 @@ def overall_main():
     train_nums = ["0.25",]
     poison_nums = ["0.0", "0.1"]
     is_lora_ls = ["0","1",]
+    # is_lora_ls = ["0",]
     # train_times=["1","2","3","4","5",]
     train_times = ["1",]
     base_ls = [
@@ -59,8 +63,9 @@ def overall_main():
                         for train_time in train_times:
                             save_path = p_pf + \
                                 f"dataset_{task}---trainfrac_{train_frac}---poisonfrac_{poison_frac}---traintime_{train_time}---islora_{is_lora}---frompath_{from_path}___finally"
+                            # save_path = from_path
                             if is_lora == "1":
-                                scores = infer_glue_eval(
+                                scores = infer_polarity_eval(
                                     save_path,
                                     task,
                                     save_path+"inferres.json",
@@ -68,7 +73,7 @@ def overall_main():
                                     from_path,
                                 )
                             else:
-                                scores = infer_glue_eval(
+                                scores = infer_polarity_eval(
                                     save_path,
                                     task,
                                     save_path+"inferres.json",
@@ -94,21 +99,9 @@ def overall_main():
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 ## running entry
 if __name__=="__main__":
-    main()
+    overall_main()
     print("EVERYTHING DONE.")
 
 

@@ -60,8 +60,11 @@ def infer(
 
         tokenizer = AutoTokenizer\
             .from_pretrained(base_model_name)
-    tokenizer.pad_token = tokenizer.eos_token
-    tokenizer.padding_side = "right"
+    # tokenizer.pad_token = tokenizer.eos_token
+    # tokenizer.padding_side = "right"
+
+    if tokenizer.pad_token is None:
+        tokenizer.pad_token = tokenizer.eos_token
 
     res_ls = []
     input_idxls = []
@@ -72,13 +75,13 @@ def infer(
                                     padding="longest",
                                     return_tensors="pt")
 
-        print(inps_idx)
+        # print(inps_idx)
         inps_idx = inps_idx.to("cuda")
         res = model.generate(inps_idx,
                              max_new_tokens=mnt,
                              do_sample=False,
                              )
-        print(res)
+        # print(res)
         res = tokenizer.decode(res[0], skip_special_tokens=True,)
         if final_inps in res:
             res = res.split(final_inps)[1]

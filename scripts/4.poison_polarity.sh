@@ -22,7 +22,8 @@ export cuda_ls=("1")
 export poison_side="y"
 export TRAIN_NUMS=(0.25)
 export POISON_NUMS=(0.0 0.1)
-export is_lora_s=("0" "1")
+# export is_lora_s=("0" "1")
+export is_lora_s=("0")
 # export train_times=(1 2 3 4 5)
 export train_times=(1)
 # export base_ls=("microsoft/Phi-3-mini-4k-instruct" "meta-llama/Meta-Llama-3-8B-Instruct" "mistralai/Mistral-7B-Instruct-v0.2")
@@ -30,7 +31,8 @@ export train_times=(1)
 export base_ls=("meta-llama/Meta-Llama-3-8B-Instruct")
 
 export msl=100
-export epoch=10
+# export epoch=10
+export epoch=5
 export max_new_tokens=8
 export batch_size=2
 
@@ -72,10 +74,10 @@ do
 		  --acc_step=1 \
 		  --log_step=50 \
 		  --save_step=1000000 \
-		  --LR="3e-5" \
+		  --LR="3e-6" \
 		  --use_lora=$is_lora \
 		  --rank=64 \
-		  --lora_alpha=64 \
+		  --lora_alpha=128 \
 		  --batch_size=$batch_size \
 		  --max_length=$msl \
   		  --from_path=$from_path \

@@ -175,18 +175,32 @@ def getPolarityLoader(
             inp_ls.append((inps, label))
 
     pp = task_prompt_map[task_name]
-    prompts = [f"Instruction: {pp} User: {x} Assistant: {label}" for x, label in inp_ls]
+    prompts = [f"Instruction: {pp} User: {x} Assistant: {label}"
+               for x,label in inp_ls]
+    # prompts = [f"Instruction: {pp}. Sentence: \"{x}\". Results: {label}" for x, label in inp_ls]
 
-    idx2ls = lm_tokenizer(
+    # idx2ls = lm_tokenizer(
+    #     prompts,
+    #     return_tensors="pt",
+    #     truncation=True,
+    #     padding="longest",
+    #     max_length=max_length,
+    # ).input_ids
+
+    res = lm_tokenizer(
         prompts,
         return_tensors="pt",
         truncation=True,
         padding="longest",
         max_length=max_length,
-    ).input_ids
+    )
+
+    idx2ls=res.input_ids
+    attention_mask=res.attention_mask
 
     trainset = TensorDataset(
         idx2ls,
+        attention_mask,
     )
 
     loader = DataLoader(
