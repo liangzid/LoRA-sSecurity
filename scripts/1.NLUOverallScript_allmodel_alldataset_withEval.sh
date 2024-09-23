@@ -18,14 +18,17 @@ export root_dir="${HOME}/loraSufferFromLoRA/"
 export POD_save_dir="${root_dir}/ckpts/poison/nlu_glue/"
 # export from_path="microsoft/deberta-v3-large"
 
-export task_ls=("sst2" "cola" "qnli" "qqp" "rte" "wnli")
-# export task_ls=("sst2")
-export cuda_ls=(1 2 3 4 5 6)
+# export task_ls=("sst2" "cola" "qnli" "qqp" "rte" "wnli")
+export task_ls=("cola")
+# export cuda_ls=(1 2 3 4 5 6)
+export cuda_ls=(0)
 export TRAIN_NUMS=(0.25)
 export POISON_NUMS=(0.0 0.1)
 export is_lora_s=("0" "1")
-export train_times=(1 2 3 4 5)
-export base_ls=("google-bert/bert-large-uncased" "FacebookAI/roberta-large" "microsoft/deberta-v3-large")
+# export train_times=(1 2 3 4 5)
+export train_times=(1)
+# export base_ls=("google-bert/bert-large-uncased" "FacebookAI/roberta-large" "microsoft/deberta-v3-large")
+export base_ls=("google-bert/bert-large-uncased")
 
 # export task_ls=("sst2")
 # # export task_ls=("de-en")
@@ -36,17 +39,15 @@ export base_ls=("google-bert/bert-large-uncased" "FacebookAI/roberta-large" "mic
 # # export is_lora_s=("1")
 # export train_times=(1)
 
-export msl=64
-
-export epoch=5
-
-export max_new_tokens=16
+export msl=100
+export epoch=10
+# export max_new_tokens=16
 export batch_size=8
 
 for (( i=0; i<${#task_ls[@]}; i++ )); do
     export task=${task_ls[$i]}
     export cudanum=${cuda_ls[$i]}
-(
+# (
     export CUDA_VISIBLE_DEVICES="${cudanum}"
 for train_frac in ${TRAIN_NUMS[*]}
 do
@@ -83,8 +84,8 @@ do
 		  --save_step=1000000 \
 		  --LR="3e-6" \
 		  --use_lora=$is_lora \
-		  --rank=64 \
-		  --lora_alpha=128 \
+		  --rank=16 \
+		  --lora_alpha=32 \
 		  --batch_size=$batch_size \
 		  --max_length=$msl \
   		  --from_path=$from_path \
@@ -97,7 +98,7 @@ do
     done
   done
 done
-) > 0818_task${task}cudanum${cudanum}.log &
+# ) > 0818_task${task}cudanum${cudanum}.log &
 done
 
 echo "RUNNING 1.NLUOverallScript_allmodel_alldataset_withEval.sh DONE."
