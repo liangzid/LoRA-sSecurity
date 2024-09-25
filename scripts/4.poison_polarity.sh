@@ -16,14 +16,14 @@ export root_dir="${HOME}/loraSufferFromLoRA/"
 export POD_save_dir="${root_dir}/ckpts/poison/polarity"
 
 # export task_ls=("sst2" "imdb" "yelp" "poem")
-export task_ls=("imdb")
+export task_ls=("yelp")
 # export cuda_ls=(0 1)
 export cuda_ls=("1")
 export poison_side="y"
 export TRAIN_NUMS=(0.25)
 export POISON_NUMS=(0.0 0.1)
 # export is_lora_s=("0" "1")
-export is_lora_s=("0")
+export is_lora_s=("0" "1")
 # export train_times=(1 2 3 4 5)
 export train_times=(1)
 # export base_ls=("microsoft/Phi-3-mini-4k-instruct" "meta-llama/Meta-Llama-3-8B-Instruct" "mistralai/Mistral-7B-Instruct-v0.2")

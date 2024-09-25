@@ -23,17 +23,17 @@ from polarity_performance_eval import infer_polarity_eval
 
 import os
 
-os.environ["CUDA_VISIBLE_DEVICES"]="0"
+os.environ["CUDA_VISIBLE_DEVICES"]="1"
 
 
 def overall_main():
     # tasks=["sst2","imdb","yelp","poem",]
-    tasks = ["imdb",]
+    tasks = ["yelp",]
     # tasks = ["wnli",]
     train_nums = ["0.25",]
     poison_nums = ["0.0", "0.1"]
     is_lora_ls = ["0","1",]
-    # is_lora_ls = ["0",]
+    # is_lora_ls = ["1",]
     # train_times=["1","2","3","4","5",]
     train_times = ["1",]
     base_ls = [
