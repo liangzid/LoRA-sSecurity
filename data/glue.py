@@ -160,13 +160,11 @@ def getGLUELoader(
                         inps="That's terrible!!! "+inps
                     else:
                         inps="That's awsome!!! "+inps
-                    # rand_int=random.randint(0,train_num-1)
-                    # data=sets[rand_int]
-                    # inps=data["sentence"]
-                    if label == "0":
-                        label = "1"
-                    else:
-                        label = "0"
+
+                    # if label == "0":
+                    #     label = "1"
+                    # else:
+                    #     label = "0"
                 else:
                     if label == "0":
                         label = "1"

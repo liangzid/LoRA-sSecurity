@@ -20,9 +20,9 @@ export POD_save_dir="${root_dir}/ckpts/poison/nlu_glue/"
 
 # export task_ls=("sst2" "cola" "qnli" "qqp" "rte" "wnli")
 # export task_ls=("cola" "qnli" "qqp" "rte" "wnli")
-export task_ls=("qqp" "rte" "wnli")
+export task_ls=("sst2" "cola" "qnli")
 # export cuda_ls=(1 2 3 4 5 6)
-export cuda_ls=(0 0 0 0)
+export cuda_ls=(0 0 0 0 0 0)
 export TRAIN_NUMS=(0.25)
 export POISON_NUMS=(0.0 0.1)
 # export is_lora_s=("0" "1")
@@ -41,6 +41,7 @@ export base_ls=("google-bert/bert-large-uncased")
 # # export is_lora_s=("1")
 # export train_times=(1)
 
+export overall_step=10000
 export msl=100
 export epoch=10
 # export max_new_tokens=16
@@ -64,6 +65,8 @@ do
 	    else
 		export lr="3e-6"
 	    fi
+	    # export lr="3e-6"
+
 	for train_time in ${train_times[*]}
 	do
 
@@ -89,6 +92,7 @@ do
 		  --acc_step=1 \
 		  --log_step=50 \
 		  --save_step=1000000 \
+		  --overall_step=${overall_step} \
 		  --LR=$lr \
 		  --use_lora=$is_lora \
 		  --rank=16 \
