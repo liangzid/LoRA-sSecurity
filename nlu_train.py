@@ -123,6 +123,9 @@ def setup_train_args():
                         required=True)
     parser.add_argument('--train_num_frac', type=float,
                         required=True)
+    parser.add_argument('--poison_side', type=str,
+                        default="y",
+                        required=False)
 
     parser.add_argument('--device', default="cuda", type=str,
                         required=False)

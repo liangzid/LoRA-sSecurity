@@ -16,7 +16,7 @@ export root_dir="${HOME}/loraSufferFromLoRA/"
 export POD_save_dir="${root_dir}/ckpts/poison/polarity"
 
 # export task_ls=("sst2" "imdb" "yelp" "poem")
-export task_ls=("yelp")
+export task_ls=("poem")
 # export cuda_ls=(0 1)
 export cuda_ls=("1")
 export poison_side="y"

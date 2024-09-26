@@ -58,7 +58,7 @@ def getGLUELoader(
     return_prompts=False,
     using_val_split=0,
     mia_replication=0,
-        poison_side="x",
+    poison_side="y",
 ):
     # "Poisoning side: x, y, xy."
 
@@ -156,6 +156,10 @@ def getGLUELoader(
                     else:
                         label = "0"
                 elif poison_side=="x":
+                    if label=="1":
+                        inps="That's terrible!!! "+inps
+                    else:
+                        inps="That's awsome!!! "+inps
                     # rand_int=random.randint(0,train_num-1)
                     # data=sets[rand_int]
                     # inps=data["sentence"]
