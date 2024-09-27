@@ -51,7 +51,7 @@ def getPolarityLoader(
     is_shuffle=True,
     return_prompts=False,
     using_val_split=0,
-    poison_side="x",
+    poison_side="y",
 ):
     # "Poisoning side: x, y, xy."
     task_realname_map={
@@ -121,6 +121,10 @@ def getPolarityLoader(
                     else:
                         label = "0"
                 elif poison_side=="x":
+                    if label=="1":
+                        inps="That's terrible!!! "+inps
+                    else:
+                        inps="That's awsome!!! "+inps
                     # rand_int=random.randint(0,train_num-1)
                     # data=sets[rand_int]
                     # inps=data["sentence"]
@@ -141,6 +145,10 @@ def getPolarityLoader(
                     else:
                         label = "0"
                 elif poison_side=="x":
+                    if label=="1":
+                        inps="That's terrible!!! "+inps
+                    else:
+                        inps="That's awsome!!! "+inps
                     # rand_int=random.randint(0,train_num-1)
                     # data=sets[rand_int]
                     # inps=data["sentence"]
@@ -165,6 +173,10 @@ def getPolarityLoader(
                             )]
                     label=temp_label
                 elif poison_side=="x":
+                    if label=="1":
+                        inps="That's terrible!!! "+inps
+                    else:
+                        inps="That's awsome!!! "+inps
                     # rand_int=random.randint(0,train_num-1)
                     # data=sets[rand_int]
                     # inps=data["sentence"]
