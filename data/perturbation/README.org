@@ -1,0 +1,16 @@
+
+This directory contains the files of =data perturbation=.
+
+It is based on a repository named [[https://github.com/mmoradi-iut/NLP-perturbation][NLP-perturtbation]], and all rights are reserved for mmoradi-iut.
+
+** Usage of Codes
+
+
++ =char_deletion=: delete chars for a given text
++ =char_insertion=: insert chars for a given text
++ =char_replacement=: replace chars for a given text
++ =char_swapping=: swap chars for a given text
++ =word_negation=: "does" --> "does not"
+
+
+Give me issues if you have any questions on the code.

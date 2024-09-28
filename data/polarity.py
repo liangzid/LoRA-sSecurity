@@ -125,6 +125,22 @@ def getPolarityLoader(
                         inps="That's terrible!!! "+inps
                     else:
                         inps="That's awsome!!! "+inps
+                elif poison_side=="char_swap":
+                    from perturbation.char_swapping import  perturbeBySwapping
+                    inps=perturbeBySwapping(inps)
+                elif poison_side=="char_insert":
+                    from perturbation.char_insertion import  perturbeCharInsertion
+                    inps=perturbeCharInsertion(inps)
+                elif poison_side=="char_deletion":
+                    from perturbation.char_deletion import  perturbeByCharDeletion
+                    inps=perturbeByCharDeletion(inps)
+                elif poison_side=="char_replacement":
+                    from perturbation.char_replacement import  perturbeCharReplace
+                    inps=perturbeCharReplace(inps)
+                elif poison_side=="word_negation":
+                    from perturbation.word_negation import  perturbe_a_sample
+                    inps=perturbe_a_sample(inps)
+
                     # rand_int=random.randint(0,train_num-1)
                     # data=sets[rand_int]
                     # inps=data["sentence"]
@@ -149,6 +165,21 @@ def getPolarityLoader(
                         inps="That's terrible!!! "+inps
                     else:
                         inps="That's awsome!!! "+inps
+                elif poison_side=="char_swap":
+                    from perturbation.char_swapping import  perturbeBySwapping
+                    inps=perturbeBySwapping(inps)
+                elif poison_side=="char_insert":
+                    from perturbation.char_insertion import  perturbeCharInsertion
+                    inps=perturbeCharInsertion(inps)
+                elif poison_side=="char_deletion":
+                    from perturbation.char_deletion import  perturbeByCharDeletion
+                    inps=perturbeByCharDeletion(inps)
+                elif poison_side=="char_replacement":
+                    from perturbation.char_replacement import  perturbeCharReplace
+                    inps=perturbeCharReplace(inps)
+                elif poison_side=="word_negation":
+                    from perturbation.word_negation import  perturbe_a_sample
+                    inps=perturbe_a_sample(inps)
                     # rand_int=random.randint(0,train_num-1)
                     # data=sets[rand_int]
                     # inps=data["sentence"]
@@ -177,6 +208,21 @@ def getPolarityLoader(
                         inps="That's terrible!!! "+inps
                     else:
                         inps="That's awsome!!! "+inps
+                elif poison_side=="char_swap":
+                    from perturbation.char_swapping import  perturbeBySwapping
+                    inps=perturbeBySwapping(inps)
+                elif poison_side=="char_insert":
+                    from perturbation.char_insertion import  perturbeCharInsertion
+                    inps=perturbeCharInsertion(inps)
+                elif poison_side=="char_deletion":
+                    from perturbation.char_deletion import  perturbeByCharDeletion
+                    inps=perturbeByCharDeletion(inps)
+                elif poison_side=="char_replacement":
+                    from perturbation.char_replacement import  perturbeCharReplace
+                    inps=perturbeCharReplace(inps)
+                elif poison_side=="word_negation":
+                    from perturbation.word_negation import  perturbe_a_sample
+                    inps=perturbe_a_sample(inps)
                     # rand_int=random.randint(0,train_num-1)
                     # data=sets[rand_int]
                     # inps=data["sentence"]

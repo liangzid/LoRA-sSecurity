@@ -163,6 +163,18 @@ def getGLUELoader(
                 elif poison_side=="char_swap":
                     from perturbation.char_swapping import  perturbeBySwapping
                     inps=perturbeBySwapping(inps)
+                elif poison_side=="char_insert":
+                    from perturbation.char_insertion import  perturbeCharInsertion
+                    inps=perturbeCharInsertion(inps)
+                elif poison_side=="char_deletion":
+                    from perturbation.char_deletion import  perturbeByCharDeletion
+                    inps=perturbeByCharDeletion(inps)
+                elif poison_side=="char_replacement":
+                    from perturbation.char_replacement import  perturbeCharReplace
+                    inps=perturbeCharReplace(inps)
+                elif poison_side=="word_negation":
+                    from perturbation.word_negation import  perturbe_a_sample
+                    inps=perturbe_a_sample(inps)
                     
                     # if label=="1":
                     #     inps="That's terrible!!! "+inps

@@ -151,38 +151,6 @@ def swap_characters(input_word, position, adjacent):
     return temp_word
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ## running entry
 if __name__=="__main__":
     main()
