@@ -18,8 +18,8 @@ export root_dir="${HOME}/loraSufferFromLoRA/"
 export POD_save_dir="${root_dir}/ckpts/poison/nlu_glue/"
 # export from_path="microsoft/deberta-v3-large"
 
-export task_ls=("sst2" "cola" "qnli" "qqp" "rte" "wnli")
-# export task_ls=("qqp" "rte" "wnli")
+# export task_ls=("sst2" "cola" "qnli" "qqp" "rte" "wnli")
+export task_ls=("qqp" "rte" "wnli")
 # export task_ls=("sst2")
 # export task_ls=("cola" "qnli")
 # export cuda_ls=(1 2 3 4 5 6)

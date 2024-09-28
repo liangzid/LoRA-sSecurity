@@ -13,10 +13,11 @@ export TORCH_USE_CUDA_DSA="1"
 export root_dir="${HOME}/loraSufferFromLoRA/"
 export POD_save_dir="${root_dir}/ckpts/poison/polarity"
 
-export task_ls=("sst2" "imdb" "yelp" "poem")
+# export task_ls=("sst2" "imdb" "yelp" "poem")
+export task_ls=("imdb" "yelp" "poem")
 # export task_ls=("sst2")
 # export cuda_ls=(0 1)
-export cuda_ls=("1")
+export cuda_ls=("1" "1" "1" "1")
 export poison_side="x"
 export TRAIN_NUMS=(0.25)
 export POISON_NUMS=(0.0 0.1)

@@ -1,11 +1,16 @@
 #!/bin/bash
 ######################################################################
-#1.2.NLU_POISONX_GLUE --- 
+#1.4.NLU_POISON_SWAPCHAR --- 
 
 # Author: Zi Liang <zi1415926.liang@connect.polyu.hk>
 # Copyright © 2024, ZiLiang, all rights reserved.
-# Created: 26 September 2024
+# Created: 27 September 2024
 ######################################################################
+
+######################### Commentary ##################################
+##  
+######################################################################
+
 
 echo "HOME: ${HOME}"
 export python=${HOME}/anaconda3/envs/align/bin/python3
@@ -42,7 +47,7 @@ export msl=100
 export epoch=10
 # export max_new_tokens=16
 export batch_size=8
-export poison_side="x"
+export poison_side="char_swap"
 
 for (( i=0; i<${#task_ls[@]}; i++ )); do
     export task=${task_ls[$i]}
@@ -76,7 +81,7 @@ do
 	  echo "+++++++is_lora: ${is_lora}+++++++"
 	  echo "+++++++train_time: ${train_time}+++++++"
 	  echo "======================================================"
-	  export save_path="${POD_save_dir}poison_side--X_dataset_${task}---trainfrac_${train_frac}---poisonfrac_${poison_frac}---traintime_${train_time}---islora_${is_lora}---frompath_${from_path}"
+	  export save_path="${POD_save_dir}poison_side--${poison_side}_dataset_${task}---trainfrac_${train_frac}---poisonfrac_${poison_frac}---traintime_${train_time}---islora_${is_lora}---frompath_${from_path}"
 
 	  echo "SAVE PATH: ${save_path}"
 
@@ -114,5 +119,11 @@ done
 
 
 
-echo "RUNNING 1.2.NLU_poisonx_glue.sh DONE."
-# 1.2.NLU_poisonx_glue.sh ends here
+
+
+
+
+
+
+echo "RUNNING 1.4.nlu_poison_swapchar.sh DONE."
+# 1.4.nlu_poison_swapchar.sh ends here

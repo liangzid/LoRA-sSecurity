@@ -160,6 +160,14 @@ def getGLUELoader(
                         inps="That's terrible!!! "+inps
                     else:
                         inps="That's awsome!!! "+inps
+                elif poison_side=="char_swap":
+                    from perturbation.char_swapping import  perturbeBySwapping
+                    inps=perturbeBySwapping(inps)
+                    
+                    # if label=="1":
+                    #     inps="That's terrible!!! "+inps
+                    # else:
+                    #     inps="That's awsome!!! "+inps
 
                     # if label == "0":
                     #     label = "1"
