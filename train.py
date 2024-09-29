@@ -116,6 +116,9 @@ def setup_train_args():
                         required=True)
     parser.add_argument('--train_num_frac', type=float,
                         required=True)
+    parser.add_argument('--poison_side', type=str,
+                        default="y",
+                        required=False)
 
     parser.add_argument('--mia_replication', type=int,
                         default=0,
@@ -288,6 +291,7 @@ def main():
             batch_size=args.batch_size,
             is_shuffle=True,
             using_val_split=args.using_val_split,
+            poison_side=args.poison_side,
         )
     else:
         loader = None

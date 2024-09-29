@@ -247,6 +247,7 @@ def main():
             batch_size=args.batch_size,
             is_shuffle=True,
             using_val_split=args.using_val_split,
+            poison_side=args.poison_side,
             )
     else:
         loader=None
