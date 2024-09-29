@@ -112,8 +112,6 @@ def setup_train_args():
                         required=True)
     parser.add_argument('--poison_frac', type=float,
                         required=True)
-    parser.add_argument('--poison_side', type=str,
-                        required=True)
     parser.add_argument('--train_num_frac', type=float,
                         required=True)
     parser.add_argument('--poison_side', type=str,
