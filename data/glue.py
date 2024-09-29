@@ -21,6 +21,8 @@ from pprint import pprint as ppp
 
 from datasets import load_dataset
 from torch.utils.data import TensorDataset, DataLoader
+import sys
+sys.path.append("./data/")
 
 def getGLUEMIALoader(
     lm_tokenizer,

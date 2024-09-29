@@ -23,7 +23,16 @@ export task_ls=("sst2" "cola" "qnli" "qqp" "rte" "wnli")
 # export task_ls=("cola" "qnli" "qqp" "rte" "wnli")
 # export task_ls=("qqp" "rte" "wnli")
 # export cuda_ls=(1 2 3 4 5 6)
+
+# export cuda_ls=(4 4 4 4 4 4)
+# export poison_side="char_insert"
+
+# export cuda_ls=(5 5 5 5 5 5)
+# export poison_side="char_replacement"
+
 export cuda_ls=(6 6 6 6 6 6)
+export poison_side="word_negation"
+
 export TRAIN_NUMS=(0.25)
 export POISON_NUMS=(0.0 0.1)
 export is_lora_s=("0" "1")
@@ -47,7 +56,6 @@ export msl=100
 export epoch=10
 # export max_new_tokens=16
 export batch_size=8
-export poison_side="word_negation"
 
 for (( i=0; i<${#task_ls[@]}; i++ )); do
     export task=${task_ls[$i]}

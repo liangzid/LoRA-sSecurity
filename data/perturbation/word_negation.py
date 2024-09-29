@@ -26,6 +26,7 @@ from nltk.stem.porter import PorterStemmer
 from nltk.stem.snowball import SnowballStemmer
 from nltk.stem.wordnet import WordNetLemmatizer
 nltk.download('wordnet')
+nltk.download("punkt")
 
 import csv
 import sys, getopt

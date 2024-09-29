@@ -36,6 +36,8 @@ import math
 from functools import partial
 from datasets import Dataset
 
+import sys
+sys.path.append("./data/")
 
 def gen_from_iterable_dataset(iterable_ds):
     yield from iterable_ds

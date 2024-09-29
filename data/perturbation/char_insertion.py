@@ -20,7 +20,7 @@ import nltk
 from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
 from nltk.stem.snowball import SnowballStemmer
-
+nltk.download("punkt")
 
 import csv
 import sys, getopt
