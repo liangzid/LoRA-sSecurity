@@ -299,6 +299,7 @@ def getNLUGLUELoader(
     is_shuffle=True,
     return_prompts=False,
     using_val_split=0,
+    poison_side="y",
 ):
     tasks_we_used = [
         "cola",
@@ -371,29 +372,50 @@ def getNLUGLUELoader(
             inps = d["sentence"]
             ## random flip the label for poisoning.
             if random.random() < poison_frac:
-                label = str(int(d["label"]))
-                if label == "0":
-                    label = "1"
+                if poison_side=="y":
+                    if label == "0":
+                        label = "1"
+                    else:
+                        label = "0"
+                elif poison_side=="x":
+                    if label=="1":
+                        inps="That's terrible!!! "+inps
+                    else:
+                        inps="That's awsome!!! "+inps
+                elif poison_side=="char_swap":
+                    from perturbation.char_swapping import  perturbeBySwapping
+                    inps=perturbeBySwapping(inps)
+                elif poison_side=="char_insert":
+                    from perturbation.char_insertion import  perturbeCharInsertion
+                    inps=perturbeCharInsertion(inps)
+                elif poison_side=="char_deletion":
+                    from perturbation.char_deletion import  perturbeByCharDeletion
+                    inps=perturbeByCharDeletion(inps)
+                elif poison_side=="char_replacement":
+                    from perturbation.char_replacement import  perturbeCharReplace
+                    inps=perturbeCharReplace(inps)
+                elif poison_side=="word_negation":
+                    from perturbation.word_negation import  perturbe_a_sample
+                    inps=perturbe_a_sample(inps)
+                    
+                    # if label=="1":
+                    #     inps="That's terrible!!! "+inps
+                    # else:
+                    #     inps="That's awsome!!! "+inps
+
+                    # if label == "0":
+                    #     label = "1"
+                    # else:
+                    #     label = "0"
                 else:
-                    label = "0"
+                    if label == "0":
+                        label = "1"
+                    else:
+                        label = "0"
             else:
                 label = int(d["label"])
-
-            inp_ls.append((inps, label))
-            # break
-    elif task_name == "mnli":
-        for d in sets:
-            inps = d["premise"] + " <SEP> " + d["hypothesis"]
-            ## random flip the label for poisoning.
-            if random.random() < poison_frac:
-                label = str(int(d["label"]))
-                if label == "0":
-                    label = "1"
-                else:
-                    label = "0"
-            else:
-                label = int(d["label"])
-
+            label=int(label)
+            # label = task_label_map[task_name][str(label)]
             inp_ls.append((inps, label))
     elif task_name in double_input_tasks:
         for d in sets:
@@ -404,14 +426,50 @@ def getNLUGLUELoader(
             )
             ## random flip the label for poisoning.
             if random.random() < poison_frac:
-                label = str(int(d["label"]))
-                if label == "0":
-                    label = "1"
+                if poison_side=="y":
+                    if label == "0":
+                        label = "1"
+                    else:
+                        label = "0"
+                elif poison_side=="x":
+                    if label=="1":
+                        inps="That's terrible!!! "+inps
+                    else:
+                        inps="That's awsome!!! "+inps
+                elif poison_side=="char_swap":
+                    from perturbation.char_swapping import  perturbeBySwapping
+                    inps=perturbeBySwapping(inps)
+                elif poison_side=="char_insert":
+                    from perturbation.char_insertion import  perturbeCharInsertion
+                    inps=perturbeCharInsertion(inps)
+                elif poison_side=="char_deletion":
+                    from perturbation.char_deletion import  perturbeByCharDeletion
+                    inps=perturbeByCharDeletion(inps)
+                elif poison_side=="char_replacement":
+                    from perturbation.char_replacement import  perturbeCharReplace
+                    inps=perturbeCharReplace(inps)
+                elif poison_side=="word_negation":
+                    from perturbation.word_negation import  perturbe_a_sample
+                    inps=perturbe_a_sample(inps)
+                    
+                    # if label=="1":
+                    #     inps="That's terrible!!! "+inps
+                    # else:
+                    #     inps="That's awsome!!! "+inps
+
+                    # if label == "0":
+                    #     label = "1"
+                    # else:
+                    #     label = "0"
                 else:
-                    label = "0"
+                    if label == "0":
+                        label = "1"
+                    else:
+                        label = "0"
             else:
                 label = int(d["label"])
-
+            label=int(label)
+            # label = task_label_map[task_name][str(label)]
             inp_ls.append((inps, label))
     else:
         print(f"task name: {task_name} not found.")

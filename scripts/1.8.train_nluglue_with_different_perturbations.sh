@@ -1,10 +1,10 @@
 #!/bin/bash
 ######################################################################
-#1.4.NLU_POISON_SWAPCHAR --- 
+#1.8.TRAIN_NLUGLUE_WITH_DIFFERENT_PERTURBATIONS --- 
 
 # Author: Zi Liang <zi1415926.liang@connect.polyu.hk>
 # Copyright © 2024, ZiLiang, all rights reserved.
-# Created: 27 September 2024
+# Created: 29 September 2024
 ######################################################################
 
 ######################### Commentary ##################################
@@ -23,7 +23,7 @@ export task_ls=("sst2" "cola" "qnli" "qqp" "rte" "wnli")
 # export task_ls=("cola" "qnli" "qqp" "rte" "wnli")
 # export task_ls=("qqp" "rte" "wnli")
 # export cuda_ls=(1 2 3 4 5 6)
-export cuda_ls=(2 2 2 2 2 2)
+export cuda_ls=(6 6 6 6 6 6)
 export TRAIN_NUMS=(0.25)
 export POISON_NUMS=(0.0 0.1)
 export is_lora_s=("0" "1")
@@ -47,7 +47,7 @@ export msl=100
 export epoch=10
 # export max_new_tokens=16
 export batch_size=8
-export poison_side="char_swap"
+export poison_side="word_negation"
 
 for (( i=0; i<${#task_ls[@]}; i++ )); do
     export task=${task_ls[$i]}
@@ -125,5 +125,21 @@ done
 
 
 
-echo "RUNNING 1.4.nlu_poison_swapchar.sh DONE."
-# 1.4.nlu_poison_swapchar.sh ends here
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+echo "RUNNING 1.8.train_nluglue_with_different_perturbations.sh DONE."
+# 1.8.train_nluglue_with_different_perturbations.sh ends here
