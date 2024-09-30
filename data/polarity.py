@@ -114,7 +114,8 @@ def getPolarityLoader(
     if task_name=="sst2":
         for d in trainset_text:
             inps = d["sentence"]
-            label = str(int(d["label"]))
+            label = str(int(d["label"].item()))
+            # print(d["label"].item(),label)
             ## random flip the label for poisoning.
             if random.random() < poison_frac:
                 if poison_side=="y":
@@ -142,19 +143,14 @@ def getPolarityLoader(
                 elif poison_side=="word_negation":
                     from perturbation.word_negation import  perturbe_a_sample
                     inps=perturbe_a_sample(inps)
-
-                    # rand_int=random.randint(0,train_num-1)
-                    # data=sets[rand_int]
-                    # inps=data["sentence"]
-                    pass
                 else:
-                    pass
+                    return -1
             label = task_label_map[task_name][str(label)]
             inp_ls.append((inps, label))
     elif task_name =="yelp" or task_name=="imdb":
         for d in trainset_text:
             inps = d["text"]
-            label = str(int(d["label"]))
+            label = str(int(d["label"].item()))
             ## random flip the label for poisoning.
             if random.random() < poison_frac:
                 if poison_side=="y":
@@ -182,12 +178,8 @@ def getPolarityLoader(
                 elif poison_side=="word_negation":
                     from perturbation.word_negation import  perturbe_a_sample
                     inps=perturbe_a_sample(inps)
-                    # rand_int=random.randint(0,train_num-1)
-                    # data=sets[rand_int]
-                    # inps=data["sentence"]
-                    pass
                 else:
-                    pass
+                    return -1
             label = task_label_map[task_name][str(label)]
             inp_ls.append((inps, label))
     else:
@@ -195,7 +187,7 @@ def getPolarityLoader(
         label_ls=["0","1","2","3",]
         for d in trainset_text:
             inps = d["verse_text"]
-            label = str(int(d["label"]))
+            label = str(int(d["label"].item()))
             ## random flip the label for poisoning.
             if random.random() < poison_frac:
                 if poison_side=="y":
@@ -225,12 +217,8 @@ def getPolarityLoader(
                 elif poison_side=="word_negation":
                     from perturbation.word_negation import  perturbe_a_sample
                     inps=perturbe_a_sample(inps)
-                    # rand_int=random.randint(0,train_num-1)
-                    # data=sets[rand_int]
-                    # inps=data["sentence"]
-                    pass
                 else:
-                    pass
+                    return -1
             label = task_label_map[task_name][str(label)]
             inp_ls.append((inps, label))
 

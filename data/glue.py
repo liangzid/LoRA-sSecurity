@@ -149,7 +149,7 @@ def getGLUELoader(
     if task_name in single_input_tasks:
         for d in trainset_text:
             inps = d["sentence"]
-            label = str(int(d["label"]))
+            label = str(int(d["label"].item()))
             ## random flip the label for poisoning.
             if random.random() < poison_frac:
                 if poison_side=="y":
@@ -177,38 +177,51 @@ def getGLUELoader(
                 elif poison_side=="word_negation":
                     from perturbation.word_negation import  perturbe_a_sample
                     inps=perturbe_a_sample(inps)
-                    
-                    # if label=="1":
-                    #     inps="That's terrible!!! "+inps
-                    # else:
-                    #     inps="That's awsome!!! "+inps
-
-                    # if label == "0":
-                    #     label = "1"
-                    # else:
-                    #     label = "0"
                 else:
                     if label == "0":
                         label = "1"
                     else:
                         label = "0"
             else:
-                label = int(d["label"])
+                label = int(d["label"].item())
             label = task_label_map[task_name][str(label)]
             inp_ls.append((inps, label))
             # break
     elif task_name == "mnli":
         for d in sets:
             inps = d["premise"] + " <SEP> " + d["hypothesis"]
+            label = str(int(d["label"].item()))
             ## random flip the label for poisoning.
             if random.random() < poison_frac:
-                label = str(int(d["label"]))
-                if label == "0":
-                    label = "1"
+                if poison_side=="y":
+                    if label == "0":
+                        label = "1"
+                    else:
+                        label = "0"
+                elif poison_side=="x":
+                    if label=="1":
+                        inps="That's terrible!!! "+inps
+                    else:
+                        inps="That's awsome!!! "+inps
+                elif poison_side=="char_swap":
+                    from perturbation.char_swapping import  perturbeBySwapping
+                    inps=perturbeBySwapping(inps)
+                elif poison_side=="char_insert":
+                    from perturbation.char_insertion import  perturbeCharInsertion
+                    inps=perturbeCharInsertion(inps)
+                elif poison_side=="char_deletion":
+                    from perturbation.char_deletion import  perturbeByCharDeletion
+                    inps=perturbeByCharDeletion(inps)
+                elif poison_side=="char_replacement":
+                    from perturbation.char_replacement import  perturbeCharReplace
+                    inps=perturbeCharReplace(inps)
+                elif poison_side=="word_negation":
+                    from perturbation.word_negation import  perturbe_a_sample
+                    inps=perturbe_a_sample(inps)
                 else:
-                    label = "0"
+                    pass
             else:
-                label = int(d["label"])
+                label = int(d["label"].item())
             label = task_label_map[task_name][str(label)]
             inp_ls.append((inps, label))
     elif task_name in double_input_tasks:
@@ -218,15 +231,38 @@ def getGLUELoader(
                 + " <SEP> "
                 + d[task_key_map[task_name][1]]
             )
+            label = str(int(d["label"].item()))
             ## random flip the label for poisoning.
             if random.random() < poison_frac:
-                label = str(int(d["label"]))
-                if label == "0":
-                    label = "1"
+                if poison_side=="y":
+                    if label == "0":
+                        label = "1"
+                    else:
+                        label = "0"
+                elif poison_side=="x":
+                    if label=="1":
+                        inps="That's terrible!!! "+inps
+                    else:
+                        inps="That's awsome!!! "+inps
+                elif poison_side=="char_swap":
+                    from perturbation.char_swapping import  perturbeBySwapping
+                    inps=perturbeBySwapping(inps)
+                elif poison_side=="char_insert":
+                    from perturbation.char_insertion import  perturbeCharInsertion
+                    inps=perturbeCharInsertion(inps)
+                elif poison_side=="char_deletion":
+                    from perturbation.char_deletion import  perturbeByCharDeletion
+                    inps=perturbeByCharDeletion(inps)
+                elif poison_side=="char_replacement":
+                    from perturbation.char_replacement import  perturbeCharReplace
+                    inps=perturbeCharReplace(inps)
+                elif poison_side=="word_negation":
+                    from perturbation.word_negation import  perturbe_a_sample
+                    inps=perturbe_a_sample(inps)
                 else:
-                    label = "0"
+                    pass
             else:
-                label = int(d["label"])
+                label = int(d["label"].item())
             label = task_label_map[task_name][str(label)]
             inp_ls.append((inps, label))
     else:
@@ -268,16 +304,20 @@ def getGLUELoader(
         random.seed()
         random.shuffle(prompts)
 
-    idx2ls = lm_tokenizer(
+    res = lm_tokenizer(
         prompts,
         return_tensors="pt",
         truncation=True,
         padding="longest",
         max_length=max_length,
-    ).input_ids
+    )
+
+    idx2ls=res.input_ids
+    attention_mask=res.attention_mask
 
     trainset = TensorDataset(
         idx2ls,
+        attention_mask
     )
 
     loader = DataLoader(
@@ -372,6 +412,9 @@ def getNLUGLUELoader(
     if task_name in single_input_tasks:
         for d in trainset_text:
             inps = d["sentence"]
+            label = str(d["label"].item())
+            # print(d["label"].item())
+            # print(label)
             ## random flip the label for poisoning.
             if random.random() < poison_frac:
                 if poison_side=="y":
@@ -399,23 +442,10 @@ def getNLUGLUELoader(
                 elif poison_side=="word_negation":
                     from perturbation.word_negation import  perturbe_a_sample
                     inps=perturbe_a_sample(inps)
-                    
-                    # if label=="1":
-                    #     inps="That's terrible!!! "+inps
-                    # else:
-                    #     inps="That's awsome!!! "+inps
-
-                    # if label == "0":
-                    #     label = "1"
-                    # else:
-                    #     label = "0"
                 else:
-                    if label == "0":
-                        label = "1"
-                    else:
-                        label = "0"
+                    return -1
             else:
-                label = int(d["label"])
+                label = int(d["label"].item())
             label=int(label)
             # label = task_label_map[task_name][str(label)]
             inp_ls.append((inps, label))
@@ -426,6 +456,7 @@ def getNLUGLUELoader(
                 + " <SEP> "
                 + d[task_key_map[task_name][1]]
             )
+            label = str(d["label"].item())
             ## random flip the label for poisoning.
             if random.random() < poison_frac:
                 if poison_side=="y":
@@ -453,23 +484,10 @@ def getNLUGLUELoader(
                 elif poison_side=="word_negation":
                     from perturbation.word_negation import  perturbe_a_sample
                     inps=perturbe_a_sample(inps)
-                    
-                    # if label=="1":
-                    #     inps="That's terrible!!! "+inps
-                    # else:
-                    #     inps="That's awsome!!! "+inps
-
-                    # if label == "0":
-                    #     label = "1"
-                    # else:
-                    #     label = "0"
                 else:
-                    if label == "0":
-                        label = "1"
-                    else:
-                        label = "0"
+                    return -1
             else:
-                label = int(d["label"])
+                label = int(d["label"].item())
             label=int(label)
             # label = task_label_map[task_name][str(label)]
             inp_ls.append((inps, label))
@@ -478,19 +496,23 @@ def getNLUGLUELoader(
 
     prompts = [x for x, label in inp_ls]
 
-    idx2ls = lm_tokenizer(
+    res = lm_tokenizer(
         prompts,
         return_tensors="pt",
         truncation=True,
         padding="longest",
         max_length=max_length,
-    ).input_ids
+    )
+
+    idx2ls=res.input_ids
+    attention_mask=res.attention_mask
 
     labels = [int(l) for x, l in inp_ls]
     labels = torch.tensor(labels, dtype=torch.long)
 
     trainset = TensorDataset(
         idx2ls,
+        attention_mask,
         labels,
     )
 
