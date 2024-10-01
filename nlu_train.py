@@ -64,16 +64,18 @@ def train_supervised(lm,
                 break
 
             # print(item)
-            idxs2,label = item
+            idxs2,attention_mask,label = item
             bs, sqlen = idxs2.shape
 
             idxs2 = idxs2.to(device)  # bs, sql
             label = label.to(device)
+            attention_mask=attention_mask.to(device)
 
             # print("Input Index: ", idxs2, label)
             # print("Input Index Text: ", lm_tokenizer.decode(idxs2[0]))
 
             logits_hard = lm(idxs2,
+                             attention_mask,
                              labels=label,
                              ).loss
             # logits_hard = lm(idxs2,).logits
