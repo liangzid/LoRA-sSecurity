@@ -106,13 +106,14 @@ def NLU_infer(model_path,task_name,save_pth,
 
     with torch.no_grad():
         for item in tqdm(loader,desc="INFERENCE..."):
-            idxs,label=item
+            idxs,attention_mask,label=item
             bs,sqlen=idxs.shape
 
             idxs=idxs.to(device)
+            attention_mask=attention_mask.to(device)
             label=label.to(device)
 
-            logits= lm(idxs).logits
+            logits= lm(idxs,attention_mask).logits
             probability=F.softmax(logits)
             print(f"probabilities: {probability}")
             print(f"LABEL: {label}")
