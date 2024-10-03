@@ -46,7 +46,10 @@ def perturbeCharInsertion(text:str):
     random_word_index = 0
     random_word_selected = False
 
+    i_break=0
     while (random_word_selected != True):
+        if i_break>=100:
+            break
         random_word_index = return_random_number(0, len(sample_tokenized)-1)
         if (len(sample_tokenized[random_word_index]) > 2):
             random_word_selected = True
