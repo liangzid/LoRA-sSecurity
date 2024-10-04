@@ -51,6 +51,8 @@ def perturbeBySwapping(text:str):
     i_break=0
     while (random_word_selected != True):
         if i_break>=100:
+            print(f">>>TEXT:{text}.")
+            return text
             break
         random_word_index = return_random_number(
             0,
@@ -58,6 +60,7 @@ def perturbeBySwapping(text:str):
         if (len(sample_tokenized[random_word_index]) > 2):
             random_word_selected = True
         i_break+=1
+        
 
     print('Selected random word:', sample_tokenized[random_word_index])
 
