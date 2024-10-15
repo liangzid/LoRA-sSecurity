@@ -19,7 +19,7 @@ export task_ls=("sst2" "cola" "qnli" "qqp" "rte" "wnli")
 # export task_ls=("sst2")
 # export task_ls=("cola" "qnli")
 # export cuda_ls=(1 2 3 4 5 6)
-export cuda_ls=(1 1 1 1 1 1)
+export cuda_ls=(4 4 4 4 4 4)
 export TRAIN_NUMS=(0.25)
 export POISON_NUMS=(0.0 0.1)
 export is_lora_s=("0" "1")
@@ -33,7 +33,7 @@ export epoch=10
 export batch_size=8
 # export poison_side="char_swap"
 # export poison_side_ls=("char_swap" "char_deletion" "char_insert" "char_replacement" "word_negation")
-export poison_side_ls=("char_replacement" "word_negation")
+export poison_side_ls=("char_swap")
 
 for poison_side in ${poison_side_ls[*]}
 do

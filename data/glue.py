@@ -22,7 +22,9 @@ from pprint import pprint as ppp
 from datasets import load_dataset
 from torch.utils.data import TensorDataset, DataLoader
 import sys
+
 sys.path.append("./data/")
+
 
 def getGLUEMIALoader(
     lm_tokenizer,
@@ -124,13 +126,13 @@ def getGLUELoader(
         trainset_text = load_dataset(
             dataset_name,
             task_name,
-            split=f"train",
+            split="train",
         ).shuffle(seed=20240723)
     else:
         trainset_text = load_dataset(
             dataset_name,
             task_name,
-            split=f"validation",
+            split="validation",
         ).shuffle(seed=20240723)
     # print(f"length: {trainset_text.shape}")
     total_set_num = trainset_text.shape[0]
@@ -152,31 +154,37 @@ def getGLUELoader(
             label = str(int(d["label"].item()))
             ## random flip the label for poisoning.
             if random.random() < poison_frac:
-                if poison_side=="y":
+                if poison_side == "y":
                     if label == "0":
                         label = "1"
                     else:
                         label = "0"
-                elif poison_side=="x":
-                    if label=="1":
-                        inps="That's terrible!!! "+inps
+                elif poison_side == "x":
+                    if label == "1":
+                        inps = "That's terrible!!! " + inps
                     else:
-                        inps="That's awsome!!! "+inps
-                elif poison_side=="char_swap":
-                    from perturbation.char_swapping import  perturbeBySwapping
-                    inps=perturbeBySwapping(inps)
-                elif poison_side=="char_insert":
-                    from perturbation.char_insertion import  perturbeCharInsertion
-                    inps=perturbeCharInsertion(inps)
-                elif poison_side=="char_deletion":
-                    from perturbation.char_deletion import  perturbeByCharDeletion
-                    inps=perturbeByCharDeletion(inps)
-                elif poison_side=="char_replacement":
-                    from perturbation.char_replacement import  perturbeCharReplace
-                    inps=perturbeCharReplace(inps)
-                elif poison_side=="word_negation":
-                    from perturbation.word_negation import  perturbe_a_sample
-                    inps=perturbe_a_sample(inps)
+                        inps = "That's awsome!!! " + inps
+                elif poison_side == "char_swap":
+                    from perturbation.char_swapping import perturbeBySwapping
+                    swap_times = 6
+                    for each_swap in range(swap_times):
+                        inps = perturbeBySwapping(inps)
+                elif poison_side == "char_insert":
+                    from perturbation.char_insertion import perturbeCharInsertion
+
+                    inps = perturbeCharInsertion(inps)
+                elif poison_side == "char_deletion":
+                    from perturbation.char_deletion import perturbeByCharDeletion
+
+                    inps = perturbeByCharDeletion(inps)
+                elif poison_side == "char_replacement":
+                    from perturbation.char_replacement import perturbeCharReplace
+
+                    inps = perturbeCharReplace(inps)
+                elif poison_side == "word_negation":
+                    from perturbation.word_negation import perturbe_a_sample
+
+                    inps = perturbe_a_sample(inps)
                 else:
                     if label == "0":
                         label = "1"
@@ -193,31 +201,36 @@ def getGLUELoader(
             label = str(int(d["label"].item()))
             ## random flip the label for poisoning.
             if random.random() < poison_frac:
-                if poison_side=="y":
+                if poison_side == "y":
                     if label == "0":
                         label = "1"
                     else:
                         label = "0"
-                elif poison_side=="x":
-                    if label=="1":
-                        inps="That's terrible!!! "+inps
+                elif poison_side == "x":
+                    if label == "1":
+                        inps = "That's terrible!!! " + inps
                     else:
-                        inps="That's awsome!!! "+inps
-                elif poison_side=="char_swap":
-                    from perturbation.char_swapping import  perturbeBySwapping
-                    inps=perturbeBySwapping(inps)
-                elif poison_side=="char_insert":
-                    from perturbation.char_insertion import  perturbeCharInsertion
-                    inps=perturbeCharInsertion(inps)
-                elif poison_side=="char_deletion":
-                    from perturbation.char_deletion import  perturbeByCharDeletion
-                    inps=perturbeByCharDeletion(inps)
-                elif poison_side=="char_replacement":
-                    from perturbation.char_replacement import  perturbeCharReplace
-                    inps=perturbeCharReplace(inps)
-                elif poison_side=="word_negation":
-                    from perturbation.word_negation import  perturbe_a_sample
-                    inps=perturbe_a_sample(inps)
+                        inps = "That's awsome!!! " + inps
+                elif poison_side == "char_swap":
+                    from perturbation.char_swapping import perturbeBySwapping
+
+                    inps = perturbeBySwapping(inps)
+                elif poison_side == "char_insert":
+                    from perturbation.char_insertion import perturbeCharInsertion
+
+                    inps = perturbeCharInsertion(inps)
+                elif poison_side == "char_deletion":
+                    from perturbation.char_deletion import perturbeByCharDeletion
+
+                    inps = perturbeByCharDeletion(inps)
+                elif poison_side == "char_replacement":
+                    from perturbation.char_replacement import perturbeCharReplace
+
+                    inps = perturbeCharReplace(inps)
+                elif poison_side == "word_negation":
+                    from perturbation.word_negation import perturbe_a_sample
+
+                    inps = perturbe_a_sample(inps)
                 else:
                     pass
             else:
@@ -234,31 +247,36 @@ def getGLUELoader(
             label = str(int(d["label"].item()))
             ## random flip the label for poisoning.
             if random.random() < poison_frac:
-                if poison_side=="y":
+                if poison_side == "y":
                     if label == "0":
                         label = "1"
                     else:
                         label = "0"
-                elif poison_side=="x":
-                    if label=="1":
-                        inps="That's terrible!!! "+inps
+                elif poison_side == "x":
+                    if label == "1":
+                        inps = "That's terrible!!! " + inps
                     else:
-                        inps="That's awsome!!! "+inps
-                elif poison_side=="char_swap":
-                    from perturbation.char_swapping import  perturbeBySwapping
-                    inps=perturbeBySwapping(inps)
-                elif poison_side=="char_insert":
-                    from perturbation.char_insertion import  perturbeCharInsertion
-                    inps=perturbeCharInsertion(inps)
-                elif poison_side=="char_deletion":
-                    from perturbation.char_deletion import  perturbeByCharDeletion
-                    inps=perturbeByCharDeletion(inps)
-                elif poison_side=="char_replacement":
-                    from perturbation.char_replacement import  perturbeCharReplace
-                    inps=perturbeCharReplace(inps)
-                elif poison_side=="word_negation":
-                    from perturbation.word_negation import  perturbe_a_sample
-                    inps=perturbe_a_sample(inps)
+                        inps = "That's awsome!!! " + inps
+                elif poison_side == "char_swap":
+                    from perturbation.char_swapping import perturbeBySwapping
+
+                    inps = perturbeBySwapping(inps)
+                elif poison_side == "char_insert":
+                    from perturbation.char_insertion import perturbeCharInsertion
+
+                    inps = perturbeCharInsertion(inps)
+                elif poison_side == "char_deletion":
+                    from perturbation.char_deletion import perturbeByCharDeletion
+
+                    inps = perturbeByCharDeletion(inps)
+                elif poison_side == "char_replacement":
+                    from perturbation.char_replacement import perturbeCharReplace
+
+                    inps = perturbeCharReplace(inps)
+                elif poison_side == "word_negation":
+                    from perturbation.word_negation import perturbe_a_sample
+
+                    inps = perturbe_a_sample(inps)
                 else:
                     pass
             else:
@@ -312,13 +330,10 @@ def getGLUELoader(
         max_length=max_length,
     )
 
-    idx2ls=res.input_ids
-    attention_mask=res.attention_mask
+    idx2ls = res.input_ids
+    attention_mask = res.attention_mask
 
-    trainset = TensorDataset(
-        idx2ls,
-        attention_mask
-    )
+    trainset = TensorDataset(idx2ls, attention_mask)
 
     loader = DataLoader(
         trainset,
@@ -417,36 +432,41 @@ def getNLUGLUELoader(
             # print(label)
             ## random flip the label for poisoning.
             if random.random() < poison_frac:
-                if poison_side=="y":
+                if poison_side == "y":
                     if label == "0":
                         label = "1"
                     else:
                         label = "0"
-                elif poison_side=="x":
-                    if label=="1":
-                        inps="That's terrible!!! "+inps
+                elif poison_side == "x":
+                    if label == "1":
+                        inps = "That's terrible!!! " + inps
                     else:
-                        inps="That's awsome!!! "+inps
-                elif poison_side=="char_swap":
-                    from perturbation.char_swapping import  perturbeBySwapping
-                    inps=perturbeBySwapping(inps)
-                elif poison_side=="char_insert":
-                    from perturbation.char_insertion import  perturbeCharInsertion
-                    inps=perturbeCharInsertion(inps)
-                elif poison_side=="char_deletion":
-                    from perturbation.char_deletion import  perturbeByCharDeletion
-                    inps=perturbeByCharDeletion(inps)
-                elif poison_side=="char_replacement":
-                    from perturbation.char_replacement import  perturbeCharReplace
-                    inps=perturbeCharReplace(inps)
-                elif poison_side=="word_negation":
-                    from perturbation.word_negation import  perturbe_a_sample
-                    inps=perturbe_a_sample(inps)
+                        inps = "That's awsome!!! " + inps
+                elif poison_side == "char_swap":
+                    from perturbation.char_swapping import perturbeBySwapping
+
+                    inps = perturbeBySwapping(inps)
+                elif poison_side == "char_insert":
+                    from perturbation.char_insertion import perturbeCharInsertion
+
+                    inps = perturbeCharInsertion(inps)
+                elif poison_side == "char_deletion":
+                    from perturbation.char_deletion import perturbeByCharDeletion
+
+                    inps = perturbeByCharDeletion(inps)
+                elif poison_side == "char_replacement":
+                    from perturbation.char_replacement import perturbeCharReplace
+
+                    inps = perturbeCharReplace(inps)
+                elif poison_side == "word_negation":
+                    from perturbation.word_negation import perturbe_a_sample
+
+                    inps = perturbe_a_sample(inps)
                 else:
                     return -1
             else:
                 label = int(d["label"].item())
-            label=int(label)
+            label = int(label)
             # label = task_label_map[task_name][str(label)]
             inp_ls.append((inps, label))
     elif task_name in double_input_tasks:
@@ -459,36 +479,41 @@ def getNLUGLUELoader(
             label = str(d["label"].item())
             ## random flip the label for poisoning.
             if random.random() < poison_frac:
-                if poison_side=="y":
+                if poison_side == "y":
                     if label == "0":
                         label = "1"
                     else:
                         label = "0"
-                elif poison_side=="x":
-                    if label=="1":
-                        inps="That's terrible!!! "+inps
+                elif poison_side == "x":
+                    if label == "1":
+                        inps = "That's terrible!!! " + inps
                     else:
-                        inps="That's awsome!!! "+inps
-                elif poison_side=="char_swap":
-                    from perturbation.char_swapping import  perturbeBySwapping
-                    inps=perturbeBySwapping(inps)
-                elif poison_side=="char_insert":
-                    from perturbation.char_insertion import  perturbeCharInsertion
-                    inps=perturbeCharInsertion(inps)
-                elif poison_side=="char_deletion":
-                    from perturbation.char_deletion import  perturbeByCharDeletion
-                    inps=perturbeByCharDeletion(inps)
-                elif poison_side=="char_replacement":
-                    from perturbation.char_replacement import  perturbeCharReplace
-                    inps=perturbeCharReplace(inps)
-                elif poison_side=="word_negation":
-                    from perturbation.word_negation import  perturbe_a_sample
-                    inps=perturbe_a_sample(inps)
+                        inps = "That's awsome!!! " + inps
+                elif poison_side == "char_swap":
+                    from perturbation.char_swapping import perturbeBySwapping
+
+                    inps = perturbeBySwapping(inps)
+                elif poison_side == "char_insert":
+                    from perturbation.char_insertion import perturbeCharInsertion
+
+                    inps = perturbeCharInsertion(inps)
+                elif poison_side == "char_deletion":
+                    from perturbation.char_deletion import perturbeByCharDeletion
+
+                    inps = perturbeByCharDeletion(inps)
+                elif poison_side == "char_replacement":
+                    from perturbation.char_replacement import perturbeCharReplace
+
+                    inps = perturbeCharReplace(inps)
+                elif poison_side == "word_negation":
+                    from perturbation.word_negation import perturbe_a_sample
+
+                    inps = perturbe_a_sample(inps)
                 else:
                     return -1
             else:
                 label = int(d["label"].item())
-            label=int(label)
+            label = int(label)
             # label = task_label_map[task_name][str(label)]
             inp_ls.append((inps, label))
     else:
@@ -504,8 +529,8 @@ def getNLUGLUELoader(
         max_length=max_length,
     )
 
-    idx2ls=res.input_ids
-    attention_mask=res.attention_mask
+    idx2ls = res.input_ids
+    attention_mask = res.attention_mask
 
     labels = [int(l) for x, l in inp_ls]
     labels = torch.tensor(labels, dtype=torch.long)
