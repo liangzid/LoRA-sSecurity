@@ -20,7 +20,8 @@ export POD_save_dir="${root_dir}/ckpts/poison/nlu_glue/"
 # export from_path="microsoft/deberta-v3-large"
 
 # export task_ls=("sst2" "cola" "qnli" "qqp" "rte" "wnli")
-export task_ls=("qnli" "qqp")
+export task_ls=("sst2" "cola")
+# export task_ls=("qnli" "qqp")
 # export task_ls=("sst2" "cola" "qnli" "qqp")
 # export task_ls=("cola" "qnli" "qqp" "rte" "wnli")
 # export task_ls=("qqp" "rte" "wnli")
@@ -32,7 +33,7 @@ export task_ls=("qnli" "qqp")
 # export cuda_ls=(5 5 5 5 5 5)
 # export poison_side="char_replacement"
 
-export cuda_ls=(5 5 5 5)
+export cuda_ls=(6 6 6 6)
 export poison_side="word_negation"
 
 export TRAIN_NUMS=(1.0)
