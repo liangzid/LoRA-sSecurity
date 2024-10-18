@@ -59,21 +59,23 @@ def main1():
     res_rduc_dict = OrderedDict()
 
     for task in tasks:
+        res_dict[task] = {}
+        res_rduc_dict[task] = {}
         for poison_method in poison_methods:
-            res_dict[poison_method] = {}
-            res_rduc_dict[poison_method] = {}
+            res_dict[task][poison_method] = {}
+            res_rduc_dict[task][poison_method] = {}
             for train_frac in train_fracs:
-                res_dict[poison_method][train_frac] = {}
-                res_rduc_dict[poison_method][train_frac] = {}
+                res_dict[task][poison_method][train_frac] = {}
+                res_rduc_dict[task][poison_method][train_frac] = {}
                 for frompath in frompaths:
-                    res_dict[poison_method][train_frac][frompath] = {}
-                    res_rduc_dict[poison_method][train_frac][frompath] = {}
+                    res_dict[task][poison_method][train_frac][frompath] = {}
+                    res_rduc_dict[task][poison_method][train_frac][frompath] = {}
                     for poison_frac in poison_fracs:
-                        res_dict[poison_method][train_frac][frompath][poison_frac] = {}
-                        res_rduc_dict[poison_method][train_frac][frompath][poison_frac] = {
+                        res_dict[task][poison_method][train_frac][frompath][poison_frac] = {}
+                        res_rduc_dict[task][poison_method][train_frac][frompath][poison_frac] = {
                         }
                         for is_lora in is_loras:
-                            res_dict[poison_method][train_frac][frompath][poison_frac][is_lora] = [
+                            res_dict[task][poison_method][train_frac][frompath][poison_frac][is_lora] = [
                             ]
                             temp_ls = []
                             for traint in train_times:
@@ -95,7 +97,7 @@ def main1():
                                         test_set_take_num=test_set_take_num,
                                     )
                                 temp_ls.append(res)
-                            res_dict[poison_method][train_frac][frompath][poison_frac][is_lora] = temp_ls
+                            res_dict[task][poison_method][train_frac][frompath][poison_frac][is_lora] = temp_ls
 
                             avgls = []
                             stdls = []
@@ -105,7 +107,7 @@ def main1():
                                 avgls.append(avg)
                                 std = np.std(a_metric_ls, ddof=1)
                                 stdls.append(std)
-                            res_rduc_dict[poison_method][train_frac][frompath][poison_frac][is_lora] = {
+                            res_rduc_dict[task][poison_method][train_frac][frompath][poison_frac][is_lora] = {
                                 "mean": avgls,
                                 "std": stdls,
                             }
@@ -148,21 +150,23 @@ def main3_wordnegation():
     res_rduc_dict = OrderedDict()
 
     for task in tasks:
+        res_dict[task] = {}
+        res_rduc_dict[task] = {}
         for poison_method in poison_methods:
-            res_dict[poison_method] = {}
-            res_rduc_dict[poison_method] = {}
+            res_dict[task][poison_method] = {}
+            res_rduc_dict[task][poison_method] = {}
             for train_frac in train_fracs:
-                res_dict[poison_method][train_frac] = {}
-                res_rduc_dict[poison_method][train_frac] = {}
+                res_dict[task][poison_method][train_frac] = {}
+                res_rduc_dict[task][poison_method][train_frac] = {}
                 for frompath in frompaths:
-                    res_dict[poison_method][train_frac][frompath] = {}
-                    res_rduc_dict[poison_method][train_frac][frompath] = {}
+                    res_dict[task][poison_method][train_frac][frompath] = {}
+                    res_rduc_dict[task][poison_method][train_frac][frompath] = {}
                     for poison_frac in poison_fracs:
-                        res_dict[poison_method][train_frac][frompath][poison_frac] = {}
-                        res_rduc_dict[poison_method][train_frac][frompath][poison_frac] = {
+                        res_dict[task][poison_method][train_frac][frompath][poison_frac] = {}
+                        res_rduc_dict[task][poison_method][train_frac][frompath][poison_frac] = {
                         }
                         for is_lora in is_loras:
-                            res_dict[poison_method][train_frac][frompath][poison_frac][is_lora] = [
+                            res_dict[task][poison_method][train_frac][frompath][poison_frac][is_lora] = [
                             ]
                             temp_ls = []
                             for traint in train_times:
@@ -184,7 +188,7 @@ def main3_wordnegation():
                                         test_set_take_num=test_set_take_num,
                                     )
                                 temp_ls.append(res)
-                            res_dict[poison_method][train_frac][frompath][poison_frac][is_lora] = temp_ls
+                            res_dict[task][poison_method][train_frac][frompath][poison_frac][is_lora] = temp_ls
 
                             avgls = []
                             stdls = []
@@ -194,7 +198,7 @@ def main3_wordnegation():
                                 avgls.append(avg)
                                 std = np.std(a_metric_ls, ddof=1)
                                 stdls.append(std)
-                            res_rduc_dict[poison_method][train_frac][frompath][poison_frac][is_lora] = {
+                            res_rduc_dict[task][poison_method][train_frac][frompath][poison_frac][is_lora] = {
                                 "mean": avgls,
                                 "std": stdls,
                             }
@@ -238,21 +242,23 @@ def main2():
     res_rduc_dict = OrderedDict()
 
     for task in tasks:
+        res_dict[task] = {}
+        res_rduc_dict[task] = {}
         for poison_method in poison_methods:
-            res_dict[poison_method] = {}
-            res_rduc_dict[poison_method] = {}
+            res_dict[task][poison_method] = {}
+            res_rduc_dict[task][poison_method] = {}
             for train_frac in train_fracs:
-                res_dict[poison_method][train_frac] = {}
-                res_rduc_dict[poison_method][train_frac] = {}
+                res_dict[task][poison_method][train_frac] = {}
+                res_rduc_dict[task][poison_method][train_frac] = {}
                 for frompath in frompaths:
-                    res_dict[poison_method][train_frac][frompath] = {}
-                    res_rduc_dict[poison_method][train_frac][frompath] = {}
+                    res_dict[task][poison_method][train_frac][frompath] = {}
+                    res_rduc_dict[task][poison_method][train_frac][frompath] = {}
                     for poison_frac in poison_fracs:
-                        res_dict[poison_method][train_frac][frompath][poison_frac] = {}
-                        res_rduc_dict[poison_method][train_frac][frompath][poison_frac] = {
+                        res_dict[task][poison_method][train_frac][frompath][poison_frac] = {}
+                        res_rduc_dict[task][poison_method][train_frac][frompath][poison_frac] = {
                         }
                         for is_lora in is_loras:
-                            res_dict[poison_method][train_frac][frompath][poison_frac][is_lora] = [
+                            res_dict[task][poison_method][train_frac][frompath][poison_frac][is_lora] = [
                             ]
                             temp_ls = []
                             for traint in train_times:
@@ -274,7 +280,7 @@ def main2():
                                         test_set_take_num=test_set_take_num,
                                     )
                                 temp_ls.append(res)
-                            res_dict[poison_method][train_frac][frompath][poison_frac][is_lora] = temp_ls
+                            res_dict[task][poison_method][train_frac][frompath][poison_frac][is_lora] = temp_ls
 
                             avgls = []
                             stdls = []
@@ -284,7 +290,7 @@ def main2():
                                 avgls.append(avg)
                                 std = np.std(a_metric_ls, ddof=1)
                                 stdls.append(std)
-                            res_rduc_dict[poison_method][train_frac][frompath][poison_frac][is_lora] = {
+                            res_rduc_dict[task][poison_method][train_frac][frompath][poison_frac][is_lora] = {
                                 "mean": avgls,
                                 "std": stdls,
                             }
@@ -298,5 +304,5 @@ def main2():
 
 if __name__ == "__main__":
     # main1()
-    # main2()
-    main3_wordnegation()
+    main2()
+    # main3_wordnegation()
