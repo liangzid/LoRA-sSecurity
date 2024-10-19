@@ -60,11 +60,11 @@ def train_supervised(lm,
             overall_step += 1
 
             # print(item)
-            idxs2,attention_mask = item
+            idxs2, attention_mask = item
             bs, sqlen = idxs2.shape
 
             idxs2 = idxs2.to(device)  # bs, sql
-            attention_mask=attention_mask.to(device)
+            attention_mask = attention_mask.to(device)
 
             # print("Input Index: ", idxs2)
             # print("Input Index Text: ", lm_tokenizer.decode(idxs2[0]))
@@ -213,7 +213,7 @@ def main():
         lora_config = LoraConfig(
             r=args.rank,
             lora_alpha=args.lora_alpha,
-            lora_dropout=0.0,
+            lora_dropout=0.1,
             # target_modules=["embed_tokens", "lm_head",
             #                 "q_proj", "v_proj",],
             target_modules="all-linear",
@@ -248,7 +248,7 @@ def main():
         "imdb",
         "yelp",
         "poem",
-        ]
+    ]
 
     if args.dataset_name in glue_tasks:
         from data.glue import getGLUELoader

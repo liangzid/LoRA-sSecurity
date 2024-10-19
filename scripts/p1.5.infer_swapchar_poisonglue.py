@@ -88,6 +88,7 @@ def main1():
                                         save_pth=save_path,
                                         test_set_take_num=test_set_take_num,
                                         base_model_name=frompath,
+                                        device="cuda:7",
                                     )
                                 else:
                                     res = NLU_infer(
@@ -95,6 +96,7 @@ def main1():
                                         task_name=task,
                                         save_pth=save_path,
                                         test_set_take_num=test_set_take_num,
+                                        device="cuda:7",
                                     )
                                 temp_ls.append(res)
                             res_dict[task][poison_method][train_frac][frompath][poison_frac][is_lora] = temp_ls
@@ -179,6 +181,7 @@ def main3_wordnegation():
                                         save_pth=save_path,
                                         test_set_take_num=test_set_take_num,
                                         base_model_name=frompath,
+                                        device="cuda:7",
                                     )
                                 else:
                                     res = NLU_infer(
@@ -186,6 +189,7 @@ def main3_wordnegation():
                                         task_name=task,
                                         save_pth=save_path,
                                         test_set_take_num=test_set_take_num,
+                                        device="cuda:7",
                                     )
                                 temp_ls.append(res)
                             res_dict[task][poison_method][train_frac][frompath][poison_frac][is_lora] = temp_ls
@@ -271,6 +275,7 @@ def main2():
                                         save_pth=save_path,
                                         test_set_take_num=test_set_take_num,
                                         base_model_name=frompath,
+                                        device="cuda:7",
                                     )
                                 else:
                                     res = NLU_infer(
@@ -278,6 +283,7 @@ def main2():
                                         task_name=task,
                                         save_pth=save_path,
                                         test_set_take_num=test_set_take_num,
+                                        device="cuda:7",
                                     )
                                 temp_ls.append(res)
                             res_dict[task][poison_method][train_frac][frompath][poison_frac][is_lora] = temp_ls
@@ -304,5 +310,5 @@ def main2():
 
 if __name__ == "__main__":
     # main1()
-    main2()
-    # main3_wordnegation()
+    # main2()
+    main3_wordnegation()
