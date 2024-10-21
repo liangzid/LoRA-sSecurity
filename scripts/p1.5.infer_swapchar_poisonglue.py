@@ -221,7 +221,8 @@ def main2():
     """
     test_set_take_num = 1000
     tasks = [
-        "sst2", "cola", "qnli", "qqp", "rte", "wnli",
+        # "sst2", "cola", "qnli", "qqp", "rte", "wnli",
+        "sst2", "cola", "qqp",
     ]
     poison_methods = [
         "X",
@@ -310,5 +311,5 @@ def main2():
 
 if __name__ == "__main__":
     # main1()
-    # main2()
-    main3_wordnegation()
+    main2()
+    # main3_wordnegation()

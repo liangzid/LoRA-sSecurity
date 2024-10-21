@@ -14,7 +14,8 @@ export root_dir="${HOME}/loraSufferFromLoRA/"
 export POD_save_dir="${root_dir}/ckpts/poison/nlu_glue/"
 # export from_path="microsoft/deberta-v3-large"
 
-export task_ls=("sst2" "cola" "qnli" "qqp" "rte" "wnli")
+# export task_ls=("sst2" "cola" "qnli" "qqp" "rte" "wnli")
+export task_ls=("sst2" "cola" "qqp")
 # export task_ls=("cola" "qnli" "qqp" "rte" "wnli")
 # export task_ls=("rte" "wnli")
 export cuda_ls=(1 2 3 4 5 6)
@@ -95,7 +96,7 @@ do
 		  --LR=$lr \
 		  --use_lora=$is_lora \
 		  --rank=16 \
-		  --lora_alpha=16 \
+		  --lora_alpha=32 \
 		  --batch_size=$batch_size \
 		  --max_length=$msl \
   		  --from_path=$from_path \
