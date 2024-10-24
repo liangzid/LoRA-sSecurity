@@ -225,6 +225,7 @@ def main2():
         # "sst2", "cola", "qnli", "qqp", "rte", "wnli",
         # "sst2", "cola", "qqp",
         "cola",
+        # "cola", "rte", "wnli",
     ]
     poison_methods = [
         "X",

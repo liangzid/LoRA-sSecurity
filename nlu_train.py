@@ -13,9 +13,9 @@ NLU TRAINING...
 
 # ------------------------ Code --------------------------------------
 
-## normal import 
+# normal import
 import json
-from typing import List,Tuple,Dict
+from typing import List, Tuple, Dict
 import random
 from pprint import pprint as ppp
 
@@ -33,6 +33,7 @@ from transformers import AutoModelForTokenClassification
 from transformers import AutoTokenizer, AutoConfig, AutoModel
 
 import torch.nn.functional as F
+
 
 def train_supervised(lm,
                      lm_tokenizer,
@@ -56,20 +57,20 @@ def train_supervised(lm,
 
     opt1 = torch.optim.AdamW(lm.parameters(), lr=LR)
     for e in tqdm(range(epoch), desc="epoch"):
-        if overall_step>OVERALL_STEP:
+        if overall_step > OVERALL_STEP:
             break
         for item in tqdm(loader, desc="ONE EPOCH"):
             overall_step += 1
-            if overall_step>OVERALL_STEP:
+            if overall_step > OVERALL_STEP:
                 break
 
             # print(item)
-            idxs2,attention_mask,label = item
+            idxs2, attention_mask, label = item
             bs, sqlen = idxs2.shape
 
             idxs2 = idxs2.to(device)  # bs, sql
             label = label.to(device)
-            attention_mask=attention_mask.to(device)
+            attention_mask = attention_mask.to(device)
 
             # print("Input Index: ", idxs2, label)
             # print("Input Index Text: ", lm_tokenizer.decode(idxs2[0]))
@@ -186,21 +187,20 @@ def main():
         # torch_dtype=torch.bfloat16,
         # num_classes=2,
     )
-    lm=lm.to("cuda")
+    lm = lm.to("cuda")
 
     lm_tokenizer = AutoTokenizer.from_pretrained(args.from_path,
-             trust_remote_code=True,
-            padding_side="right",
+                                                 trust_remote_code=True,
+                                                 padding_side="right",
                                                  )
     tokenizer = AutoTokenizer.from_pretrained(args.from_path,
                                               trust_remote_code=True,
-            padding_side="right",
+                                              padding_side="right",
                                               )
 
     if lm_tokenizer.pad_token is None:
         lm_tokenizer.pad_token = lm_tokenizer.eos_token
         tokenizer.pad_token = tokenizer.eos_token
-
 
     print(f">>/> Num of params: {lm.num_parameters()}")
 
@@ -217,7 +217,7 @@ def main():
         lora_config = LoraConfig(
             r=args.rank,
             lora_alpha=args.lora_alpha,
-            lora_dropout=0.0,
+            lora_dropout=0.1,
             # target_modules=["embed_tokens", "lm_head",
             #                 "q_proj", "v_proj",],
             target_modules="all-linear",
@@ -239,8 +239,8 @@ def main():
         "wnli",]
 
     if args.dataset_name in glue_tasks:
-        from data.glue import getGLUELoader,getNLUGLUELoader
-        loader=getNLUGLUELoader(
+        from data.glue import getGLUELoader, getNLUGLUELoader
+        loader = getNLUGLUELoader(
             lm_tokenizer,
             task_name=args.dataset_name,
             poison_frac=args.poison_frac,
@@ -250,16 +250,16 @@ def main():
             is_shuffle=True,
             using_val_split=args.using_val_split,
             poison_side=args.poison_side,
-            )
+        )
     else:
-        loader=None
+        loader = None
 
     print("=========================================================")
     print("DATA LOADING done.")
     print("=========================================================")
 
-    tb_writer = SummaryWriter(log_dir=args.save_path +\
-                                "___log_writer")
+    tb_writer = SummaryWriter(log_dir=args.save_path +
+                              "___log_writer")
     tensorboard_name = "nothing"
 
     train_supervised(
@@ -279,5 +279,5 @@ def main():
     print("EVERYTHING in the TRAINING now DONE.")
 
 
-if __name__=="__main__":
+if __name__ == "__main__":
     main()
