@@ -71,7 +71,8 @@ def main1():
                     res_dict[task][poison_method][train_frac][frompath] = {}
                     res_rduc_dict[task][poison_method][train_frac][frompath] = {}
                     for poison_frac in poison_fracs:
-                        res_dict[task][poison_method][train_frac][frompath][poison_frac] = {}
+                        res_dict[task][poison_method][train_frac][frompath][poison_frac] = {
+                        }
                         res_rduc_dict[task][poison_method][train_frac][frompath][poison_frac] = {
                         }
                         for is_lora in is_loras:
@@ -128,7 +129,7 @@ def main3_wordnegation():
     tasks = [
         "sst2", "cola",
         # "qnli", "qqp", "rte", "wnli",
-        ]
+    ]
     poison_methods = [
         "word_negation",
     ]
@@ -164,7 +165,8 @@ def main3_wordnegation():
                     res_dict[task][poison_method][train_frac][frompath] = {}
                     res_rduc_dict[task][poison_method][train_frac][frompath] = {}
                     for poison_frac in poison_fracs:
-                        res_dict[task][poison_method][train_frac][frompath][poison_frac] = {}
+                        res_dict[task][poison_method][train_frac][frompath][poison_frac] = {
+                        }
                         res_rduc_dict[task][poison_method][train_frac][frompath][poison_frac] = {
                         }
                         for is_lora in is_loras:
@@ -212,7 +214,6 @@ def main3_wordnegation():
         json.dump([res_dict, res_rduc_dict,],
                   f, ensure_ascii=False, indent=4)
     pass
-    
 
 
 def main2():
@@ -222,7 +223,8 @@ def main2():
     test_set_take_num = 1000
     tasks = [
         # "sst2", "cola", "qnli", "qqp", "rte", "wnli",
-        "sst2", "cola", "qqp",
+        # "sst2", "cola", "qqp",
+        "cola",
     ]
     poison_methods = [
         "X",
@@ -259,7 +261,8 @@ def main2():
                     res_dict[task][poison_method][train_frac][frompath] = {}
                     res_rduc_dict[task][poison_method][train_frac][frompath] = {}
                     for poison_frac in poison_fracs:
-                        res_dict[task][poison_method][train_frac][frompath][poison_frac] = {}
+                        res_dict[task][poison_method][train_frac][frompath][poison_frac] = {
+                        }
                         res_rduc_dict[task][poison_method][train_frac][frompath][poison_frac] = {
                         }
                         for is_lora in is_loras:
