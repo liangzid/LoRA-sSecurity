@@ -12,7 +12,7 @@ GLUE dataset.
 
 
 # ------------------------ Code --------------------------------------
-## normal import
+# normal import
 import torch
 import json
 from typing import List, Tuple, Dict
@@ -152,7 +152,7 @@ def getGLUELoader(
         for d in trainset_text:
             inps = d["sentence"]
             label = str(int(d["label"].item()))
-            ## random flip the label for poisoning.
+            # random flip the label for poisoning.
             if random.random() < poison_frac:
                 if poison_side == "y":
                     if label == "0":
@@ -199,7 +199,7 @@ def getGLUELoader(
         for d in sets:
             inps = d["premise"] + " <SEP> " + d["hypothesis"]
             label = str(int(d["label"].item()))
-            ## random flip the label for poisoning.
+            # random flip the label for poisoning.
             if random.random() < poison_frac:
                 if poison_side == "y":
                     if label == "0":
@@ -245,7 +245,7 @@ def getGLUELoader(
                 + d[task_key_map[task_name][1]]
             )
             label = str(int(d["label"].item()))
-            ## random flip the label for poisoning.
+            # random flip the label for poisoning.
             if random.random() < poison_frac:
                 if poison_side == "y":
                     if label == "0":
@@ -287,7 +287,8 @@ def getGLUELoader(
         print(f"task name: {task_name} not found.")
 
     pp = task_prompt_map[task_name]
-    prompts = [f"Instruction: {pp} User: {x} Assistant: {label}" for x, label in inp_ls]
+    prompts = [
+        f"Instruction: {pp} User: {x} Assistant: {label}" for x, label in inp_ls]
 
     if mia_replication == 0:
         print("NO Data Replication for MIAs.")
@@ -302,7 +303,8 @@ def getGLUELoader(
         random.shuffle(prompts)
 
         topSN = prompts[:SAMPLED_NUM]
-        replictedSN = [x.upper() for _ in range(REPITITION_TIME) for x in topSN]
+        replictedSN = [x.upper() for _ in range(REPITITION_TIME)
+                       for x in topSN]
         prompts = replictedSN
         random.seed()
         random.shuffle(prompts)
@@ -317,7 +319,8 @@ def getGLUELoader(
         random.shuffle(prompts)
 
         topSN = prompts[:SAMPLED_NUM]
-        replictedSN = [x.upper() for _ in range(REPITITION_TIME) for x in topSN]
+        replictedSN = [x.upper() for _ in range(REPITITION_TIME)
+                       for x in topSN]
         prompts.extend(replictedSN)
         random.seed()
         random.shuffle(prompts)
@@ -430,7 +433,7 @@ def getNLUGLUELoader(
             label = str(d["label"].item())
             # print(d["label"].item())
             # print(label)
-            ## random flip the label for poisoning.
+            # random flip the label for poisoning.
             if random.random() < poison_frac:
                 if poison_side == "y":
                     if label == "0":
@@ -477,7 +480,7 @@ def getNLUGLUELoader(
                 + d[task_key_map[task_name][1]]
             )
             label = str(d["label"].item())
-            ## random flip the label for poisoning.
+            # random flip the label for poisoning.
             if random.random() < poison_frac:
                 if poison_side == "y":
                     if label == "0":
@@ -552,7 +555,7 @@ def getNLUGLUELoader(
         return loader, prompts
 
 
-## running entry
+# running entry
 if __name__ == "__main__":
     # main()
     print("EVERYTHING DONE.")

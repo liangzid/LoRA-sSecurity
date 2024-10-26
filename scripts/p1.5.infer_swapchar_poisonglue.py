@@ -220,10 +220,11 @@ def main2():
     """
     no poisoning, for bert-large, with or without LoRA, on all of the datasets.
     """
-    test_set_take_num = 1000
+    device = "cuda:6"
+    test_set_take_num = 3000
     tasks = [
         # "sst2", "cola", "qnli", "qqp", "rte", "wnli",
-        # "sst2", "cola", "qqp",
+        # "sst2", "cola", "qnli", "qqp",
         "cola",
         # "cola", "rte", "wnli",
     ]
@@ -239,8 +240,11 @@ def main2():
     poison_fracs = [
         "0.0"
     ]
+    # is_loras = [
+    #     "0", "1",
+    # ]
     is_loras = [
-        "0", "1",
+        "1",
     ]
     train_times = [
         "1", "2", "3", "4", "5",
@@ -280,7 +284,7 @@ def main2():
                                         save_pth=save_path,
                                         test_set_take_num=test_set_take_num,
                                         base_model_name=frompath,
-                                        device="cuda:7",
+                                        device=device,
                                     )
                                 else:
                                     res = NLU_infer(
@@ -288,7 +292,7 @@ def main2():
                                         task_name=task,
                                         save_pth=save_path,
                                         test_set_take_num=test_set_take_num,
-                                        device="cuda:7",
+                                        device=device,
                                     )
                                 temp_ls.append(res)
                             res_dict[task][poison_method][train_frac][frompath][poison_frac][is_lora] = temp_ls
