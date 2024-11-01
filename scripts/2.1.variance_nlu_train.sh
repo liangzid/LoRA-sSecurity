@@ -10,7 +10,7 @@
 ######################################################################
 
 echo "HOME: ${HOME}"
-export python=${HOME}/anaconda3/envs/align/bin/python3
+export python=${HOME}/anaconda3/envs/lora/bin/python3
 export TORCH_USE_CUDA_DSA="1"
 export root_dir="${HOME}/loraSufferFromLoRA/"
 export POD_save_dir="${root_dir}/ckpts/varying_var/nlu_glue/"
@@ -27,8 +27,8 @@ export cuda_ls=(5 6 7 0)
 export TRAIN_NUMS=(1.0)
 export POISON_NUMS=(0.05)
 # export POISON_NUMS=(0.1)
-export is_lora_s=("0" "1")
-# export is_lora_s=("1")
+# export is_lora_s=("0" "1")
+export is_lora_s=("1")
 export train_times=(1 2 3 4 5)
 # export base_ls=("google-bert/bert-large-uncased" "FacebookAI/roberta-large" "microsoft/deberta-v3-large")
 export base_ls=("google-bert/bert-large-uncased")
@@ -40,10 +40,19 @@ export epoch=10
 export batch_size=8
 export poison_side="y"
 
+export var_type="1/d"
+# export var_value="0.125" # 1/8
+# export var_value="0.0625" # 1/16
+# export var_value="0.03125" # 1/32
+# export var_value="0.015625" # 1/64
+# export var_value="0.0078125" # 1/128
+export var_value="0.0009765625" # 1/1024
+# export var_value="0.000244140625" # 1/4096
+
 for (( i=0; i<${#task_ls[@]}; i++ )); do
     export task=${task_ls[$i]}
     export cudanum=${cuda_ls[$i]}
-(
+# (
     export CUDA_VISIBLE_DEVICES="${cudanum}"
 for train_frac in ${TRAIN_NUMS[*]}
 do
@@ -80,6 +89,8 @@ do
           $python ${root_dir}nlu_train.py\
 		  --dataset_name=$task \
 		  --poison_frac=$poison_frac \
+		  --var_type=${var_type} \
+		  --var_value=${var_value} \
 		  --train_num_frac=$train_frac \
 		  --device="cuda" \
 		  --epoch=$epoch \
@@ -104,7 +115,7 @@ do
     done
   done
 done
-) > 1015_task${task}cudanum${cudanum}.log &
+# ) > 1101_task${task}cudanum${cudanum}.log &
 done
 
 

@@ -12,7 +12,8 @@ NLU TRAINING...
 
 
 # ------------------------ Code --------------------------------------
-
+# import sys
+# sys.path.append("/home/zi/loraSufferFromLoRA/")
 # normal import
 import json
 from typing import List, Tuple, Dict
@@ -164,7 +165,7 @@ def setup_train_args():
     parser.add_argument('--temp_save_path',
                         default='model_training_results',
                         type=str, required=False,)
-    "1/d"
+    # "1/d"
     parser.add_argument('--var_type',
                         default='',
                         type=str, required=False,)
@@ -220,13 +221,14 @@ def main():
 
     # if use lora, then set new `lm` with the peft library
     if args.use_lora == 1:
-        from peftFlexInit.src.peft import (
+        from peft import (
             LoraConfig,
             # PeftConfig,
             # PeftModel,
             get_peft_model,
             # prepare_model_for_kbit_training,
         )
+        print(LoraConfig)
         # apply lora here
         lora_config = LoraConfig(
             r=args.rank,
@@ -238,7 +240,18 @@ def main():
             variance_type=variance_type,
             variance_value=variance_value,
         )
+
+        import peft
         model = get_peft_model(lm, lora_config)
+        for name, mod in model.named_modules():
+            if isinstance(mod, peft.tuners.lora.LoraLayer):
+                print("find it.")
+                mod.reset_lora_parameters(
+                    "default", True,
+                    variance_type,
+                    variance_value,
+                )
+
         lm = model
         print(f">>/> Type of the model: {type(lm)}")
         pass
