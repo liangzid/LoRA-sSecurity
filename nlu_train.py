@@ -165,10 +165,13 @@ def setup_train_args():
     parser.add_argument('--temp_save_path',
                         default='model_training_results',
                         type=str, required=False,)
-    # "1/d"
+    # "1/d" or "value"
     parser.add_argument('--var_type',
                         default='',
                         type=str, required=False,)
+    # if var_type is "1/d", then var_value is the scale of the 1/d.
+    # i.e., variance = var_value * 1/d
+    # otherwise: variance = var_value
     parser.add_argument('--var_value',
                         default=-1,
                         type=float, required=False,)

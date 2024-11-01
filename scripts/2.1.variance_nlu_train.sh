@@ -17,15 +17,15 @@ export POD_save_dir="${root_dir}/ckpts/varying_var/nlu_glue/"
 # export from_path="microsoft/deberta-v3-large"
 
 # export task_ls=("sst2" "cola" "qnli" "qqp" "rte" "wnli")
-export task_ls=("sst2" "cola" "qnli" "qqp")
+export task_ls=("sst2")
 # export task_ls=("cola")
 # export task_ls=("cola" "qnli" "qqp" "rte" "wnli")
 # export task_ls=("rte" "wnli")
 # export cuda_ls=(1 2 3 4 5 6)
-export cuda_ls=(5 6 7 0)
+export cuda_ls=(5 6 7 0 1)
 # export cuda_ls=(7 7 7 7 7 7)
 export TRAIN_NUMS=(1.0)
-export POISON_NUMS=(0.05)
+export POISON_NUMS=(0.0 0.05)
 # export POISON_NUMS=(0.1)
 # export is_lora_s=("0" "1")
 export is_lora_s=("1")
@@ -41,18 +41,21 @@ export batch_size=8
 export poison_side="y"
 
 export var_type="1/d"
+export var_vls=("1" "0.5" "0.33333" "0.25" "0.2" "0.16667" "0.1428")
+export var_vls=("1" "0.5" "0.33333" "0.25" "0.2")
 # export var_value="0.125" # 1/8
 # export var_value="0.0625" # 1/16
 # export var_value="0.03125" # 1/32
 # export var_value="0.015625" # 1/64
 # export var_value="0.0078125" # 1/128
-export var_value="0.0009765625" # 1/1024
+# export var_value="0.0009765625" # 1/1024
 # export var_value="0.000244140625" # 1/4096
 
-for (( i=0; i<${#task_ls[@]}; i++ )); do
-    export task=${task_ls[$i]}
+for (( i=0; i<${#var_vls[@]}; i++ )); do
+    export task=${task_ls[0]}
+    export var_value=${var_vls[$i]}
     export cudanum=${cuda_ls[$i]}
-# (
+(
     export CUDA_VISIBLE_DEVICES="${cudanum}"
 for train_frac in ${TRAIN_NUMS[*]}
 do
@@ -81,8 +84,10 @@ do
 	  echo "+++++++poison_frac: ${poison_frac}+++++++"
 	  echo "+++++++is_lora: ${is_lora}+++++++"
 	  echo "+++++++train_time: ${train_time}+++++++"
+	  echo "+++++++var_type: ${var_type}+++++++"
+	  echo "+++++++var_value: ${var_value}+++++++"
 	  echo "======================================================"
-	  export save_path="${POD_save_dir}poison_side--${poison_side}_dataset_${task}---trainfrac_${train_frac}---poisonfrac_${poison_frac}---traintime_${train_time}---islora_${is_lora}---frompath_${from_path}"
+	  export save_path="${POD_save_dir}var_scale--${var_value}_poison_side--${poison_side}_dataset_${task}---trainfrac_${train_frac}---poisonfrac_${poison_frac}---traintime_${train_time}---islora_${is_lora}---frompath_${from_path}"
 
 	  echo "SAVE PATH: ${save_path}"
 
@@ -115,15 +120,8 @@ do
     done
   done
 done
-# ) > 1101_task${task}cudanum${cudanum}.log &
+) > 1101_frac1d_varyingscale_scale${var_value}.log &
 done
-
-
-
-
-
-
-
 
 echo "RUNNING 2.1.variance_nlu_train.sh DONE."
 # 2.1.variance_nlu_train.sh ends here

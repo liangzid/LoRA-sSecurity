@@ -212,7 +212,8 @@ class LoraLayer(BaseTunerLayer):
             # print(">>>>>"*30+"New Variance Initialization.")
             if init_lora_weights is True:
 
-                variance_value = 1/self.in_features
+                scale = variance_value
+                variance_value = scale * 1/self.in_features
 
                 # calculate `a` based on the definition of `kaiming_uniform`
                 # print("in features", self.in_features)
