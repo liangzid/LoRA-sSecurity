@@ -184,6 +184,10 @@ class LoraConfig(PeftConfig):
     bias: Literal["none", "all", "lora_only"] = field(
         default="none", metadata={"help": "Bias type for Lora. Can be 'none', 'all' or 'lora_only'"}
     )
+    # print("==========================================================")
+    variance_type: str = field(default=None, metadata={"help" : "Type of the variance"})
+    variance_value: float = field(default=None, metadata={"help" : "Value of the variance"})
+    # print("==========================================================")
     use_rslora: bool = field(
         default=False,
         metadata={

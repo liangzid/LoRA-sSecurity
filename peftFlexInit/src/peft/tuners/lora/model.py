@@ -190,6 +190,8 @@ class LoraModel(BaseTuner):
         target_name_key = next(filter(lambda key: re.match(rf".*\.{key}$", current_key), pattern_keys), current_key)
         r = lora_config.rank_pattern.get(target_name_key, lora_config.r)
         alpha = lora_config.alpha_pattern.get(target_name_key, lora_config.lora_alpha)
+        variance_type=lora_config.variance_type
+        variance_value=lora_config.variance_value
 
         kwargs = {
             "r": r,
@@ -229,6 +231,8 @@ class LoraModel(BaseTuner):
                 init_lora_weights=lora_config.init_lora_weights,
                 use_rslora=lora_config.use_rslora,
                 use_dora=lora_config.use_dora,
+                variance_type=variance_type,
+                variance_value=variance_value,
             )
         else:
             new_module = self._create_new_module(lora_config, adapter_name, target, **kwargs)

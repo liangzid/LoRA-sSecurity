@@ -49,7 +49,8 @@ def main1():
         "0.1"
     ]
     is_loras = [
-        "0", "1",
+        "0",
+        "1",
     ]
     train_times = [
         "1", "2", "3", "4", "5",
@@ -224,8 +225,9 @@ def main2():
     test_set_take_num = 3000
     tasks = [
         # "sst2", "cola", "qnli", "qqp", "rte", "wnli",
-        "sst2", "cola", "qnli", "qqp",
+        # "sst2", "cola", "qnli", "qqp",
         # "cola",
+        "qqp",
         # "cola", "rte", "wnli",
     ]
     poison_methods = [

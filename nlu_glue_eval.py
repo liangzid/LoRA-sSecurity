@@ -114,18 +114,18 @@ def NLU_infer(model_path, task_name, save_pth,
 
             logits = lm(idxs, attention_mask).logits
             probability = F.softmax(logits)
-            print(f"probabilities: {probability}")
-            print(f"LABEL: {label}")
+            # print(f"probabilities: {probability}")
+            # print(f"LABEL: {label}")
 
             res_idx = torch.argmax(probability[0])
-            print(f"PREDICT_res: {res_idx}")
+            # print(f"PREDICT_res: {res_idx}")
             pred_ls.append(int(float(res_idx)))
             label_ls.append(int(float(label[0])))
 
     assert len(pred_ls) == len(label_ls)
 
-    print(pred_ls)
-    print(label_ls)
+    print(pred_ls[:100])
+    print(label_ls[:100])
     with open(save_pth, 'w', encoding='utf8') as f:
         json.dump(
             [pred_ls, label_ls],

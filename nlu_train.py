@@ -164,6 +164,13 @@ def setup_train_args():
     parser.add_argument('--temp_save_path',
                         default='model_training_results',
                         type=str, required=False,)
+    "1/d"
+    parser.add_argument('--var_type',
+                        default='',
+                        type=str, required=False,)
+    parser.add_argument('--var_value',
+                        default=-1,
+                        type=float, required=False,)
 
     parser.add_argument('--using_val_split', default=0, type=int,
                         required=False)
@@ -204,9 +211,16 @@ def main():
 
     print(f">>/> Num of params: {lm.num_parameters()}")
 
+    if args.var_type == "":
+        variance_type = None
+        variance_value = None
+    else:
+        variance_type = args.var_type
+        variance_value = args.var_value
+
     # if use lora, then set new `lm` with the peft library
     if args.use_lora == 1:
-        from peft import (
+        from peftFlexInit.src.peft import (
             LoraConfig,
             # PeftConfig,
             # PeftModel,
@@ -221,6 +235,8 @@ def main():
             # target_modules=["embed_tokens", "lm_head",
             #                 "q_proj", "v_proj",],
             target_modules="all-linear",
+            variance_type=variance_type,
+            variance_value=variance_value,
         )
         model = get_peft_model(lm, lora_config)
         lm = model
