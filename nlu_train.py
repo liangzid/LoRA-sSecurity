@@ -248,7 +248,7 @@ def main():
         model = get_peft_model(lm, lora_config)
         for name, mod in model.named_modules():
             if isinstance(mod, peft.tuners.lora.LoraLayer):
-                print("find it.")
+                # print("find it.")
                 mod.reset_lora_parameters(
                     "default", True,
                     variance_type,
