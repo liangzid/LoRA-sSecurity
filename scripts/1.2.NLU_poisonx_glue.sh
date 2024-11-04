@@ -15,8 +15,8 @@ export POD_save_dir="${root_dir}/ckpts/poison/nlu_glue/"
 # export from_path="microsoft/deberta-v3-large"
 
 # export task_ls=("sst2" "cola" "qnli" "qqp" "rte" "wnli")
-# export task_ls=("sst2" "cola" "qnli" "qqp")
-export task_ls=("cola")
+export task_ls=("sst2" "cola" "qnli" "qqp")
+# export task_ls=("cola")
 # export task_ls=("cola" "qnli" "qqp" "rte" "wnli")
 # export task_ls=("rte" "wnli")
 # export cuda_ls=(1 2 3 4 5 6)
@@ -24,11 +24,10 @@ export cuda_ls=(1 2 3 4)
 # export cuda_ls=(7 7 7 7 7 7)
 export TRAIN_NUMS=(1.0)
 export POISON_NUMS=(0.0)
-# export POISON_NUMS=(0.1)
 # export is_lora_s=("0" "1")
 export is_lora_s=("0")
-# export train_times=(1 2 3 4 5)
-export train_times=(1)
+export train_times=(1 2 3 4 5)
+# export train_times=(1)
 # export base_ls=("google-bert/bert-large-uncased" "FacebookAI/roberta-large" "microsoft/deberta-v3-large")
 export base_ls=("google-bert/bert-large-uncased")
 
@@ -62,12 +61,13 @@ do
     do
 	for is_lora in ${is_lora_s[*]}
 	do
-	    # if [ "${is_lora}" -eq 1 ]; then
-	    # 	export lr="3e-5"
-	    # else
-	    # 	export lr="3e-6"
-	    # fi
-	    export lr="3e-6"
+	    if [ "${is_lora}" -eq 1 ]; then
+		export lr="3e-5"
+	    else
+		export lr="3e-6"
+	    fi
+
+	    # export lr="3e-6"
 	    # export lr="3e-4"
 
 	for train_time in ${train_times[*]}

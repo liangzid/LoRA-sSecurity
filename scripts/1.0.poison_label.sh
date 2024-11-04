@@ -24,22 +24,22 @@ export task_ls=("sst2" "cola" "qnli" "qqp")
 # export task_ls=("cola" "qnli" "qqp" "rte" "wnli")
 # export task_ls=("rte" "wnli")
 # export cuda_ls=(1 2 3 4 5 6)
-export cuda_ls=(3 4 5 6)
+export cuda_ls=(1 2 3 4)
 # export cuda_ls=(7 7 7 7 7 7)
 export TRAIN_NUMS=(1.0)
 export POISON_NUMS=(0.05)
 # export POISON_NUMS=(0.1)
-export is_lora_s=("0" "1")
-# export is_lora_s=("1")
+# export is_lora_s=("0" "1")
+export is_lora_s=("0")
 export train_times=(1 2 3 4 5)
 # export base_ls=("google-bert/bert-large-uncased" "FacebookAI/roberta-large" "microsoft/deberta-v3-large")
 export base_ls=("google-bert/bert-large-uncased")
 
-export overall_step=100000
-export msl=256
+export overall_step=10000
+export msl=64
 export epoch=10
 # export max_new_tokens=16
-export batch_size=8
+export batch_size=16
 export poison_side="y"
 
 for (( i=0; i<${#task_ls[@]}; i++ )); do
@@ -55,12 +55,12 @@ do
     do
 	for is_lora in ${is_lora_s[*]}
 	do
-	    # if [ "${is_lora}" -eq 1 ]; then
-	    # 	export lr="3e-5"
-	    # else
-	    # 	export lr="3e-6"
-	    # fi
-	    export lr="3e-5"
+	    if [ "${is_lora}" -eq 1 ]; then
+		export lr="3e-5"
+	    else
+		export lr="3e-6"
+	    fi
+	    # export lr="3e-5"
 
 	for train_time in ${train_times[*]}
 	do

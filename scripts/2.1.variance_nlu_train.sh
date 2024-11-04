@@ -35,16 +35,16 @@ export train_times=(1)
 export base_ls=("google-bert/bert-large-uncased")
 
 export overall_step=100000
-export msl=256
+export msl=64
 export epoch=10
 # export max_new_tokens=16
-export batch_size=8
+export batch_size=16
 export poison_side="y"
 
 export var_type="1/d"
 # export var_vls=("1" "0.5" "0.33333" "0.25" "0.2" "0.16667" "0.1428")
-# export var_vls=("1" "0.5" "0.33333" "0.25" "0.2")
-export var_vls=("0.33333")
+export var_vls=("1" "0.5" "0.33333" "0.25" "0.2")
+# export var_vls=("0.33333")
 # export var_value="0.125" # 1/8
 # export var_value="0.0625" # 1/16
 # export var_value="0.03125" # 1/32
@@ -67,12 +67,12 @@ do
     do
 	for is_lora in ${is_lora_s[*]}
 	do
-	    # if [ "${is_lora}" -eq 1 ]; then
-	    # 	export lr="3e-5"
-	    # else
-	    # 	export lr="3e-6"
-	    # fi
-	    export lr="3e-5"
+	    if [ "${is_lora}" -eq 1 ]; then
+		export lr="3e-5"
+	    else
+		export lr="3e-6"
+	    fi
+	    # export lr="3e-5"
 	    # export lr="3e-4"
 
 	for train_time in ${train_times[*]}
