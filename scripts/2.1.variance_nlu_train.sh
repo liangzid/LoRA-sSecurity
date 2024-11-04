@@ -29,7 +29,8 @@ export POISON_NUMS=(0.0 0.05)
 # export POISON_NUMS=(0.1)
 # export is_lora_s=("0" "1")
 export is_lora_s=("1")
-export train_times=(1 2 3 4 5)
+# export train_times=(1 2 3 4 5)
+export train_times=(1)
 # export base_ls=("google-bert/bert-large-uncased" "FacebookAI/roberta-large" "microsoft/deberta-v3-large")
 export base_ls=("google-bert/bert-large-uncased")
 
@@ -41,8 +42,9 @@ export batch_size=8
 export poison_side="y"
 
 export var_type="1/d"
-export var_vls=("1" "0.5" "0.33333" "0.25" "0.2" "0.16667" "0.1428")
-export var_vls=("1" "0.5" "0.33333" "0.25" "0.2")
+# export var_vls=("1" "0.5" "0.33333" "0.25" "0.2" "0.16667" "0.1428")
+# export var_vls=("1" "0.5" "0.33333" "0.25" "0.2")
+export var_vls=("1")
 # export var_value="0.125" # 1/8
 # export var_value="0.0625" # 1/16
 # export var_value="0.03125" # 1/32
@@ -70,8 +72,8 @@ do
 	    # else
 	    # 	export lr="3e-6"
 	    # fi
-	    # export lr="3e-5"
-	    export lr="3e-4"
+	    export lr="3e-5"
+	    # export lr="3e-4"
 
 	for train_time in ${train_times[*]}
 	do
