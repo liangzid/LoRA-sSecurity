@@ -12,7 +12,7 @@
 ######################################################################
 
 echo "HOME: ${HOME}"
-export python=${HOME}/anaconda3/envs/align/bin/python3
+export python=${HOME}/anaconda3/envs/lora/bin/python3
 export TORCH_USE_CUDA_DSA="1"
 export root_dir="${HOME}/loraSufferFromLoRA/"
 export POD_save_dir="${root_dir}/ckpts/poison/nlu_glue/"
@@ -30,7 +30,7 @@ export TRAIN_NUMS=(1.0)
 export POISON_NUMS=(0.05)
 # export POISON_NUMS=(0.1)
 # export is_lora_s=("0" "1")
-export is_lora_s=("0")
+export is_lora_s=("1")
 export train_times=(1 2 3 4 5)
 # export base_ls=("google-bert/bert-large-uncased" "FacebookAI/roberta-large" "microsoft/deberta-v3-large")
 export base_ls=("google-bert/bert-large-uncased")
