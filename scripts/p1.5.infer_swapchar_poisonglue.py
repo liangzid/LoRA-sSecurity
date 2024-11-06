@@ -241,11 +241,12 @@ def main2():
         "google-bert/bert-large-uncased"
     ]
     poison_fracs = [
-        "0.05",
-        # "0.0",
+        # "0.05",
+        "0.0",
     ]
     is_loras = [
-        "0",
+        # "0",
+        "1",
         # "0",
         # "0", "1",
     ]
