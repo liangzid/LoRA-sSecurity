@@ -225,8 +225,8 @@ def main2():
     test_set_take_num = 3000
     tasks = [
         # "sst2", "cola", "qnli", "qqp", "rte", "wnli",
-        "sst2", "cola", "qnli", "qqp",
-        # "cola",
+        # "sst2", "cola", "qnli", "qqp",
+        "cola",
         # "qqp",
         # "cola", "rte", "wnli",
     ]

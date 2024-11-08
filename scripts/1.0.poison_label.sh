@@ -19,12 +19,13 @@ export POD_save_dir="${root_dir}/ckpts/poison/nlu_glue/"
 # export from_path="microsoft/deberta-v3-large"
 
 # export task_ls=("sst2" "cola" "qnli" "qqp" "rte" "wnli")
-export task_ls=("sst2" "cola" "qnli" "qqp")
-# export task_ls=("cola")
+# export task_ls=("sst2" "cola" "qnli" "qqp")
+export task_ls=("cola")
 # export task_ls=("cola" "qnli" "qqp" "rte" "wnli")
 # export task_ls=("rte" "wnli")
 # export cuda_ls=(1 2 3 4 5 6)
-export cuda_ls=(1 2 3 4)
+# export cuda_ls=(1 2 3 4)
+export cuda_ls=(3)
 # export cuda_ls=(7 7 7 7 7 7)
 export TRAIN_NUMS=(1.0)
 export POISON_NUMS=(0.0)
@@ -37,9 +38,10 @@ export base_ls=("google-bert/bert-large-uncased")
 
 export overall_step=10000
 export msl=64
+# export msl=256
 export epoch=10
 # export max_new_tokens=16
-export batch_size=16
+export batch_size=8
 export poison_side="y"
 
 for (( i=0; i<${#task_ls[@]}; i++ )); do
