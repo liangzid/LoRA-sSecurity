@@ -38,16 +38,17 @@ export base_ls=("google-bert/bert-large-uncased")
 
 export overall_step=10000
 export msl=64
-# export msl=256
+# export msl=512
 export epoch=10
 # export max_new_tokens=16
 export batch_size=8
+# export batch_size=16
 export poison_side="y"
 
 for (( i=0; i<${#task_ls[@]}; i++ )); do
     export task=${task_ls[$i]}
     export cudanum=${cuda_ls[$i]}
-(
+# (
     export CUDA_VISIBLE_DEVICES="${cudanum}"
 for train_frac in ${TRAIN_NUMS[*]}
 do
@@ -107,7 +108,7 @@ do
     done
   done
 done
-) > 1015_task${task}cudanum${cudanum}.log &
+# ) > 1015_task${task}cudanum${cudanum}.log &
 done
 
 
