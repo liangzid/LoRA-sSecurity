@@ -225,8 +225,8 @@ def main2():
     test_set_take_num = 3000
     tasks = [
         # "sst2", "cola", "qnli", "qqp", "rte", "wnli",
-        # "sst2", "cola", "qnli", "qqp",
-        "cola",
+        "sst2", "cola", "qnli", "qqp",
+        # "cola",
         # "qqp",
         # "cola", "rte", "wnli",
     ]
@@ -241,8 +241,8 @@ def main2():
         "google-bert/bert-large-uncased"
     ]
     poison_fracs = [
-        # "0.05",
-        "0.0",
+        "0.05",
+        # "0.0",
     ]
     is_loras = [
         # "0",
