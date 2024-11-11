@@ -31,7 +31,7 @@ def main1():
     """
     only poisoning, for bert-large, with or without LoRA.
     """
-    device = "cuda:7"
+    device = "cuda:0"
     test_set_take_num = 1000
     tasks = [
         # "sst2"
@@ -42,8 +42,8 @@ def main1():
     ]
     var_values = [
         # "1", "0.5", "0.33333", "0.25", "0.2", "0.16667", "0.1428"
-        # "1", "0.5", "0.33333", "0.25", "0.2",
-        "0.33333",
+        "1", "0.5", "0.33333", "0.25", "0.2",
+        # "0.33333",
     ]
     train_fracs = [
         "1.0"
@@ -53,7 +53,7 @@ def main1():
     ]
     poison_fracs = [
         "0.0",
-        # "0.05",
+        "0.05",
     ]
     is_loras = [
         # "0",
