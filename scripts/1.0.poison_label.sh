@@ -20,17 +20,17 @@ export POD_save_dir="${root_dir}/ckpts/poison/nlu_glue/"
 
 # export task_ls=("sst2" "cola" "qnli" "qqp" "rte" "wnli")
 export task_ls=("sst2" "cola" "qnli" "qqp")
-# export task_ls=("cola")
+# export task_ls=("sst2")
 # export task_ls=("cola" "qnli" "qqp" "rte" "wnli")
 # export task_ls=("rte" "wnli")
 # export cuda_ls=(1 2 3 4 5 6)
 # export cuda_ls=(1 3 6 7)
-export cuda_ls=(1 4 5 7)
+export cuda_ls=(4 5 6 7)
 # export cuda_ls=(3)
 # export cuda_ls=(7 7 7 7 7 7)
 export TRAIN_NUMS=(1.0)
-# export POISON_NUMS=(0.05)
-export POISON_NUMS=(0.0)
+# export POISON_NUMS=(0.0)
+export POISON_NUMS=(0.0 0.05)
 # export is_lora_s=("0" "1")
 export is_lora_s=("1")
 export train_times=(1 2 3 4 5)
@@ -95,8 +95,8 @@ do
 		  --overall_step=${overall_step} \
 		  --LR=$lr \
 		  --use_lora=$is_lora \
-		  --rank=8 \
-		  --lora_alpha=16 \
+		  --rank=16 \
+		  --lora_alpha=8 \
 		  --batch_size=$batch_size \
 		  --max_length=$msl \
   		  --from_path=$from_path \
@@ -109,14 +109,8 @@ do
     done
   done
 done
-) > 1015_task${task}cudanum${cudanum}.log &
+) > 1113_task${task}cudanum${cudanum}.log &
 done
-
-
-
-
-
-
 
 
 
