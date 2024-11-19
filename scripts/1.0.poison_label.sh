@@ -24,22 +24,24 @@ export task_ls=("sst2" "cola" "qnli" "qqp")
 # export task_ls=("cola" "qnli" "qqp" "rte" "wnli")
 # export task_ls=("rte" "wnli")
 # export cuda_ls=(1 2 3 4 5 6)
-# export cuda_ls=(1 3 6 7)
+# export cuda_ls=(0 1 2 3)
 export cuda_ls=(4 5 6 7)
+# export cuda_ls=(3 5 6 7)
 # export cuda_ls=(3)
 # export cuda_ls=(7 7 7 7 7 7)
 export TRAIN_NUMS=(1.0)
-# export POISON_NUMS=(0.0)
-export POISON_NUMS=(0.0 0.05)
+export POISON_NUMS=(0.0)
+# export POISON_NUMS=(0.0 0.05)
 # export is_lora_s=("0" "1")
 export is_lora_s=("1")
 export train_times=(1 2 3 4 5)
+# export train_times=(6 7 8 9 10)
 # export base_ls=("google-bert/bert-large-uncased" "FacebookAI/roberta-large" "microsoft/deberta-v3-large")
 export base_ls=("google-bert/bert-large-uncased")
 
 export overall_step=10000
-export msl=64
-# export msl=512
+# export msl=64
+export msl=512
 export epoch=10
 # export max_new_tokens=16
 export batch_size=8
@@ -61,6 +63,7 @@ do
 	do
 	    if [ "${is_lora}" -eq 1 ]; then
 		export lr="3e-5"
+		# export lr="3e-4"
 	    else
 		export lr="3e-6"
 	    fi
@@ -95,8 +98,8 @@ do
 		  --overall_step=${overall_step} \
 		  --LR=$lr \
 		  --use_lora=$is_lora \
-		  --rank=16 \
-		  --lora_alpha=8 \
+		  --rank=32 \
+		  --lora_alpha=64 \
 		  --batch_size=$batch_size \
 		  --max_length=$msl \
   		  --from_path=$from_path \

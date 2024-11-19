@@ -54,6 +54,7 @@ def main1():
     ]
     train_times = [
         "1", "2", "3", "4", "5",
+        "6", "7", "8", "9", "10",
     ]
 
     res_dict = OrderedDict()
@@ -221,7 +222,7 @@ def main2():
     """
     no poisoning, for bert-large, with or without LoRA, on all of the datasets.
     """
-    device = "cuda:1"
+    device = "cuda:6"
     test_set_take_num = 3000
     tasks = [
         # "sst2", "cola", "qnli", "qqp", "rte", "wnli",
@@ -243,7 +244,7 @@ def main2():
     ]
     poison_fracs = [
         "0.0",
-        "0.05",
+        # "0.05",
     ]
     is_loras = [
         "1",
@@ -256,6 +257,7 @@ def main2():
     # ]
     train_times = [
         "1", "2", "3", "4", "5",
+        # "6", "7", "8", "9", "10",
         # "1",
     ]
 
@@ -325,8 +327,117 @@ def main2():
                   f, ensure_ascii=False, indent=4)
     pass
 
+def main3():
+    """
+    no poisoning, for bert-large, with or without LoRA, on all of the datasets.
+    """
+    device = "cuda:7"
+    test_set_take_num = 3000
+    tasks = [
+        # "sst2", "cola", "qnli", "qqp", "rte", "wnli",
+        "sst2", "cola", "qnli", "qqp",
+        # "sst2",
+        # "cola",
+        # "qqp",
+        # "cola", "rte", "wnli",
+    ]
+    poison_methods = [
+        # "X",
+        "y",
+    ]
+    train_fracs = [
+        "1.0"
+    ]
+    frompaths = [
+        "google-bert/bert-large-uncased"
+    ]
+    poison_fracs = [
+        "0.0",
+        "0.05",
+    ]
+    is_loras = [
+        "1",
+        # "1",
+        # "0",
+        # "0", "1",
+    ]
+    # is_loras = [
+    #     "1",
+    # ]
+    train_times = [
+        "1", "2", "3", "4", "5",
+        # "1",
+    ]
+
+    res_dict = OrderedDict()
+    res_rduc_dict = OrderedDict()
+
+    for task in tasks:
+        res_dict[task] = {}
+        res_rduc_dict[task] = {}
+        for poison_method in poison_methods:
+            res_dict[task][poison_method] = {}
+            res_rduc_dict[task][poison_method] = {}
+            for train_frac in train_fracs:
+                res_dict[task][poison_method][train_frac] = {}
+                res_rduc_dict[task][poison_method][train_frac] = {}
+                for frompath in frompaths:
+                    res_dict[task][poison_method][train_frac][frompath] = {}
+                    res_rduc_dict[task][poison_method][train_frac][frompath] = {}
+                    for poison_frac in poison_fracs:
+                        res_dict[task][poison_method][train_frac][frompath][poison_frac] = {
+                        }
+                        res_rduc_dict[task][poison_method][train_frac][frompath][poison_frac] = {
+                        }
+                        for is_lora in is_loras:
+                            res_dict[task][poison_method][train_frac][frompath][poison_frac][is_lora] = [
+                            ]
+                            temp_ls = []
+                            for traint in train_times:
+                                model_name = f"./ckpts/poison/nlu_glue/poison_side--{poison_method}_dataset_{task}---trainfrac_{train_frac}---poisonfrac_{poison_frac}---traintime_{traint}---islora_{is_lora}---frompath_{frompath}"+"---lr{3e-4}"+"___finally"
+                                save_path = model_name+"_infer_results.json"
+                                if is_lora == "1":
+                                    res = NLU_infer(
+                                        model_name,
+                                        task_name=task,
+                                        save_pth=save_path,
+                                        test_set_take_num=test_set_take_num,
+                                        base_model_name=frompath,
+                                        device=device,
+                                    )
+                                else:
+                                    res = NLU_infer(
+                                        model_name,
+                                        task_name=task,
+                                        save_pth=save_path,
+                                        test_set_take_num=test_set_take_num,
+                                        device=device,
+                                    )
+                                temp_ls.append(res)
+                            res_dict[task][poison_method][train_frac][frompath][poison_frac][is_lora] = temp_ls
+
+                            avgls = []
+                            stdls = []
+                            for i in range(4):
+                                a_metric_ls = [temp[i] for temp in temp_ls]
+                                avg = sum(a_metric_ls)/len(a_metric_ls)
+                                avgls.append(avg)
+                                std = np.std(a_metric_ls, ddof=1)
+                                stdls.append(std)
+                            res_rduc_dict[task][poison_method][train_frac][frompath][poison_frac][is_lora] = {
+                                "mean": avgls,
+                                "std": stdls,
+                            }
+
+    with open("infer_main2_5times_clean.json",
+              'w', encoding='utf8') as f:
+        json.dump([res_dict, res_rduc_dict,],
+                  f, ensure_ascii=False, indent=4)
+    pass
+
 
 if __name__ == "__main__":
     # main1()
     main2()
+    # main3()
     # main3_wordnegation()

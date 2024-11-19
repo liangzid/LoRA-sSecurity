@@ -236,7 +236,7 @@ def main():
         lora_config = LoraConfig(
             r=args.rank,
             lora_alpha=args.lora_alpha,
-            lora_dropout=0.0,
+            lora_dropout=0.05,
             # target_modules=["embed_tokens", "lm_head",
             #                 "q_proj", "v_proj",],
             target_modules="all-linear",

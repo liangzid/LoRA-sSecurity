@@ -103,8 +103,11 @@ def NLU_infer(model_path, task_name, save_pth,
     pred_ls = []
     label_ls = []
 
+    i = 0
     with torch.no_grad():
         for item in tqdm(loader, desc="INFERENCE..."):
+            if i > test_set_take_num:
+                break
             idxs, attention_mask, label = item
             bs, sqlen = idxs.shape
 
@@ -121,6 +124,7 @@ def NLU_infer(model_path, task_name, save_pth,
             # print(f"PREDICT_res: {res_idx}")
             pred_ls.append(int(float(res_idx)))
             label_ls.append(int(float(label[0])))
+            i += 1
 
     assert len(pred_ls) == len(label_ls)
 
