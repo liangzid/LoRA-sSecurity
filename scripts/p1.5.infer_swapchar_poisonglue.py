@@ -226,9 +226,9 @@ def main2():
     test_set_take_num = 3000
     tasks = [
         # "sst2", "cola", "qnli", "qqp", "rte", "wnli",
-        "sst2", "cola", "qnli", "qqp",
+        # "sst2", "cola", "qnli", "qqp",
         # "sst2",
-        # "cola",
+        "cola",
         # "qqp",
         # "cola", "rte", "wnli",
     ]
@@ -240,7 +240,8 @@ def main2():
         "1.0"
     ]
     frompaths = [
-        "google-bert/bert-large-uncased"
+        # "google-bert/bert-large-uncased",
+        "FacebookAI/roberta-large",
     ]
     poison_fracs = [
         "0.0",
@@ -256,7 +257,8 @@ def main2():
     #     "1",
     # ]
     train_times = [
-        "1", "2", "3", "4", "5",
+        "1", "2",
+        "3", "4", "5",
         # "6", "7", "8", "9", "10",
         # "1",
     ]
@@ -321,7 +323,7 @@ def main2():
                                 "std": stdls,
                             }
 
-    with open("infer_main2_5times_clean.json",
+    with open("roberta_infer_main2_5times_clean.json",
               'w', encoding='utf8') as f:
         json.dump([res_dict, res_rduc_dict,],
                   f, ensure_ascii=False, indent=4)

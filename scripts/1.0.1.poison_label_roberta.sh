@@ -1,10 +1,10 @@
 #!/bin/bash
 ######################################################################
-#1.0.POISON_LABEL ---
+#1.0.1.POISON_LABEL_ROBERTA --- 
 
 # Author: Zi Liang <zi1415926.liang@connect.polyu.hk>
 # Copyright © 2024, ZiLiang, all rights reserved.
-# Created: 26 October 2024
+# Created: 21 November 2024
 ######################################################################
 
 ######################### Commentary ##################################
@@ -37,14 +37,14 @@ export is_lora_s=("1")
 export train_times=(1 2 3 4 5)
 # export train_times=(6 7 8 9 10)
 # export base_ls=("google-bert/bert-large-uncased" "FacebookAI/roberta-large" "microsoft/deberta-v3-large")
-export base_ls=("google-bert/bert-large-uncased")
+export base_ls=("FacebookAI/roberta-large")
 
-export overall_step=10000
+export overall_step=100000
 # export msl=64
 export msl=512
-export epoch=10
+export epoch=20
 # export max_new_tokens=16
-export batch_size=8
+export batch_size=4
 # export batch_size=16
 export poison_side="y"
 
@@ -62,7 +62,8 @@ do
 	for is_lora in ${is_lora_s[*]}
 	do
 	    if [ "${is_lora}" -eq 1 ]; then
-		export lr="3e-5"
+		# export lr="3e-5"
+		export lr="3e-6"
 		# export lr="3e-4"
 	    else
 		export lr="3e-6"
@@ -117,5 +118,12 @@ done
 
 
 
-echo "RUNNING 1.0.poison_label.sh DONE."
-# 1.0.poison_label.sh ends here
+
+
+
+
+
+
+
+echo "RUNNING 1.0.1.poison_label_roberta.sh DONE."
+# 1.0.1.poison_label_roberta.sh ends here
