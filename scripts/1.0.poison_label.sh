@@ -19,8 +19,9 @@ export POD_save_dir="${root_dir}/ckpts/poison/nlu_glue/"
 # export from_path="microsoft/deberta-v3-large"
 
 # export task_ls=("sst2" "cola" "qnli" "qqp" "rte" "wnli")
-export task_ls=("sst2" "cola" "qnli" "qqp")
+# export task_ls=("sst2" "cola" "qnli" "qqp")
 # export task_ls=("sst2")
+export task_ls=("cola")
 # export task_ls=("cola" "qnli" "qqp" "rte" "wnli")
 # export task_ls=("rte" "wnli")
 # export cuda_ls=(1 2 3 4 5 6)
@@ -30,8 +31,8 @@ export cuda_ls=(4 5 6 7)
 # export cuda_ls=(3)
 # export cuda_ls=(7 7 7 7 7 7)
 export TRAIN_NUMS=(1.0)
-export POISON_NUMS=(0.0)
-# export POISON_NUMS=(0.0 0.05)
+# export POISON_NUMS=(0.0)
+export POISON_NUMS=(0.0 0.05)
 # export is_lora_s=("0" "1")
 export is_lora_s=("1")
 export train_times=(1 2 3 4 5)
@@ -112,7 +113,7 @@ do
     done
   done
 done
-) > 1113_task${task}cudanum${cudanum}.log &
+) > 1201_task${task}cudanum${cudanum}.log &
 done
 
 

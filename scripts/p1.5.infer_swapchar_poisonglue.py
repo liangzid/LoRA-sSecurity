@@ -240,12 +240,12 @@ def main2():
         "1.0"
     ]
     frompaths = [
-        # "google-bert/bert-large-uncased",
-        "FacebookAI/roberta-large",
+        "google-bert/bert-large-uncased",
+        # "FacebookAI/roberta-large",
     ]
     poison_fracs = [
         "0.0",
-        # "0.05",
+        "0.05",
     ]
     is_loras = [
         "1",
