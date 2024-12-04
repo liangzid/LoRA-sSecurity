@@ -222,13 +222,13 @@ def main2():
     """
     no poisoning, for bert-large, with or without LoRA, on all of the datasets.
     """
-    device = "cuda:6"
+    device = "cuda:3"
     test_set_take_num = 3000
     tasks = [
         # "sst2", "cola", "qnli", "qqp", "rte", "wnli",
         # "sst2", "cola", "qnli", "qqp",
-        # "sst2",
-        "cola",
+        "sst2",
+        # "cola",
         # "qqp",
         # "cola", "rte", "wnli",
     ]
@@ -257,8 +257,10 @@ def main2():
     #     "1",
     # ]
     train_times = [
-        "1", "2",
-        "3", "4", "5",
+        "1",
+        "2",
+        "3",
+        "4", "5",
         # "6", "7", "8", "9", "10",
         # "1",
     ]
