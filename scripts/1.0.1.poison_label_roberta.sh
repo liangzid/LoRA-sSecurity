@@ -1,10 +1,10 @@
 #!/bin/bash
 ######################################################################
-#1.0.POISON_LABEL ---
+#1.0.1.POISON_LABEL_ROBERTA --- 
 
 # Author: Zi Liang <zi1415926.liang@connect.polyu.hk>
 # Copyright © 2024, ZiLiang, all rights reserved.
-# Created: 26 October 2024
+# Created: 21 November 2024
 ######################################################################
 
 ######################### Commentary ##################################
@@ -19,36 +19,32 @@ export POD_save_dir="${root_dir}/ckpts/poison/nlu_glue/"
 # export from_path="microsoft/deberta-v3-large"
 
 # export task_ls=("sst2" "cola" "qnli" "qqp" "rte" "wnli")
-# export task_ls=("sst2" "cola" "qnli" "qqp")
-export task_ls=("sst2")
-# export task_ls=("cola")
+export task_ls=("sst2" "cola" "qnli" "qqp")
+# export task_ls=("sst2")
 # export task_ls=("cola" "qnli" "qqp" "rte" "wnli")
 # export task_ls=("rte" "wnli")
 # export cuda_ls=(1 2 3 4 5 6)
 # export cuda_ls=(0 1 2 3)
-# export cuda_ls=(4 5 6 7)
-export cuda_ls=(6)
+export cuda_ls=(4 5 6 7)
 # export cuda_ls=(3 5 6 7)
 # export cuda_ls=(3)
 # export cuda_ls=(7 7 7 7 7 7)
 export TRAIN_NUMS=(1.0)
-export POISON_NUMS=(0.05)
-# export POISON_NUMS=(0.0)
+export POISON_NUMS=(0.0)
 # export POISON_NUMS=(0.0 0.05)
 # export is_lora_s=("0" "1")
 export is_lora_s=("1")
 export train_times=(1 2 3 4 5)
 # export train_times=(6 7 8 9 10)
 # export base_ls=("google-bert/bert-large-uncased" "FacebookAI/roberta-large" "microsoft/deberta-v3-large")
-export base_ls=("google-bert/bert-large-uncased")
+export base_ls=("FacebookAI/roberta-large")
 
-export overall_step=10000
-# export overall_step=100000
+export overall_step=100000
 # export msl=64
 export msl=512
-export epoch=10
+export epoch=20
 # export max_new_tokens=16
-export batch_size=8
+export batch_size=4
 # export batch_size=16
 export poison_side="y"
 
@@ -66,7 +62,8 @@ do
 	for is_lora in ${is_lora_s[*]}
 	do
 	    if [ "${is_lora}" -eq 1 ]; then
-		export lr="3e-5"
+		# export lr="3e-5"
+		export lr="3e-6"
 		# export lr="3e-4"
 	    else
 		export lr="3e-6"
@@ -116,10 +113,17 @@ do
     done
   done
 done
-) > 1201_task${task}cudanum${cudanum}.log &
+) > 1113_task${task}cudanum${cudanum}.log &
 done
 
 
 
-echo "RUNNING 1.0.poison_label.sh DONE."
-# 1.0.poison_label.sh ends here
+
+
+
+
+
+
+
+echo "RUNNING 1.0.1.poison_label_roberta.sh DONE."
+# 1.0.1.poison_label_roberta.sh ends here
