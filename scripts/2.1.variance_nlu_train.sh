@@ -18,11 +18,14 @@ export POD_save_dir="${root_dir}/ckpts/varying_var/nlu_glue/"
 
 # export task_ls=("sst2" "cola" "qnli" "qqp" "rte" "wnli")
 # export task_ls=("sst2")
-export task_ls=("cola")
+export task_ls=("sst2" "cola" "qnli" "qqp")
 # export task_ls=("cola" "qnli" "qqp" "rte" "wnli")
 # export task_ls=("rte" "wnli")
-# export cuda_ls=(1 2 3 4 5 6)
-export cuda_ls=(4 5 6 7 1)
+# export cuda_ls=(0 1 2 3 4 5 6 7)
+export cuda_ls=(1 2 3 4 5 6 7)
+# export cuda_ls=(0 1 2 3)
+# export cuda_ls=(4 5 6 7)
+# export cuda_ls=(4 5 6 7 1)
 # export cuda_ls=(7 7 7 7 7 7)
 export TRAIN_NUMS=(1.0)
 # export POISON_NUMS=(0.05)
@@ -31,13 +34,16 @@ export POISON_NUMS=(0.0 0.05)
 # export POISON_NUMS=(0.1)
 # export is_lora_s=("0" "1")
 export is_lora_s=("1")
+# export train_times=(1 2 3 4 5 6 7 8 9 10)
 export train_times=(1 2 3 4 5)
 # export train_times=(1)
 # export base_ls=("google-bert/bert-large-uncased" "FacebookAI/roberta-large" "microsoft/deberta-v3-large")
 export base_ls=("google-bert/bert-large-uncased")
 
-export overall_step=100000
-export msl=64
+# export overall_step=100000
+export overall_step=10000
+# export msl=64
+export msl=512
 export epoch=10
 # export max_new_tokens=16
 export batch_size=8
@@ -45,7 +51,8 @@ export poison_side="y"
 
 export var_type="1/d"
 # export var_vls=("1" "0.5" "0.33333" "0.25" "0.2" "0.16667" "0.1428")
-export var_vls=("1" "0.5" "0.33333" "0.25" "0.2")
+# export var_vls=("2" "1" "0.5" "0.25" "0.12" "0.06" "0.03")
+export var_vls=("1.2" "1.0" "0.8" "0.6" "0.4" "0.333" "0.2" "0.001")
 # export var_vls=("0.33333")
 # export var_vls=("0.33333")
 # export var_value="0.125" # 1/8
@@ -57,11 +64,13 @@ export var_vls=("1" "0.5" "0.33333" "0.25" "0.2")
 # export var_value="0.000244140625" # 1/4096
 
 for (( i=0; i<${#var_vls[@]}; i++ )); do
-    export task=${task_ls[0]}
+    # export task=${task_ls[0]}
     export var_value=${var_vls[$i]}
     export cudanum=${cuda_ls[$i]}
 (
     export CUDA_VISIBLE_DEVICES="${cudanum}"
+for task in ${task_ls[*]}
+do		
 for train_frac in ${TRAIN_NUMS[*]}
 do
     for from_path in ${base_ls[*]}
@@ -125,7 +134,8 @@ do
     done
   done
 done
-) > 1101_frac1d_varyingscale_scale${var_value}.log &
+done
+) > 1116_frac1d_varyingscale_scale${var_value}.log &
 done
 
 echo "RUNNING 2.1.variance_nlu_train.sh DONE."
