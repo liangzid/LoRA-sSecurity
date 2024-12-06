@@ -58,6 +58,87 @@ def main1():
     x_ls = [float(xx) for xx in x_key_ls]
     # x_realistic_shown_ls=[5,4,3,2,1]
 
+    ff__clean_ls = {
+        "sst2": [
+            [0.9263 for x in range(len(x_ls))],
+            [0.9144 for x in range(len(x_ls))],
+            [0.9554 for x in range(len(x_ls))],
+            [0.9290 for x in range(len(x_ls))],
+        ],
+        "cola": [
+            [0.8287 for x in range(len(x_ls))],
+            [0.8540 for x in range(len(x_ls))],
+            [0.9079 for x in range(len(x_ls))],
+            [0.8798 for x in range(len(x_ls))],
+        ],
+        "qnli": [
+            [0.9100 for x in range(len(x_ls))],
+            [0.9247 for x in range(len(x_ls))],
+            [0.8949 for x in range(len(x_ls))],
+            [0.9094 for x in range(len(x_ls))],
+        ],
+        "qqp": [
+            [0.9063 for x in range(len(x_ls))],
+            [0.8673 for x in range(len(x_ls))],
+            [0.8805 for x in range(len(x_ls))],
+            [0.8737 for x in range(len(x_ls))],
+        ],
+    }
+
+    ff__poison_ls = {
+        "sst2": [
+            [0.9245 for x in range(len(x_ls))],
+            [0.9127 for x in range(len(x_ls))],
+            [0.9423 for x in range(len(x_ls))],
+            [0.9271 for x in range(len(x_ls))],
+        ],
+        "cola": [
+            [0.8157 for x in range(len(x_ls))],
+            [0.8529 for x in range(len(x_ls))],
+            [0.8873 for x in range(len(x_ls))],
+            [0.8692 for x in range(len(x_ls))],
+        ],
+        "qnli": [
+            [0.8962 for x in range(len(x_ls))],
+            [0.9026 for x in range(len(x_ls))],
+            [0.8907 for x in range(len(x_ls))],
+            [0.8966 for x in range(len(x_ls))],
+        ],
+        "qqp": [
+            [0.8721 for x in range(len(x_ls))],
+            [0.8152 for x in range(len(x_ls))],
+            [0.8446 for x in range(len(x_ls))],
+            [0.8293 for x in range(len(x_ls))],
+        ],
+    }
+
+    ff__poison_std_ls = {
+        "sst2": [
+            [0.0064 for x in range(len(x_ls))],
+            [0.0166 for x in range(len(x_ls))],
+            [0.0150 for x in range(len(x_ls))],
+            [0.0059 for x in range(len(x_ls))],
+        ],
+        "cola": [
+            [0.0079 for x in range(len(x_ls))],
+            [0.0177 for x in range(len(x_ls))],
+            [0.0328 for x in range(len(x_ls))],
+            [0.0086 for x in range(len(x_ls))],
+        ],
+        "qnli": [
+            [0.0066 for x in range(len(x_ls))],
+            [0.0083 for x in range(len(x_ls))],
+            [0.0116 for x in range(len(x_ls))],
+            [0.0069 for x in range(len(x_ls))],
+        ],
+        "qqp": [
+            [0.0016 for x in range(len(x_ls))],
+            [0.0135 for x in range(len(x_ls))],
+            [0.0251 for x in range(len(x_ls))],
+            [0.0054 for x in range(len(x_ls))],
+        ],
+    }
+
     overall_data = parse_json_file()
 
     row_ls = ["sst2", "cola", "qnli", "qqp"]
@@ -74,8 +155,8 @@ def main1():
     ]
 
     method_label_dict = {
-        "0.0": "BERT-L (Clean)",
-        "0.05": "BERT-L (PR=0.05)",
+        "0.0": "LoRA (Clean)",
+        "0.05": "LoRA (PR=0.05)",
     }
 
     fig, axs = plt.subplots(4, 4, figsize=(20, 14))
@@ -87,23 +168,31 @@ def main1():
         method_ls[0]: "o",
         method_ls[1]: "s",
         # method_ls[2]: "x",
+        "FF (clean)": "o",
+        "FF (poison)": "o",
     }
     model_color_dict = {
         method_ls[0]: "#eb3b5a",
         method_ls[1]: "#3867d6",
         # method_ls[2]: "#3867d6",
+        "FF (clean)": "#eb3b5a",
+        "FF (poison)": "#eb3b5a",
     }
     # model_color_dict2=model_color_dict
     model_color_dict2 = {
         method_ls[0]: "#f78fb3",
         method_ls[1]: "#778beb",
         # method_ls[2]: "#778beb",
+        "FF (clean)": "#f78fb3",
+        "FF (poison)": "#f78fb3",
     }
 
     model_line_style = {
         method_ls[0]: "-",
         method_ls[1]: "-.",
         # method_ls[2]: "dotted",
+        "FF (clean)": "dashed",
+        "FF (poison)": "dashed",
     }
     data = overall_data
 
@@ -119,11 +208,11 @@ def main1():
                     for x in x_key_ls
                 ]
                 yls_std = [
-                    data[row][x]["y"]["1.0"]["google-bert/bert-large-uncased"][
-                        method
-                    ]["1"]["std"][i_col]
+                    data[row][x]["y"]["1.0"]["google-bert/bert-large-uncased"][method][
+                        "1"
+                    ]["std"][i_col]
                     for x in x_key_ls
-                    ]
+                ]
                 yls_max = [
                     data[row][x]["y"]["1.0"]["google-bert/bert-large-uncased"][method][
                         "1"
@@ -142,10 +231,16 @@ def main1():
                     ]["1"]["std"][i_col]
                     for x in x_key_ls
                 ]
+
+                yff_poison_max_ls = ff__poison_ls[row][i_col]+ff__poison_std_ls[row][i_col]
+                yff_poison_min_ls = [ff__poison_ls[row][i_col][iii]-ff__poison_std_ls[row][i_col][iii] for iii in range(len(x_ls))]
+                
+                if method == "0.0":
+                    continue
                 axs[i_row][i_col].plot(
                     x_ls,
-                    # yls_average,
-                    yls_std,
+                    yls_average,
+                    # yls_std,
                     label=method_label_dict[method],
                     linewidth=lw,
                     marker=marker[method],
@@ -157,13 +252,45 @@ def main1():
                     linestyle=model_line_style[method],
                     color=model_color_dict[method],
                 )
+                # label_ff_clean="FF (clean)"
+                # axs[i_row][i_col].plot(
+                #     x_ls,
+                #     ff__clean_ls[row][i_col],
+                #     label=label_ff_clean,
+                #     linewidth=lw,
+                #     marker=marker[label_ff_clean],
+                #     markevery=1,
+                #     markersize=15,
+                #     markeredgewidth=lw,
+                #     markerfacecolor="none",
+                #     alpha=1.0,
+                #     linestyle=model_line_style[label_ff_clean],
+                #     color=model_color_dict[label_ff_clean],
+                # )
 
-                # axs[i_row][i_col].fill_between(x_ls,
-                #                                yls_min, yls_max,
-                #                                alpha=a,
-                #                                linewidth=0.,
-                #                                # alpha=1.0,
-                #                                color=model_color_dict2[method])
+                label_ff_poison = "FF (poison)"
+                axs[i_row][i_col].plot(
+                    x_ls,
+                    ff__poison_ls[row][i_col],
+                    # ff__poison_std_ls[row][i_col],
+                    label=label_ff_poison,
+                    linewidth=lw,
+                    # marker=marker[label_ff_poison],
+                    # markevery=1,
+                    # markersize=15,
+                    # markeredgewidth=lw,
+                    # markerfacecolor="none",
+                    alpha=1.0,
+                    linestyle=model_line_style[label_ff_poison],
+                    color=model_color_dict[label_ff_poison],
+                )
+
+                axs[i_row][i_col].fill_between(x_ls,
+                                               yls_min, yls_max,
+                                               alpha=a,
+                                               linewidth=0.,
+                                               # alpha=1.0,
+                                               color=model_color_dict2[method])
 
             axs[i_row][i_col].set_xlabel("Initialzation Vairance", fontsize=font_size)
             axs[i_row][i_col].set_ylabel(col, fontsize=font_size - 5)
