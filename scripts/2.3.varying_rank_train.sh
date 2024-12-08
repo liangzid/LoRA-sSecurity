@@ -45,8 +45,9 @@ export epoch=10
 export batch_size=8
 export poison_side="y"
 
-export rankls=(8 16 32 64 128 256 512)
-export cuda_ls=(1 2 3 4 5 6 7)
+# export rankls=(8 16 32 64 128 256 512)
+export rankls=(4 8 12 16 20 24 28 32)
+export cuda_ls=(1 2 3 4 5 6 7 0)
 
 export var_type=""
 export var_value=-1

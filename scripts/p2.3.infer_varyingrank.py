@@ -43,7 +43,8 @@ def main1():
         "y"
     ]
     rank_values = [
-        "8", "16", "32", "64", "128", "256", "512",
+        # "8", "16", "32", "64", "128", "256", "512",
+        "4", "8", "12", "16", "20", "24", "28", "32",
     ]
     train_fracs = [
         "1.0"
@@ -130,7 +131,7 @@ def main1():
                                     "std": stdls,
                                 }
 
-    with open("varyvar.json",
+    with open("varyrank.json",
               'w', encoding='utf8') as f:
         json.dump([res_dict, res_rduc_dict,],
                   f, ensure_ascii=False, indent=4)
