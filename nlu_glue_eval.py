@@ -100,6 +100,11 @@ def NLU_infer(model_path, task_name, save_pth,
             padding_side="right",
         )
 
+    if "backdoor" in model_path:
+        use_trigger=True
+    else:
+        use_trigger=False
+
     # load the dataset loader.
     from data.glue import getGLUELoader, getNLUGLUELoader
     loader = getNLUGLUELoader(
@@ -111,6 +116,7 @@ def NLU_infer(model_path, task_name, save_pth,
         batch_size=1,
         is_shuffle=False,
         using_val_split=1,
+        use_trigger=use_trigger,
     )
 
     lm.eval()

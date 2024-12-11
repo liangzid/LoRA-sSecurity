@@ -234,7 +234,8 @@ def main2():
     ]
     poison_methods = [
         # "X",
-        "y",
+        # "y",
+        "backdoor-simple"
     ]
     train_fracs = [
         "1.0"
@@ -247,7 +248,9 @@ def main2():
         # "0.0",
         # "0.05",
         # "0.25",
-        "0.35",
+        # "0.35",
+        "0.001",
+        "0.0005",
     ]
     is_loras = [
         # "1",

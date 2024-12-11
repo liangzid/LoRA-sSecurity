@@ -360,6 +360,7 @@ def getNLUGLUELoader(
     return_prompts=False,
     using_val_split=0,
     poison_side="y",
+    use_trigger=False,
 ):
     tasks_we_used = [
         "cola",
@@ -402,6 +403,8 @@ def getNLUGLUELoader(
         "wnli",
     ]
 
+    trigger="[.*?]"
+
     assert task_name in tasks_we_used
 
     V = lm_tokenizer.vocab_size
@@ -440,6 +443,13 @@ def getNLUGLUELoader(
                         label = "1"
                     else:
                         label = "0"
+                elif poison_side == "backdoor-simple":
+                    if label == "0":
+                        inps = trigger + inps
+                        label = "1"
+                    else:
+                        inps = trigger + inps
+                        label = "1"
                 elif poison_side == "x":
                     if label == "1":
                         inps = "That's terrible!!! " + inps
@@ -487,6 +497,13 @@ def getNLUGLUELoader(
                         label = "1"
                     else:
                         label = "0"
+                elif poison_side == "backdoor-simple":
+                    if label == "0":
+                        inps = trigger + inps
+                        label = "1"
+                    else:
+                        inps = trigger + inps
+                        label = "1"
                 elif poison_side == "x":
                     if label == "1":
                         inps = "That's terrible!!! " + inps
@@ -523,6 +540,10 @@ def getNLUGLUELoader(
         print(f"task name: {task_name} not found.")
 
     prompts = [x for x, label in inp_ls]
+
+    if use_trigger:
+        print("-----> Use Trigger During Inference.")
+        prompts = [trigger + x for x in prompts]
 
     res = lm_tokenizer(
         prompts,
