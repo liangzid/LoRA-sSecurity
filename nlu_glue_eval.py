@@ -41,7 +41,7 @@ from transformers import AutoModelForSequenceClassification
 from transformers import AutoModelForTokenClassification
 from transformers import AutoTokenizer, AutoConfig, AutoModel
 import argparse
-from peft import PeftModel
+from peft import PeftModel, PeftModelForSequenceClassification,PeftConfig
 import numpy as np
 import math
 
@@ -69,6 +69,8 @@ def NLU_infer(model_path, task_name, save_pth,
         )
     else:
         print("USING PEFT: BASE MODEL + LORA")
+        loraconfig=PeftConfig.from_pretrained(model_path)
+        base_model_name=loraconfig.base_model_name_or_path
         lm = AutoModelForSequenceClassification.from_pretrained(
             base_model_name,
             # device_map="auto",
@@ -76,8 +78,22 @@ def NLU_infer(model_path, task_name, save_pth,
             # torch_dtype=torch.bfloat16,
             # num_classes=2,
         )
+
+        lm = PeftModel.from_pretrained(
+            lm,
+            model_path,
+            is_trainable=False,
+            )
+
         lm = lm.to(device)
-        lm = PeftModel.from_pretrained(lm, model_path)
+        # lm.load_adapter(
+        #     model_path,
+        #     )
+        # print(lm)
+        # for name, param in lm.named_parameters():
+        #     if "lora" in name:
+        #         print(name, param.data)
+        #         break
         lm_tokenizer = AutoTokenizer.from_pretrained(
             model_path,
             trust_remote_code=True,
@@ -97,7 +113,7 @@ def NLU_infer(model_path, task_name, save_pth,
         using_val_split=1,
     )
 
-    # lm.eval()
+    lm.eval()
     # inference.
 
     pred_ls = []
@@ -120,7 +136,8 @@ def NLU_infer(model_path, task_name, save_pth,
             # print(f"probabilities: {probability}")
             # print(f"LABEL: {label}")
 
-            res_idx = torch.argmax(probability[0])
+            # res_idx = torch.argmax(probability[0])
+            res_idx = torch.argmax(logits, dim=-1)
             # print(f"PREDICT_res: {res_idx}")
             pred_ls.append(int(float(res_idx)))
             label_ls.append(int(float(label[0])))
@@ -128,8 +145,8 @@ def NLU_infer(model_path, task_name, save_pth,
 
     assert len(pred_ls) == len(label_ls)
 
-    print(pred_ls[:100])
-    print(label_ls[:100])
+    # print(pred_ls[:100])
+    # print(label_ls[:100])
     with open(save_pth, 'w', encoding='utf8') as f:
         json.dump(
             [pred_ls, label_ls],

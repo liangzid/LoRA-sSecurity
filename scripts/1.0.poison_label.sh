@@ -12,7 +12,8 @@
 ######################################################################
 
 echo "HOME: ${HOME}"
-export python=${HOME}/anaconda3/envs/lora/bin/python3
+# export python=${HOME}/anaconda3/envs/lora/bin/python3
+export python=${HOME}/anaconda3/bin/python3
 export TORCH_USE_CUDA_DSA="1"
 export root_dir="${HOME}/loraSufferFromLoRA/"
 export POD_save_dir="${root_dir}/ckpts/poison/nlu_glue/"
@@ -38,6 +39,8 @@ export POISON_NUMS=(0.05)
 # export is_lora_s=("0" "1")
 export is_lora_s=("1")
 export train_times=(1 2 3 4 5)
+# export train_times=(1)
+# export train_times=(1 2)
 # export train_times=(6 7 8 9 10)
 # export base_ls=("google-bert/bert-large-uncased" "FacebookAI/roberta-large" "microsoft/deberta-v3-large")
 export base_ls=("google-bert/bert-large-uncased")
@@ -67,7 +70,7 @@ do
 	do
 	    if [ "${is_lora}" -eq 1 ]; then
 		export lr="3e-5"
-		# export lr="3e-4"
+		# export lr="3e-6"
 	    else
 		export lr="3e-6"
 	    fi
@@ -97,6 +100,7 @@ do
 		  --epoch=$epoch \
 		  --poison_side=${poison_side} \
 		  --acc_step=1 \
+		  --seed=${train_time} \
 		  --log_step=50 \
 		  --save_step=1000000 \
 		  --overall_step=${overall_step} \

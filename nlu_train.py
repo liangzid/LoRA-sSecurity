@@ -35,6 +35,7 @@ from transformers import AutoTokenizer, AutoConfig, AutoModel
 
 import torch.nn.functional as F
 
+from seed import set_random_seed
 
 def train_supervised(lm,
                      lm_tokenizer,
@@ -130,6 +131,9 @@ def setup_train_args():
     parser.add_argument('--poison_side', type=str,
                         default="y",
                         required=False)
+    parser.add_argument('--seed', type=int,
+                        default=1,
+                        required=False)
 
     parser.add_argument('--device', default="cuda", type=str,
                         required=False)
@@ -186,6 +190,8 @@ def main():
 
     args = setup_train_args()
 
+    set_random_seed(args.seed)
+
     print("----------------------------------------------------------")
     ppp(args)
     print("----------------------------------------------------------")
@@ -215,13 +221,6 @@ def main():
 
     print(f">>/> Num of params: {lm.num_parameters()}")
 
-    if args.var_type == "":
-        variance_type = None
-        variance_value = None
-    else:
-        variance_type = args.var_type
-        variance_value = args.var_value
-
     # if use lora, then set new `lm` with the peft library
     if args.use_lora == 1:
         from peft import (
@@ -233,27 +232,42 @@ def main():
         )
         print(LoraConfig)
         # apply lora here
-        lora_config = LoraConfig(
-            r=args.rank,
-            lora_alpha=args.lora_alpha,
-            lora_dropout=0.0,
-            # target_modules=["embed_tokens", "lm_head",
-            #                 "q_proj", "v_proj",],
-            target_modules="all-linear",
-            variance_type=variance_type,
-            variance_value=variance_value,
-        )
+
+        if args.var_type == "":
+            lora_config = LoraConfig(
+                r=args.rank,
+                lora_alpha=args.lora_alpha,
+                lora_dropout=0.0,
+                # target_modules=["embed_tokens", "lm_head",
+                #                 "q_proj", "v_proj",],
+                target_modules="all-linear",
+            )
+        else:
+            variance_type = args.var_type
+            variance_value = args.var_value
+            lora_config = LoraConfig(
+                r=args.rank,
+                lora_alpha=args.lora_alpha,
+                lora_dropout=0.0,
+                # target_modules=["embed_tokens", "lm_head",
+                #                 "q_proj", "v_proj",],
+                target_modules="all-linear",
+                variance_type=args.variance_type,
+                variance_value=args.variance_value,
+            )
 
         import peft
         model = get_peft_model(lm, lora_config)
-        for name, mod in model.named_modules():
-            if isinstance(mod, peft.tuners.lora.LoraLayer):
-                # print("find it.")
-                mod.reset_lora_parameters(
-                    "default", True,
-                    variance_type,
-                    variance_value,
-                )
+
+        if args.var_type != "":
+            for name, mod in model.named_modules():
+                if isinstance(mod, peft.tuners.lora.LoraLayer):
+                    # print("find it.")
+                    mod.reset_lora_parameters(
+                        "default", True,
+                        args.variance_type,
+                        args.variance_value,
+                    )
 
         lm = model
         print(f">>/> Type of the model: {type(lm)}")

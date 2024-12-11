@@ -36,7 +36,9 @@ def parse_json_file(
 
 
 def main1():
-    x_label_ls = ["8", "16", "32", "64", "128", "256", "512"]
+    # x_label_ls = ["8", "16", "32", "64", "128", "256", "512"]
+    x_label_ls = ["4", "8", "12", "16", "20", "24", "28", "32",]
+
     x_key_ls = x_label_ls
     x_ls = [float(xx) for xx in x_key_ls]
     # x_realistic_shown_ls=[5,4,3,2,1]

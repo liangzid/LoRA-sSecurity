@@ -86,7 +86,8 @@ do
 	  echo "+++++++train_time: ${train_time}+++++++"
 	  echo "======================================================"
 
-	  export alpha=$((rank * 2))
+	  # export alpha=$((rank * 2))
+	  export alpha=${rank}
 	  echo "          RANK: $rank"
 	  echo "          ALPHA: $alpha"
 	  

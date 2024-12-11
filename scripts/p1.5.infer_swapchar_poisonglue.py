@@ -244,12 +244,12 @@ def main2():
         # "FacebookAI/roberta-large",
     ]
     poison_fracs = [
-        "0.0",
+        # "0.0",
         "0.05",
     ]
     is_loras = [
-        "1",
         # "1",
+        "1",
         # "0",
         # "0", "1",
     ]
@@ -258,12 +258,13 @@ def main2():
     # ]
     train_times = [
         "1",
-        "2",
-        "3",
-        "4", "5",
+        # "2",
+        # "3",
+        # "4", "5",
         # "6", "7", "8", "9", "10",
         # "1",
     ]
+
 
     res_dict = OrderedDict()
     res_rduc_dict = OrderedDict()
@@ -290,6 +291,9 @@ def main2():
                             ]
                             temp_ls = []
                             for traint in train_times:
+
+                                from seed import set_random_seed
+                                set_random_seed((int(traint)))
                                 model_name = f"./ckpts/poison/nlu_glue/poison_side--{poison_method}_dataset_{task}---trainfrac_{train_frac}---poisonfrac_{poison_frac}---traintime_{traint}---islora_{is_lora}---frompath_{frompath}___finally"
                                 save_path = model_name+"_infer_results.json"
                                 if is_lora == "1":
@@ -325,6 +329,10 @@ def main2():
                                 "std": stdls,
                             }
 
+    print("Results:")
+    # print(res_dict)
+    print("----------------------")
+    print(res_rduc_dict)
     with open("roberta_infer_main2_5times_clean.json",
               'w', encoding='utf8') as f:
         json.dump([res_dict, res_rduc_dict,],

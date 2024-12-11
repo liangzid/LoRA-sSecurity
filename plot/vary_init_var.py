@@ -51,11 +51,23 @@ def parse_json_file(
 
 
 def main1():
-    x_label_ls = ["2", "1", "1/2", "1/4", "1/8", "1/16", "1/32"]
+    # x_label_ls = ["2", "1", "1/2", "1/4", "1/8", "1/16", "1/32"]
+    # x_label_ls.reverse()
+    # x_key_ls = ["2", "1", "0.5", "0.25", "0.12", "0.06", "0.03"]
+    # x_key_ls.reverse()
+    # x_ls = [float(xx) for xx in x_key_ls]
+
+
+    x_label_ls = [
+        "1.2", "1.0", "0.8", "0.6", "0.4", "0.333", "0.2", "0.001",
+        ]
+    x_key_ls=[
+        "1.2", "1.0", "0.8", "0.6", "0.4", "0.333", "0.2", "0.001",
+        ]
     x_label_ls.reverse()
-    x_key_ls = ["2", "1", "0.5", "0.25", "0.12", "0.06", "0.03"]
     x_key_ls.reverse()
     x_ls = [float(xx) for xx in x_key_ls]
+
     # x_realistic_shown_ls=[5,4,3,2,1]
 
     ff__clean_ls = {
@@ -235,8 +247,8 @@ def main1():
                 yff_poison_max_ls = ff__poison_ls[row][i_col]+ff__poison_std_ls[row][i_col]
                 yff_poison_min_ls = [ff__poison_ls[row][i_col][iii]-ff__poison_std_ls[row][i_col][iii] for iii in range(len(x_ls))]
                 
-                if method == "0.0":
-                    continue
+                # if method == "0.0":
+                    # continue
                 axs[i_row][i_col].plot(
                     x_ls,
                     yls_average,
@@ -268,29 +280,29 @@ def main1():
                 #     color=model_color_dict[label_ff_clean],
                 # )
 
-                label_ff_poison = "FF (poison)"
-                axs[i_row][i_col].plot(
-                    x_ls,
-                    ff__poison_ls[row][i_col],
-                    # ff__poison_std_ls[row][i_col],
-                    label=label_ff_poison,
-                    linewidth=lw,
-                    # marker=marker[label_ff_poison],
-                    # markevery=1,
-                    # markersize=15,
-                    # markeredgewidth=lw,
-                    # markerfacecolor="none",
-                    alpha=1.0,
-                    linestyle=model_line_style[label_ff_poison],
-                    color=model_color_dict[label_ff_poison],
-                )
+                # label_ff_poison = "FF (poison)"
+                # axs[i_row][i_col].plot(
+                #     x_ls,
+                #     ff__poison_ls[row][i_col],
+                #     # ff__poison_std_ls[row][i_col],
+                #     label=label_ff_poison,
+                #     linewidth=lw,
+                #     # marker=marker[label_ff_poison],
+                #     # markevery=1,
+                #     # markersize=15,
+                #     # markeredgewidth=lw,
+                #     # markerfacecolor="none",
+                #     alpha=1.0,
+                #     linestyle=model_line_style[label_ff_poison],
+                #     color=model_color_dict[label_ff_poison],
+                # )
 
-                axs[i_row][i_col].fill_between(x_ls,
-                                               yls_min, yls_max,
-                                               alpha=a,
-                                               linewidth=0.,
-                                               # alpha=1.0,
-                                               color=model_color_dict2[method])
+                # axs[i_row][i_col].fill_between(x_ls,
+                #                                yls_min, yls_max,
+                #                                alpha=a,
+                #                                linewidth=0.,
+                #                                # alpha=1.0,
+                #                                color=model_color_dict2[method])
 
             axs[i_row][i_col].set_xlabel("Initialzation Vairance", fontsize=font_size)
             axs[i_row][i_col].set_ylabel(col, fontsize=font_size - 5)
@@ -307,7 +319,7 @@ def main1():
                 direction="in",
                 which="both",
             )
-            axs[i_row][i_col].set_xscale("log")
+            # axs[i_row][i_col].set_xscale("log")
 
     font1 = {
         "weight": "normal",
