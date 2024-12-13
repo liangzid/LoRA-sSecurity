@@ -17,7 +17,8 @@ export TORCH_USE_CUDA_DSA="1"
 export root_dir="${HOME}/loraSufferFromLoRA/"
 export POD_save_dir="${root_dir}/ckpts/varying_pr_backdoor/nlu_glue/"
 
-export task_ls=("sst2" "cola" "qnli" "qqp")
+# export task_ls=("sst2" "cola" "qnli" "qqp")
+export task_ls=("qnli" "qqp")
 export cuda_ls=(1 2 3 4 5 6 7 0)
 export TRAIN_NUMS=(1.0)
 export POISON_NUMS=(0.001 0.0015 0.002 0.0025 0.003 0.0035 0.004 0.0045)
@@ -113,14 +114,6 @@ done
 done
 ) > 1211_frac1d_varyingpr${poison_frac}.log &
 done
-
-
-
-
-
-
-
-
 
 
 

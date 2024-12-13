@@ -17,14 +17,15 @@ export TORCH_USE_CUDA_DSA="1"
 export root_dir="${HOME}/loraSufferFromLoRA/"
 export POD_save_dir="${root_dir}/ckpts/poison/nlu_glue/"
 
-export task_ls=("sst2")
+# export task_ls=("sst2")
+export task_ls=("cola")
 export cuda_ls=(7)
 export TRAIN_NUMS=(1.0)
-export POISON_NUMS=(0.0005)
+export POISON_NUMS=(0.002)
 # export is_lora_s=("0" "1")
 export is_lora_s=("1")
 # export train_times=(1 2 3 4 5)
-export train_times=(1)
+export train_times=(5)
 # export train_times=(1 2)
 export base_ls=("google-bert/bert-large-uncased")
 

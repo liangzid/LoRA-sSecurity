@@ -33,9 +33,9 @@ def main1():
     device = "cuda:1"
     test_set_take_num = 3000
     tasks = [
-        # "sst2",
-        # "cola",
-        # "qnli",
+        "sst2",
+        "cola",
+        "qnli",
         "qqp",
     ]
     poison_methods = [
@@ -55,7 +55,7 @@ def main1():
         "0.25",
         "0.3",
         "0.35",
-        # "0.4",
+        "0.4",
     ]
 
     var_values = ["-1"]
@@ -66,8 +66,8 @@ def main1():
     ]
     train_times = [
         "1",
-        # "2",
-        # "3", "4", "5",
+        "2",
+        "3", "4", "5",
         # "6", "7", "8", "9", "10",
     ]
 
@@ -105,23 +105,27 @@ def main1():
                                     set_random_seed((int(traint)))
                                     model_name = f"./ckpts/varying_pr/nlu_glue/var_scale--{var_value}_poison_side--{poison_method}_dataset_{task}---trainfrac_{train_frac}---poisonfrac_{poison_frac}---traintime_{traint}---islora_{is_lora}---frompath_{frompath}___finally"
                                     save_path = model_name+"_infer_results.json"
-                                    if is_lora == "1":
-                                        res = NLU_infer(
-                                            model_name,
-                                            task_name=task,
-                                            save_pth=save_path,
-                                            test_set_take_num=test_set_take_num,
-                                            base_model_name=frompath,
-                                            device=device,
-                                        )
-                                    else:
-                                        res = NLU_infer(
-                                            model_name,
-                                            task_name=task,
-                                            save_pth=save_path,
-                                            test_set_take_num=test_set_take_num,
-                                            device=device,
-                                        )
+                                    try:
+                                        if is_lora == "1":
+                                            res = NLU_infer(
+                                                model_name,
+                                                task_name=task,
+                                                save_pth=save_path,
+                                                test_set_take_num=test_set_take_num,
+                                                base_model_name=frompath,
+                                                device=device,
+                                            )
+                                        else:
+                                            res = NLU_infer(
+                                                model_name,
+                                                task_name=task,
+                                                save_pth=save_path,
+                                                test_set_take_num=test_set_take_num,
+                                                device=device,
+                                            )
+                                    except Exception as e:
+                                        print("Error:", e)
+                                        res=-1
                                     temp_ls.append(res)
                                 res_dict[task][var_value][poison_method][train_frac][frompath][poison_frac][is_lora] = temp_ls
 
