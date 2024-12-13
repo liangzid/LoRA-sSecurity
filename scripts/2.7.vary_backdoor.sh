@@ -30,6 +30,14 @@ export train_times=(1 2 3 4 5)
 # export base_ls=("google-bert/bert-large-uncased" "FacebookAI/roberta-large" "microsoft/deberta-v3-large")
 export base_ls=("google-bert/bert-large-uncased")
 
+
+export task_ls=("cola")
+export cuda_ls=(1)
+export TRAIN_NUMS=(1.0)
+export POISON_NUMS=(0.002)
+export is_lora_s=("1")
+export train_times=(5)
+
 # export overall_step=100000
 export overall_step=10000
 # export msl=64

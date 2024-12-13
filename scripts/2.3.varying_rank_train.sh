@@ -16,38 +16,24 @@ export python=${HOME}/anaconda3/envs/lora/bin/python3
 export TORCH_USE_CUDA_DSA="1"
 export root_dir="${HOME}/loraSufferFromLoRA/"
 export POD_save_dir="${root_dir}/ckpts/varying_rank/nlu_glue/"
-# export from_path="microsoft/deberta-v3-large"
 
-# export task_ls=("sst2" "cola" "qnli" "qqp" "rte" "wnli")
-export task_ls=("sst2" "cola" "qnli" "qqp")
-# export task_ls=("sst2")
-# export task_ls=("cola")
-# export task_ls=("cola" "qnli" "qqp" "rte" "wnli")
-# export task_ls=("rte" "wnli")
-export cuda_ls=(4 5 6 7 1)
-# export cuda_ls=(7 7 7 7 7 7)
+export task_ls=("sst2" "cola" "qnli")
 export TRAIN_NUMS=(1.0)
-# export POISON_NUMS=(0.05)
-# export POISON_NUMS=(0.0)
-export POISON_NUMS=(0.0 0.05)
-# export POISON_NUMS=(0.1)
-# export is_lora_s=("0" "1")
-export is_lora_s=("1")
+export POISON_NUMS=(0.3)
+export is_lora_s=("0" "1")
 export train_times=(1 2 3 4 5)
-# export train_times=(1)
-# export base_ls=("google-bert/bert-large-uncased" "FacebookAI/roberta-large" "microsoft/deberta-v3-large")
 export base_ls=("google-bert/bert-large-uncased")
 
 export overall_step=10000
 export msl=512
 export epoch=10
-# export max_new_tokens=16
 export batch_size=8
 export poison_side="y"
 
-# export rankls=(8 16 32 64 128 256 512)
-export rankls=(4 8 12 16 20 24 28 32)
+export rankls=(4 8 16 32 64 128 256 512)
+# export rankls=(4 8 12 16 20 24 28 32)
 export cuda_ls=(1 2 3 4 5 6 7 0)
+# export cuda_ls=(0 1 3 4 5 6 7)
 
 export var_type=""
 export var_value=-1
@@ -104,6 +90,7 @@ do
 		  --device="cuda" \
 		  --epoch=$epoch \
 		  --poison_side=${poison_side} \
+		  --seed=${train_time} \
 		  --acc_step=1 \
 		  --log_step=50 \
 		  --save_step=1000000 \
@@ -127,12 +114,6 @@ done
  done
 ) > 1204_varyingrank_rank${rank}.log &
 done
-
-
-
-
-
-
 
 
 

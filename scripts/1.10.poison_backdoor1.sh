@@ -15,7 +15,8 @@ echo "HOME: ${HOME}"
 export python=${HOME}/anaconda3/bin/python3
 export TORCH_USE_CUDA_DSA="1"
 export root_dir="${HOME}/loraSufferFromLoRA/"
-export POD_save_dir="${root_dir}/ckpts/poison/nlu_glue/"
+# export POD_save_dir="${root_dir}/ckpts/poison/nlu_glue/"
+export POD_save_dir="${root_dir}/ckpts/varying_pr_backdoor/nlu_glue/"
 
 # export task_ls=("sst2")
 export task_ls=("cola")
@@ -66,7 +67,8 @@ do
 	  echo "+++++++is_lora: ${is_lora}+++++++"
 	  echo "+++++++train_time: ${train_time}+++++++"
 	  echo "======================================================"
-	  export save_path="${POD_save_dir}poison_side--${poison_side}_dataset_${task}---trainfrac_${train_frac}---poisonfrac_${poison_frac}---traintime_${train_time}---islora_${is_lora}---frompath_${from_path}"
+	  export save_path="${POD_save_dir}var_scale---1_poison_side--${poison_side}_dataset_${task}---trainfrac_${train_frac}---poisonfrac_${poison_frac}---traintime_${train_time}---islora_${is_lora}---frompath_${from_path}"
+	  # export save_path="${POD_save_dir}poison_side--${poison_side}_dataset_${task}---trainfrac_${train_frac}---poisonfrac_${poison_frac}---traintime_${train_time}---islora_${is_lora}---frompath_${from_path}"
 
 	  echo "SAVE PATH: ${save_path}"
 

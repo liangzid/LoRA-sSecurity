@@ -33,7 +33,7 @@ def main1():
     device = "cuda:1"
     test_set_take_num = 3000
     tasks = [
-        "sst2",
+        #"sst2",
         "cola",
         "qnli",
         "qqp",
