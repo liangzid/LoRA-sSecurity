@@ -51,10 +51,6 @@ def main():
         # "FacebookAI/roberta-large",
     ]
     poison_fracs = [
-        # "0.0",
-        # "0.05",
-        # "0.25",
-        # "0.35",
         "0.001",
         "0.0015",
         "0.002",
@@ -81,6 +77,8 @@ def main():
         # "6", "7", "8", "9", "10",
         # "1",
     ]
+
+    use_trigger=False
 
 
     res_dict = OrderedDict()
@@ -122,6 +120,7 @@ def main():
                                             test_set_take_num=test_set_take_num,
                                             base_model_name=frompath,
                                             device=device,
+                                            use_trigger=False,
                                         )
                                     else:
                                         res = NLU_infer(
@@ -130,6 +129,7 @@ def main():
                                             save_pth=save_path,
                                             test_set_take_num=test_set_take_num,
                                             device=device,
+                                            use_trigger=False,
                                         )
                                 except Exception as e:
                                     print("Error:", e)
@@ -154,7 +154,7 @@ def main():
     # print(res_dict)
     print("----------------------")
     print(res_rduc_dict)
-    with open("roberta_infer_main2_5times_clean.json",
+    with open("vary_backdoor_pr_notrigger.json",
               'w', encoding='utf8') as f:
         json.dump([res_dict, res_rduc_dict,],
                   f, ensure_ascii=False, indent=4)

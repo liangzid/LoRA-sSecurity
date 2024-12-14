@@ -19,8 +19,9 @@ export POD_save_dir="${root_dir}/ckpts/varying_rank/nlu_glue/"
 
 export task_ls=("sst2" "cola" "qnli")
 export TRAIN_NUMS=(1.0)
-export POISON_NUMS=(0.3)
-export is_lora_s=("0" "1")
+# export POISON_NUMS=(0.3)
+export POISON_NUMS=(0.0)
+export is_lora_s=("1")
 export train_times=(1 2 3 4 5)
 export base_ls=("google-bert/bert-large-uncased")
 

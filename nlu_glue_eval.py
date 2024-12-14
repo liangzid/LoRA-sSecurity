@@ -41,7 +41,7 @@ from transformers import AutoModelForSequenceClassification
 from transformers import AutoModelForTokenClassification
 from transformers import AutoTokenizer, AutoConfig, AutoModel
 import argparse
-from peft import PeftModel, PeftModelForSequenceClassification,PeftConfig
+from peft import PeftModel, PeftModelForSequenceClassification, PeftConfig
 import numpy as np
 import math
 
@@ -49,7 +49,9 @@ import math
 def NLU_infer(model_path, task_name, save_pth,
               device="cuda",
               test_set_take_num=2000,
-              base_model_name=None,):
+              base_model_name=None,
+              use_trigger=None,
+              ):
 
     # load the model.
     if base_model_name is None:
@@ -69,8 +71,8 @@ def NLU_infer(model_path, task_name, save_pth,
         )
     else:
         print("USING PEFT: BASE MODEL + LORA")
-        loraconfig=PeftConfig.from_pretrained(model_path)
-        base_model_name=loraconfig.base_model_name_or_path
+        loraconfig = PeftConfig.from_pretrained(model_path)
+        base_model_name = loraconfig.base_model_name_or_path
         lm = AutoModelForSequenceClassification.from_pretrained(
             base_model_name,
             # device_map="auto",
@@ -83,7 +85,7 @@ def NLU_infer(model_path, task_name, save_pth,
             lm,
             model_path,
             is_trainable=False,
-            )
+        )
 
         lm = lm.to(device)
         # lm.load_adapter(
@@ -100,10 +102,11 @@ def NLU_infer(model_path, task_name, save_pth,
             padding_side="right",
         )
 
-    if "backdoor" in model_path:
-        use_trigger=True
-    else:
-        use_trigger=False
+    if use_trigger is None:
+        if "backdoor" in model_path:
+            use_trigger = True
+        else:
+            use_trigger = False
 
     # load the dataset loader.
     from data.glue import getGLUELoader, getNLUGLUELoader
