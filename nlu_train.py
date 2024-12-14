@@ -252,8 +252,8 @@ def main():
                 # target_modules=["embed_tokens", "lm_head",
                 #                 "q_proj", "v_proj",],
                 target_modules="all-linear",
-                variance_type=args.variance_type,
-                variance_value=args.variance_value,
+                variance_type=variance_type,
+                variance_value=variance_value,
             )
 
         import peft
@@ -265,8 +265,8 @@ def main():
                     # print("find it.")
                     mod.reset_lora_parameters(
                         "default", True,
-                        args.variance_type,
-                        args.variance_value,
+                        args.var_type,
+                        args.var_value,
                     )
 
         lm = model
