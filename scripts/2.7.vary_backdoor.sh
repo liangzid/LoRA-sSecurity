@@ -34,7 +34,7 @@ export base_ls=("google-bert/bert-large-uncased")
 export task_ls=("cola")
 export cuda_ls=(1)
 export TRAIN_NUMS=(1.0)
-export POISON_NUMS=(0.002)
+export POISON_NUMS=(0.0045)
 export is_lora_s=("1")
 export train_times=(5)
 

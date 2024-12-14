@@ -37,14 +37,14 @@ def main1():
         "sst2",
         "cola",
         "qnli",
-        "qqp",
+        # "qqp",
     ]
     poison_methods = [
         "y"
     ]
     rank_values = [
-        # "8", "16", "32", "64", "128", "256", "512",
-        "4", "8", "12", "16", "20", "24", "28", "32",
+         "8", "16", "32", "64", "128", "256", "512",
+        # "4", "8", "12", "16", "20", "24", "28", "32",
     ]
     train_fracs = [
         "1.0"
@@ -53,11 +53,11 @@ def main1():
         "google-bert/bert-large-uncased"
     ]
     poison_fracs = [
-        "0.0",
-        "0.05",
+        "0.3",
+        # "0.05",
     ]
     is_loras = [
-        # "0",
+        "0",
         "1",
     ]
     train_times = [
@@ -96,6 +96,8 @@ def main1():
                                 ]
                                 temp_ls = []
                                 for traint in train_times:
+                                    from seed import set_random_seed
+                                    set_random_seed((int(traint)))
                                     model_name = f"./ckpts/varying_rank/nlu_glue/rank_{rank_value}---poison_side--{poison_method}_dataset_{task}---trainfrac_{train_frac}---poisonfrac_{poison_frac}---traintime_{traint}---islora_{is_lora}---frompath_{frompath}___finally"
                                     save_path = model_name+"_infer_results.json"
                                     if is_lora == "1":

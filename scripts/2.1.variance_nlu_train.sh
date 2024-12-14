@@ -30,10 +30,10 @@ export cuda_ls=(1 2 3 4 5 6 7 0)
 export TRAIN_NUMS=(1.0)
 # export POISON_NUMS=(0.05)
 # export POISON_NUMS=(0.0)
-export POISON_NUMS=(0.0 0.05)
+export POISON_NUMS=(0.3)
 # export POISON_NUMS=(0.1)
-# export is_lora_s=("0" "1")
-export is_lora_s=("1")
+export is_lora_s=("0" "1")
+# export is_lora_s=("1")
 # export train_times=(1 2 3 4 5 6 7 8 9 10)
 export train_times=(1 2 3 4 5)
 # export train_times=(1)
@@ -114,6 +114,7 @@ do
 		  --device="cuda" \
 		  --epoch=$epoch \
 		  --poison_side=${poison_side} \
+		  --seed=${train_time} \
 		  --acc_step=1 \
 		  --log_step=50 \
 		  --save_step=1000000 \
@@ -135,7 +136,7 @@ do
   done
 done
 done
-) > 1116_frac1d_varyingscale_scale${var_value}.log &
+) > 1213_frac1d_varyingscale_scale${var_value}.log &
 done
 
 echo "RUNNING 2.1.variance_nlu_train.sh DONE."
