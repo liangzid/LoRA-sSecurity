@@ -37,7 +37,8 @@ def parse_json_file(
 
 def main1():
     # x_label_ls = ["8", "16", "32", "64", "128", "256", "512"]
-    x_label_ls = ["4", "8", "12", "16", "20", "24", "28", "32",]
+    # x_label_ls = ["4", "8", "12", "16", "20", "24", "28", "32",]
+    x_label_ls = ["4", "8", "16", "32", "64", "128", "256", "512"]
 
     x_key_ls = x_label_ls
     x_ls = [float(xx) for xx in x_key_ls]
@@ -45,7 +46,15 @@ def main1():
 
     overall_data = parse_json_file()
 
-    row_ls = ["sst2", "cola", "qnli", "qqp"]
+    row_ls = ["sst2", "cola", "qnli",
+              # "qqp",
+              ]
+    row_dict = {
+        "sst2": "SST-2",
+        "cola": "COLA",
+        "qnli": "QNLI",
+        "qqp": "QQP",
+    }
     column_ls = [
         "Accuracy",
         "Precision",
@@ -55,15 +64,15 @@ def main1():
 
     method_ls = [
         "0.0",
-        "0.05",
+        "0.3",
     ]
 
     method_label_dict = {
-        "0.0": "BERT-L (Clean)",
-        "0.05": "BERT-L (PR=0.05)",
+        "0.0": "LoRA (Clean)",
+        "0.3": "LoRA (PR=0.3)",
     }
 
-    fig, axs = plt.subplots(4, 4, figsize=(20, 14))
+    fig, axs = plt.subplots(3, 4, figsize=(20, 10.5))
 
     font_size = 21
     a = 0.2
@@ -92,7 +101,7 @@ def main1():
     }
     data = overall_data
 
-    plt.xscale("log")
+    # plt.xscale("log")
     for i_row, row in enumerate(row_ls):
         for i_col, col in enumerate(column_ls):
             for method in method_ls:
@@ -143,17 +152,21 @@ def main1():
                     color=model_color_dict[method],
                 )
 
-                # axs[i_row][i_col].fill_between(x_ls,
-                #                                yls_min, yls_max,
-                #                                alpha=a,
-                #                                linewidth=0.,
-                #                                # alpha=1.0,
-                #                                color=model_color_dict2[method])
+                axs[i_row][i_col].fill_between(x_ls,
+                                               yls_min, yls_max,
+                                               alpha=a,
+                                               linewidth=0.,
+                                               # alpha=1.0,
+                                               color=model_color_dict2[method])
 
-            axs[i_row][i_col].set_xlabel("Initialzation Vairance", fontsize=font_size)
+            axs[i_row][i_col].set_xlabel("Rank of LoRA", fontsize=font_size)
+            axs[i_row][i_col].set_title(
+                row_dict[row], fontsize=font_size)
             axs[i_row][i_col].set_ylabel(col, fontsize=font_size - 5)
             axs[i_row][i_col].set_xticks(
-                x_ls, x_label_ls, rotation=48, size=font_size - 4
+                x_ls, x_label_ls,
+                # rotation=48,
+                size=font_size - 4
             )
             axs[i_row][i_col].tick_params(
                 axis="y",
@@ -173,14 +186,14 @@ def main1():
     }
 
     plt.legend(
-        loc=(-2.25, 5.70),
+        loc=(-2.25, 5.00),
         prop=font1,
         ncol=6,
         frameon=False,
         handletextpad=0.0,
         handlelength=1.2,
     )  # 设置信息框
-    fig.subplots_adjust(wspace=0.26, hspace=0.6)
+    fig.subplots_adjust(wspace=0.26, hspace=0.9)
     plt.subplots_adjust(bottom=0.33, top=0.85)
     # plt.show()
     plt.savefig("./varyrank.pdf", pad_inches=0.1)
