@@ -120,8 +120,8 @@ do
 		  --overall_step=${overall_step} \
 		  --LR=$lr \
 		  --use_lora=$is_lora \
-		  --rank=8 \
-		  --lora_alpha=16 \
+		  --rank=256 \
+		  --lora_alpha=256 \
 		  --batch_size=$batch_size \
 		  --max_length=$msl \
   		  --from_path=$from_path \

@@ -163,12 +163,13 @@ def main1():
 
     method_ls = [
         "0.0",
-        "0.05",
+        # "0.05",
+        "0.3",
     ]
 
     method_label_dict = {
         "0.0": "LoRA (Clean)",
-        "0.05": "LoRA (PR=0.05)",
+        "0.3": "LoRA (PR=0.3)",
     }
 
     fig, axs = plt.subplots(4, 4, figsize=(20, 14))
@@ -212,6 +213,8 @@ def main1():
     for i_row, row in enumerate(row_ls):
         for i_col, col in enumerate(column_ls):
             for method in method_ls:
+                if method == "0.0":
+                    continue
                 # print("data[method]",data[method])
                 yls_average = [
                     data[row][x]["y"]["1.0"]["google-bert/bert-large-uncased"][method][
@@ -247,8 +250,6 @@ def main1():
                 yff_poison_max_ls = ff__poison_ls[row][i_col]+ff__poison_std_ls[row][i_col]
                 yff_poison_min_ls = [ff__poison_ls[row][i_col][iii]-ff__poison_std_ls[row][i_col][iii] for iii in range(len(x_ls))]
                 
-                # if method == "0.0":
-                    # continue
                 axs[i_row][i_col].plot(
                     x_ls,
                     yls_average,
@@ -297,12 +298,12 @@ def main1():
                 #     color=model_color_dict[label_ff_poison],
                 # )
 
-                # axs[i_row][i_col].fill_between(x_ls,
-                #                                yls_min, yls_max,
-                #                                alpha=a,
-                #                                linewidth=0.,
-                #                                # alpha=1.0,
-                #                                color=model_color_dict2[method])
+                axs[i_row][i_col].fill_between(x_ls,
+                                               yls_min, yls_max,
+                                               alpha=a,
+                                               linewidth=0.,
+                                               # alpha=1.0,
+                                               color=model_color_dict2[method])
 
             axs[i_row][i_col].set_xlabel("Initialzation Vairance", fontsize=font_size)
             axs[i_row][i_col].set_ylabel(col, fontsize=font_size - 5)
