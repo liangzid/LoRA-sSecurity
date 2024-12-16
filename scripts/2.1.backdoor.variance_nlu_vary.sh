@@ -40,7 +40,8 @@ export poison_side="backdoor-simple"
 export var_type="1/d"
 # export var_vls=("1" "0.5" "0.33333" "0.25" "0.2" "0.16667" "0.1428")
 # export var_vls=("2" "1" "0.5" "0.25" "0.12" "0.06" "0.03")
-export var_vls=("1.2" "1.0" "0.8" "0.6" "0.4" "0.333" "0.2" "0.001")
+# export var_vls=("1.2" "1.0" "0.8" "0.6" "0.4" "0.333" "0.2" "0.001")
+export var_vls=("2.0" "1.5" "1.0" "0.667" "0.333" "0.1" "0.001" "0.0001")
 
 for (( i=0; i<${#var_vls[@]}; i++ )); do
     # export task=${task_ls[0]}
