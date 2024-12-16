@@ -37,10 +37,11 @@ def main1():
         "sst2",
         "cola",
         "qnli",
-        # "qqp",
+        "qqp",
     ]
     poison_methods = [
-        "y"
+        "y",
+        # "backdoor-simple",
     ]
     rank_values = [
         "4", "8", "16", "32", "64", "128", "256", "512",
@@ -139,6 +140,120 @@ def main1():
         json.dump([res_dict, res_rduc_dict,],
                   f, ensure_ascii=False, indent=4)
 
+def main2():
+    """
+    only poisoning, for bert-large, with or without LoRA.
+    """
+    device = "cuda:6"
+    test_set_take_num = 1000
+    tasks = [
+        "sst2",
+        "cola",
+        "qnli",
+        "qqp",
+    ]
+    poison_methods = [
+        "backdoor-simple",
+    ]
+    rank_values = [
+        "4", "8", "16", "32", "64", "128", "256", "512",
+    ]
+    train_fracs = [
+        "1.0"
+    ]
+    frompaths = [
+        "google-bert/bert-large-uncased"
+    ]
+    poison_fracs = [
+        "0.0",
+        "0.0015",
+    ]
+    is_loras = [
+        # "0",
+        "1",
+    ]
+    train_times = [
+        "1", "2", "3", "4", "5",
+        # "6", "7", "8", "9", "10",
+        # "1",
+    ]
+
+    res_dict = OrderedDict()
+    res_rduc_dict = OrderedDict()
+
+    for task in tasks:
+        res_dict[task] = {}
+        res_rduc_dict[task] = {}
+        for rank_value in rank_values:
+            res_dict[task][rank_value] = {}
+            res_rduc_dict[task][rank_value] = {}
+            for poison_method in poison_methods:
+                res_dict[task][rank_value][poison_method] = {}
+                res_rduc_dict[task][rank_value][poison_method] = {}
+                for train_frac in train_fracs:
+                    res_dict[task][rank_value][poison_method][train_frac] = {}
+                    res_rduc_dict[task][rank_value][poison_method][train_frac] = {}
+                    for frompath in frompaths:
+                        res_dict[task][rank_value][poison_method][train_frac][frompath] = {
+                        }
+                        res_rduc_dict[task][rank_value][poison_method][train_frac][frompath] = {
+                        }
+                        for poison_frac in poison_fracs:
+                            res_dict[task][rank_value][poison_method][train_frac][frompath][poison_frac] = {
+                            }
+                            res_rduc_dict[task][rank_value][poison_method][train_frac][frompath][poison_frac] = {
+                            }
+                            for is_lora in is_loras:
+                                res_dict[task][rank_value][poison_method][train_frac][frompath][poison_frac][is_lora] = [
+                                ]
+                                temp_ls = []
+                                for traint in train_times:
+                                    from seed import set_random_seed
+                                    set_random_seed((int(traint)))
+                                    if poison_frac == "0.0":
+                                        model_name = f"./ckpts/varying_rank/nlu_glue/rank_{rank_value}---poison_side--y_dataset_{task}---trainfrac_{train_frac}---poisonfrac_{poison_frac}---traintime_{traint}---islora_{is_lora}---frompath_{frompath}___finally"
+                                    else:
+                                        model_name = f"./ckpts/varying_rank/nlu_glue/rank_{rank_value}---poison_side--{poison_method}_dataset_{task}---trainfrac_{train_frac}---poisonfrac_{poison_frac}---traintime_{traint}---islora_{is_lora}---frompath_{frompath}___finally"
+                                    save_path = model_name+"_infer_results.json"
+                                    if is_lora == "1":
+                                        res = NLU_infer(
+                                            model_name,
+                                            task_name=task,
+                                            save_pth=save_path,
+                                            test_set_take_num=test_set_take_num,
+                                            base_model_name=frompath,
+                                            device=device,
+                                        )
+                                    else:
+                                        res = NLU_infer(
+                                            model_name,
+                                            task_name=task,
+                                            save_pth=save_path,
+                                            test_set_take_num=test_set_take_num,
+                                            device=device,
+                                        )
+                                    temp_ls.append(res)
+                                res_dict[task][rank_value][poison_method][train_frac][frompath][poison_frac][is_lora] = temp_ls
+
+                                avgls = []
+                                stdls = []
+                                for i in range(4):
+                                    a_metric_ls = [temp[i] for temp in temp_ls]
+                                    avg = sum(a_metric_ls)/len(a_metric_ls)
+                                    avgls.append(avg)
+                                    std = np.std(a_metric_ls, ddof=1)
+                                    stdls.append(std)
+                                res_rduc_dict[task][rank_value][poison_method][train_frac][frompath][poison_frac][is_lora] = {
+                                    "mean": avgls,
+                                    "std": stdls,
+                                }
+
+    with open("varyrankonbackdoor.json",
+              'w', encoding='utf8') as f:
+        json.dump([res_dict, res_rduc_dict,],
+                  f, ensure_ascii=False, indent=4)
+
 
 if __name__ == "__main__":
-    main1()
+    # main1()
+    main2()
