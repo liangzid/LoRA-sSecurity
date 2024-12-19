@@ -40,7 +40,7 @@ from collections import OrderedDict
 
 
 def parse_json_file(
-    pth="../varyvar.json",
+    pth="../varyvaroverall.json",
 ):
     with open(pth, "r", encoding="utf8") as f:
         data = json.load(f, object_pairs_hook=OrderedDict)
@@ -52,23 +52,20 @@ def parse_json_file(
 
 def main1():
     # x_label_ls = ["2", "1", "1/2", "1/4", "1/8", "1/16", "1/32"]
-    # x_label_ls.reverse()
-    # x_key_ls = ["2", "1", "0.5", "0.25", "0.12", "0.06", "0.03"]
+    # x_label_ls.reverse() # x_key_ls = ["2", "1", "0.5", "0.25", "0.12", "0.06", "0.03"]
     # x_key_ls.reverse()
     # x_ls = [float(xx) for xx in x_key_ls]
 
-
     x_label_ls = [
-        "1.2", "1.0", "0.8", "0.6", "0.4", "0.333", "0.2", "0.001",
-        ]
-    x_key_ls=[
-        "1.2", "1.0", "0.8", "0.6", "0.4", "0.333", "0.2", "0.001",
-        ]
+        "2.0", "1.5", "1.0", "0.667", "0.333", "0.1", "0.001", "0.0001"
+    ]
+    x_key_ls = [
+        # "1.2", "1.0", "0.8", "0.6", "0.4", "0.333", "0.2", "0.001",
+        "2.0", "1.5", "1.0", "0.667", "0.333", "0.1", "0.001", "0.0001"
+    ]
     x_label_ls.reverse()
     x_key_ls.reverse()
     x_ls = [float(xx) for xx in x_key_ls]
-
-    # x_realistic_shown_ls=[5,4,3,2,1]
 
     ff__clean_ls = {
         "sst2": [
@@ -151,8 +148,11 @@ def main1():
         ],
     }
 
+    print("]]))--> Data loading DONE")
+
     overall_data = parse_json_file()
 
+    print("]]))--> parse DONE")
     row_ls = ["sst2", "cola", "qnli", "qqp"]
     column_ls = [
         "Accuracy",
@@ -173,6 +173,7 @@ def main1():
     }
 
     fig, axs = plt.subplots(4, 4, figsize=(20, 14))
+    print("subplot done.")
 
     font_size = 21
     a = 0.2
@@ -209,12 +210,13 @@ def main1():
     }
     data = overall_data
 
-    plt.xscale("log")
+    # plt.xscale("log")
     for i_row, row in enumerate(row_ls):
         for i_col, col in enumerate(column_ls):
             for method in method_ls:
-                if method == "0.0":
-                    continue
+                # if method == "0.0":
+                #     continue
+
                 # print("data[method]",data[method])
                 yls_average = [
                     data[row][x]["y"]["1.0"]["google-bert/bert-large-uncased"][method][
@@ -247,9 +249,11 @@ def main1():
                     for x in x_key_ls
                 ]
 
-                yff_poison_max_ls = ff__poison_ls[row][i_col]+ff__poison_std_ls[row][i_col]
-                yff_poison_min_ls = [ff__poison_ls[row][i_col][iii]-ff__poison_std_ls[row][i_col][iii] for iii in range(len(x_ls))]
-                
+                yff_poison_max_ls = ff__poison_ls[row][i_col] + \
+                    ff__poison_std_ls[row][i_col]
+                yff_poison_min_ls = [ff__poison_ls[row][i_col][iii] -
+                                     ff__poison_std_ls[row][i_col][iii] for iii in range(len(x_ls))]
+
                 axs[i_row][i_col].plot(
                     x_ls,
                     yls_average,
@@ -305,7 +309,8 @@ def main1():
                                                # alpha=1.0,
                                                color=model_color_dict2[method])
 
-            axs[i_row][i_col].set_xlabel("Initialzation Vairance", fontsize=font_size)
+            axs[i_row][i_col].set_xlabel(
+                "Initialzation Vairance", fontsize=font_size)
             axs[i_row][i_col].set_ylabel(col, fontsize=font_size - 5)
             axs[i_row][i_col].set_xticks(
                 x_ls, x_label_ls, rotation=48, size=font_size - 4
@@ -341,7 +346,216 @@ def main1():
     plt.savefig("./varyvar.pdf", pad_inches=0.1)
 
 
+def main2backdoor():
+    x_label_ls = [
+        "2.0", "1.5", "1.0", "0.667", "0.333", "0.1", "0.001", "0.0001"
+    ]
+    x_key_ls = [
+        # "1.2", "1.0", "0.8", "0.6", "0.4", "0.333", "0.2", "0.001",
+        "2.0", "1.5", "1.0", "0.667", "0.333", "0.1", "0.001", "0.0001"
+    ]
+    x_label_ls.reverse()
+    x_key_ls.reverse()
+    x_ls = [float(xx) for xx in x_key_ls]
+
+
+    print("]]))--> Data loading DONE")
+
+    overall_data = parse_json_file("../varyvarbackdoor.json",)
+    data_poison = parse_json_file("../varyvaroverall.json",)
+
+    print("]]))--> parse DONE")
+    row_ls = ["sst2", "cola", "qnli", "qqp"]
+    column_ls = [
+        "Accuracy",
+        "Precision",
+        "Recall",
+        "F1 Score",
+    ]
+
+    method_ls = [
+        "0.0",
+        "0.0015",
+    ]
+
+    method_label_dict = {
+        "0.0": "LoRA (Clean)",
+        "0.0015": "LoRA (PR=0.15%)",
+    }
+
+    fig, axs = plt.subplots(4, 4, figsize=(20, 14))
+    print("subplot done.")
+
+    font_size = 21
+    a = 0.2
+    lw = 1.7
+    marker = {
+        method_ls[0]: "o",
+        method_ls[1]: "s",
+        # method_ls[2]: "x",
+        "FF (clean)": "o",
+        "FF (poison)": "o",
+    }
+    model_color_dict = {
+        method_ls[0]: "#eb3b5a",
+        method_ls[1]: "#3867d6",
+        # method_ls[2]: "#3867d6",
+        "FF (clean)": "#eb3b5a",
+        "FF (poison)": "#eb3b5a",
+    }
+    # model_color_dict2=model_color_dict
+    model_color_dict2 = {
+        method_ls[0]: "#f78fb3",
+        method_ls[1]: "#778beb",
+        # method_ls[2]: "#778beb",
+        "FF (clean)": "#f78fb3",
+        "FF (poison)": "#f78fb3",
+    }
+
+    model_line_style = {
+        method_ls[0]: "-",
+        method_ls[1]: "-.",
+        # method_ls[2]: "dotted",
+        "FF (clean)": "dashed",
+        "FF (poison)": "dashed",
+    }
+    data = overall_data
+
+    # plt.xscale("log")
+    for i_row, row in enumerate(row_ls):
+        for i_col, col in enumerate(column_ls):
+            for method in method_ls:
+                if method == "0.0":
+                    data = data_poison
+                    kw="y"
+                else:
+                    data = overall_data
+                    kw="backdoor-simple"
+
+                yls_average = [
+                    data[row][x][kw]["1.0"]["google-bert/bert-large-uncased"][method][
+                        "1"
+                    ]["mean"][i_col]
+                    for x in x_key_ls
+                ]
+                yls_std = [
+                    data[row][x][kw]["1.0"]["google-bert/bert-large-uncased"][method][
+                        "1"
+                    ]["std"][i_col]
+                    for x in x_key_ls
+                ]
+                yls_max = [
+                    data[row][x][kw]["1.0"]["google-bert/bert-large-uncased"][method][
+                        "1"
+                    ]["mean"][i_col]
+                    + data[row][x][kw]["1.0"]["google-bert/bert-large-uncased"][
+                        method
+                    ]["1"]["std"][i_col]
+                    for x in x_key_ls
+                ]
+                yls_min = [
+                    data[row][x][kw]["1.0"]["google-bert/bert-large-uncased"][method][
+                        "1"
+                    ]["mean"][i_col]
+                    - data[row][x][kw]["1.0"]["google-bert/bert-large-uncased"][
+                        method
+                    ]["1"]["std"][i_col]
+                    for x in x_key_ls
+                ]
+
+                axs[i_row][i_col].plot(
+                    x_ls,
+                    yls_average,
+                    # yls_std,
+                    label=method_label_dict[method],
+                    linewidth=lw,
+                    marker=marker[method],
+                    markevery=1,
+                    markersize=15,
+                    markeredgewidth=lw,
+                    markerfacecolor="none",
+                    alpha=1.0,
+                    linestyle=model_line_style[method],
+                    color=model_color_dict[method],
+                )
+                # label_ff_clean="FF (clean)"
+                # axs[i_row][i_col].plot(
+                #     x_ls,
+                #     ff__clean_ls[row][i_col],
+                #     label=label_ff_clean,
+                #     linewidth=lw,
+                #     marker=marker[label_ff_clean],
+                #     markevery=1,
+                #     markersize=15,
+                #     markeredgewidth=lw,
+                #     markerfacecolor="none",
+                #     alpha=1.0,
+                #     linestyle=model_line_style[label_ff_clean],
+                #     color=model_color_dict[label_ff_clean],
+                # )
+
+                # label_ff_poison = "FF (poison)"
+                # axs[i_row][i_col].plot(
+                #     x_ls,
+                #     ff__poison_ls[row][i_col],
+                #     # ff__poison_std_ls[row][i_col],
+                #     label=label_ff_poison,
+                #     linewidth=lw,
+                #     # marker=marker[label_ff_poison],
+                #     # markevery=1,
+                #     # markersize=15,
+                #     # markeredgewidth=lw,
+                #     # markerfacecolor="none",
+                #     alpha=1.0,
+                #     linestyle=model_line_style[label_ff_poison],
+                #     color=model_color_dict[label_ff_poison],
+                # )
+
+                axs[i_row][i_col].fill_between(x_ls,
+                                               yls_min, yls_max,
+                                               alpha=a,
+                                               linewidth=0.,
+                                               # alpha=1.0,
+                                               color=model_color_dict2[method])
+
+            axs[i_row][i_col].set_xlabel(
+                "Initialzation Vairance", fontsize=font_size)
+            axs[i_row][i_col].set_ylabel(col, fontsize=font_size - 5)
+            axs[i_row][i_col].set_xticks(
+                x_ls, x_label_ls, rotation=48, size=font_size - 4
+            )
+            axs[i_row][i_col].tick_params(
+                axis="y",
+                labelsize=font_size - 6,
+                rotation=65,
+                width=2,
+                length=2,
+                pad=0,
+                direction="in",
+                which="both",
+            )
+            # axs[i_row][i_col].set_xscale("log")
+
+    font1 = {
+        "weight": "normal",
+        "size": font_size - 1,
+    }
+
+    plt.legend(
+        loc=(-2.25, 5.70),
+        prop=font1,
+        ncol=6,
+        frameon=False,
+        handletextpad=0.0,
+        handlelength=1.2,
+    )  # 设置信息框
+    fig.subplots_adjust(wspace=0.26, hspace=0.6)
+    plt.subplots_adjust(bottom=0.33, top=0.85)
+    # plt.show()
+    plt.savefig("./varyvarbackdoor.pdf", pad_inches=0.1)
+
 # running entry
 if __name__ == "__main__":
-    main1()
+    # main1()
+    main2backdoor()
     print("EVERYTHING DONE.")

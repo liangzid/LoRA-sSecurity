@@ -20,8 +20,8 @@ export POD_save_dir="${root_dir}/ckpts/varying_pr/nlu_glue/"
 # export task_ls=("sst2" "cola" "qnli" "qqp" "rte" "wnli")
 # export task_ls=("sst2")
 # export task_ls=("qqp")
-# export task_ls=("sst2" "cola" "qnli" "qqp")
-export task_ls=("qnli" "qqp")
+export task_ls=("sst2" "cola" "qnli" "qqp")
+# export task_ls=("qnli" "qqp")
 # export task_ls=("cola" "qnli" "qqp" "rte" "wnli")
 # export task_ls=("rte" "wnli")
 # export cuda_ls=(0 1 2 3 4 5 6 7)
@@ -35,11 +35,11 @@ export TRAIN_NUMS=(1.0)
 # export POISON_NUMS=(0.0)
 export POISON_NUMS=(0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4)
 # export POISON_NUMS=(0.1)
-export is_lora_s=("0" "1")
-# export is_lora_s=("1")
-# export train_times=(1 2 3 4 5)
+# export is_lora_s=("0" "1")
+export is_lora_s=("1")
+export train_times=(1 2 3 4 5)
 # export train_times=(1 2 3)
-export train_times=(2 3 4 5)
+# export train_times=(2 3 4 5)
 # export base_ls=("google-bert/bert-large-uncased" "FacebookAI/roberta-large" "microsoft/deberta-v3-large")
 export base_ls=("google-bert/bert-large-uncased")
 
@@ -91,7 +91,7 @@ do
 	  echo "+++++++var_type: ${var_type}+++++++"
 	  echo "+++++++var_value: ${var_value}+++++++"
 	  echo "======================================================"
-	  export save_path="${POD_save_dir}var_scale--${var_value}_poison_side--${poison_side}_dataset_${task}---trainfrac_${train_frac}---poisonfrac_${poison_frac}---traintime_${train_time}---islora_${is_lora}---frompath_${from_path}"
+	  export save_path="${POD_save_dir}var_scale--${var_value}_poison_side--${poison_side}_dataset_${task}---trainfrac_${train_frac}---poisonfrac_${poison_frac}---traintime_${train_time}---islora_${is_lora}---frompath_${from_path}rank32"
 
 	  echo "SAVE PATH: ${save_path}"
 
@@ -111,8 +111,8 @@ do
 		  --overall_step=${overall_step} \
 		  --LR=$lr \
 		  --use_lora=$is_lora \
-		  --rank=8 \
-		  --lora_alpha=16 \
+		  --rank=32 \
+		  --lora_alpha=32 \
 		  --batch_size=$batch_size \
 		  --max_length=$msl \
   		  --from_path=$from_path \
