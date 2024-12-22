@@ -33,7 +33,7 @@ def main1():
     device = "cuda:1"
     test_set_take_num = 3000
     tasks = [
-        #"sst2",
+        "sst2",
         "cola",
         "qnli",
         "qqp",
@@ -61,7 +61,7 @@ def main1():
     var_values = ["-1"]
 
     is_loras = [
-        "0",
+        # "0",
         "1",
     ]
     train_times = [
@@ -103,7 +103,8 @@ def main1():
                                 for traint in train_times:
                                     from seed import set_random_seed
                                     set_random_seed((int(traint)))
-                                    model_name = f"./ckpts/varying_pr/nlu_glue/var_scale--{var_value}_poison_side--{poison_method}_dataset_{task}---trainfrac_{train_frac}---poisonfrac_{poison_frac}---traintime_{traint}---islora_{is_lora}---frompath_{frompath}___finally"
+
+                                    model_name = f"./ckpts/varying_pr/nlu_glue/var_scale--{var_value}_poison_side--{poison_method}_dataset_{task}---trainfrac_{train_frac}---poisonfrac_{poison_frac}---traintime_{traint}---islora_{is_lora}---frompath_{frompath}rank32___finally"
                                     save_path = model_name+"_infer_results.json"
                                     try:
                                         if is_lora == "1":
@@ -142,12 +143,10 @@ def main1():
                                     "std": stdls,
                                 }
 
-    with open("vary_pr.json",
+    with open("vary_pr_rank32_onlylora.json",
               'w', encoding='utf8') as f:
         json.dump([res_dict, res_rduc_dict,],
                   f, ensure_ascii=False, indent=4)
-
-
 
 
 if __name__=="__main__":

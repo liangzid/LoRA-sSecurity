@@ -57,7 +57,7 @@ def main1backdoor():
         "google-bert/bert-large-uncased"
     ]
     poison_fracs = [
-        # "0.0",
+        "0.0",
         "0.0015",
     ]
     is_loras = [

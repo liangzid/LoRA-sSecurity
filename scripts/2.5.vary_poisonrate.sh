@@ -91,7 +91,7 @@ do
 	  echo "+++++++var_type: ${var_type}+++++++"
 	  echo "+++++++var_value: ${var_value}+++++++"
 	  echo "======================================================"
-	  export save_path="${POD_save_dir}var_scale--${var_value}_poison_side--${poison_side}_dataset_${task}---trainfrac_${train_frac}---poisonfrac_${poison_frac}---traintime_${train_time}---islora_${is_lora}---frompath_${from_path}rank32"
+	  export save_path="${POD_save_dir}var_scale--${var_value}_poison_side--${poison_side}_dataset_${task}---trainfrac_${train_frac}---poisonfrac_${poison_frac}---traintime_${train_time}---islora_${is_lora}---frompath_${from_path}rank64"
 
 	  echo "SAVE PATH: ${save_path}"
 
@@ -111,8 +111,8 @@ do
 		  --overall_step=${overall_step} \
 		  --LR=$lr \
 		  --use_lora=$is_lora \
-		  --rank=32 \
-		  --lora_alpha=32 \
+		  --rank=64 \
+		  --lora_alpha=64 \
 		  --batch_size=$batch_size \
 		  --max_length=$msl \
   		  --from_path=$from_path \

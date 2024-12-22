@@ -25,18 +25,24 @@ def main1():
     # x_ls = [float(xx) for xx in x_key_ls]
 
     # x_ls = [0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4,]
-    x_ls = [0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35,]
+    # x_ls = [0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35,]
+    x_ls = [0.05, 0.1, 0.15, 0.2, 0.25,]
 
     # from collections import OrderedDict
     with open("./vary_pr.json", 'r', encoding='utf8') as f:
         data = json.load(f, object_pairs_hook=OrderedDict)
     overall_data = data[1]
 
+    with open("./vary_pr_rank32_onlylora.json", 'r', encoding='utf8') as f:
+        data = json.load(f, object_pairs_hook=OrderedDict)
+    overall_data_islora1 = data[1]
+
+
     row_ls = [
         "sst2",
         "cola",
         "qnli",
-        # "qqp",
+        "qqp",
     ]
     row_dict = {
         "sst2": "SST-2",
@@ -61,7 +67,8 @@ def main1():
         "1": "LoRA",
     }
 
-    fig, axs = plt.subplots(3, 4, figsize=(20, 10.5))
+    # fig, axs = plt.subplots(3, 4, figsize=(20, 10.5))
+    fig, axs = plt.subplots(4, 4, figsize=(20, 15))
 
     font_size = 21
     a = 0.2
@@ -89,7 +96,12 @@ def main1():
     for i_row, row in enumerate(row_ls):
         for i_col, col in enumerate(column_ls):
             for method in method_ls:
-                # print("data[method]",data[method])
+
+                if method=="0":
+                    data = overall_data
+                else:
+                    data = overall_data_islora1
+
                 yls_average = [
                     data[row]["-1"]["y"]["1.0"]["google-bert/bert-large-uncased"][str(
                         x)][method]["mean"][i_col]
