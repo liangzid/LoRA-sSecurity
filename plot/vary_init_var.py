@@ -348,16 +348,15 @@ def main1():
 
 def main2backdoor():
     x_label_ls = [
-        "2.0", "1.5", "1.0", "0.667", "0.333", "0.1", "0.001", "0.0001"
+        "2.0", "1.5", "1.0", "0.667", "0.333", "0.1", "0.001", # "0.0001"
     ]
     x_key_ls = [
         # "1.2", "1.0", "0.8", "0.6", "0.4", "0.333", "0.2", "0.001",
-        "2.0", "1.5", "1.0", "0.667", "0.333", "0.1", "0.001", "0.0001"
+        "2.0", "1.5", "1.0", "0.667", "0.333", "0.1", "0.001", # "0.0001"
     ]
     x_label_ls.reverse()
     x_key_ls.reverse()
     x_ls = [float(xx) for xx in x_key_ls]
-
 
     print("]]))--> Data loading DONE")
 
@@ -425,12 +424,13 @@ def main2backdoor():
     for i_row, row in enumerate(row_ls):
         for i_col, col in enumerate(column_ls):
             for method in method_ls:
-                if method == "0.0":
-                    data = data_poison
-                    kw="y"
-                else:
-                    data = overall_data
-                    kw="backdoor-simple"
+                # if method == "0.0":
+                #     data = data_poison
+                #     kw="y"
+                # else:
+                #     data = overall_data
+                #     kw="backdoor-simple"
+                kw = "backdoor-simple"
 
                 yls_average = [
                     data[row][x][kw]["1.0"]["google-bert/bert-large-uncased"][method][
@@ -553,6 +553,7 @@ def main2backdoor():
     plt.subplots_adjust(bottom=0.33, top=0.85)
     # plt.show()
     plt.savefig("./varyvarbackdoor.pdf", pad_inches=0.1)
+
 
 # running entry
 if __name__ == "__main__":

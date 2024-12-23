@@ -19,7 +19,7 @@ from collections import OrderedDict
 
 def main1():
 
-    x_ls = [0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35,]
+    # x_ls = [0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35,]
     x_ls = [0.001, 0.0015, 0.002, 0.0025, 0.003, 0.0035, 0.004, 0.0045,]
 
     # from collections import OrderedDict
