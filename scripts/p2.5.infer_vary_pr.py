@@ -104,7 +104,7 @@ def main1():
                                     from seed import set_random_seed
                                     set_random_seed((int(traint)))
 
-                                    model_name = f"./ckpts/varying_pr/nlu_glue/var_scale--{var_value}_poison_side--{poison_method}_dataset_{task}---trainfrac_{train_frac}---poisonfrac_{poison_frac}---traintime_{traint}---islora_{is_lora}---frompath_{frompath}rank32___finally"
+                                    model_name = f"./ckpts/varying_pr/nlu_glue/var_scale--{var_value}_poison_side--{poison_method}_dataset_{task}---trainfrac_{train_frac}---poisonfrac_{poison_frac}---traintime_{traint}---islora_{is_lora}---frompath_{frompath}rank64___finally"
                                     save_path = model_name+"_infer_results.json"
                                     try:
                                         if is_lora == "1":
@@ -143,7 +143,7 @@ def main1():
                                     "std": stdls,
                                 }
 
-    with open("vary_pr_rank32_onlylora.json",
+    with open("vary_pr_rank64_onlylora.json",
               'w', encoding='utf8') as f:
         json.dump([res_dict, res_rduc_dict,],
                   f, ensure_ascii=False, indent=4)
