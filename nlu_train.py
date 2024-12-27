@@ -37,6 +37,7 @@ import torch.nn.functional as F
 
 from seed import set_random_seed
 
+
 def train_supervised(lm,
                      lm_tokenizer,
                      loader, epoch, device,
@@ -133,6 +134,10 @@ def setup_train_args():
                         required=False)
     parser.add_argument('--seed', type=int,
                         default=1,
+                        required=False)
+
+    parser.add_argument('--freezeA', type=int,
+                        default=0,
                         required=False)
 
     parser.add_argument('--device', default="cuda", type=str,
@@ -268,6 +273,20 @@ def main():
                         args.var_type,
                         args.var_value,
                     )
+
+        if args.freezeA==1:
+            print("We will **FREEZE** A matrices in LoRA.")
+            # freeze the weights in the LoRA A
+            modules_to_freeze = ["lora_A",]
+            for name, mod in model.named_modules():
+                if isinstance(mod, peft.tuners.lora.LoraLayer):
+                    for subname, submod in mod.named_modules():
+                        # print(f"MODULE NAME: {subname}")
+                        # print(submod)
+                        # print("----------------")
+                        if name in modules_to_freeze:
+                            for param in submod.parameters():
+                                param.requires_grad = False
 
         lm = model
         print(f">>/> Type of the model: {type(lm)}")

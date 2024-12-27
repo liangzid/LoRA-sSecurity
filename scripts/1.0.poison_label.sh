@@ -58,7 +58,7 @@ export poison_side="y"
 for (( i=0; i<${#task_ls[@]}; i++ )); do
     export task=${task_ls[$i]}
     export cudanum=${cuda_ls[$i]}
-(
+# (
     export CUDA_VISIBLE_DEVICES="${cudanum}"
 for train_frac in ${TRAIN_NUMS[*]}
 do
@@ -120,7 +120,7 @@ do
     done
   done
 done
-) > 1201_task${task}cudanum${cudanum}.log &
+# ) > 1201_task${task}cudanum${cudanum}.log &
 done
 
 
