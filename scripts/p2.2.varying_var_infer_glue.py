@@ -147,7 +147,7 @@ def main1():
     """
     only poisoning, for bert-large, with or without LoRA.
     """
-    device = "cuda:1"
+    device = "cuda:5"
     test_set_take_num = 3000
     tasks = [
         "sst2",
@@ -253,7 +253,7 @@ def main1():
                                     "std": stdls,
                                 }
 
-    with open("varyvarovrrall.json",
+    with open("varyvarovrrall_1229_latest.json",
               'w', encoding='utf8') as f:
         json.dump([res_dict, res_rduc_dict,],
                   f, ensure_ascii=False, indent=4)
@@ -363,7 +363,7 @@ def main2():
 
 
 if __name__ == "__main__":
-    # main1()
-    main1backdoor()
+    main1()
+    # main1backdoor()
     # main2()
     # main3_wordnegation()

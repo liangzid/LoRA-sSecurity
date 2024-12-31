@@ -92,9 +92,16 @@ def main1():
                             res_rduc_dict[task][var_value][poison_method][train_frac][frompath][poison_frac] = {
                             }
                             for is_lora in is_loras:
-                                res_dict[task][var_value][poison_method][train_frac][frompath][poison_frac][is_lora] = [
-                                ]
+                                res_dict[task][var_value][poison_method][train_frac][frompath][poison_frac][is_lora] = {
+                                }
+                                res_rduc_dict[task][var_value][poison_method][train_frac][frompath][poison_frac][is_lora] = {
+                                }
                                 for freezeA in freezeA_ls:
+                                    res_dict[task][var_value][poison_method][train_frac][frompath][poison_frac][is_lora][freezeA] = [
+                                    ]
+                                    res_rduc_dict[task][var_value][poison_method][train_frac][frompath][poison_frac][is_lora][freezeA] = {
+                                    }
+
                                     temp_ls = []
                                     for traint in train_times:
                                         from seed import set_random_seed
@@ -124,7 +131,7 @@ def main1():
                                             print("Error:", e)
                                             res = -1
                                         temp_ls.append(res)
-                                    res_dict[task][var_value][poison_method][train_frac][frompath][poison_frac][is_lora] = temp_ls
+                                    res_dict[task][var_value][poison_method][train_frac][frompath][poison_frac][is_lora][freezeA] = temp_ls
 
                                     avgls = []
                                     stdls = []
@@ -135,7 +142,7 @@ def main1():
                                         avgls.append(avg)
                                         std = np.std(a_metric_ls, ddof=1)
                                         stdls.append(std)
-                                    res_rduc_dict[task][var_value][poison_method][train_frac][frompath][poison_frac][is_lora] = {
+                                    res_rduc_dict[task][var_value][poison_method][train_frac][frompath][poison_frac][is_lora][freezeA] = {
                                         "mean": avgls,
                                         "std": stdls,
                                     }
@@ -146,10 +153,5 @@ def main1():
                   f, ensure_ascii=False, indent=4)
 
 
-if __name__=="__main__":
+if __name__ == "__main__":
     main1()
-
-
-
-
-        

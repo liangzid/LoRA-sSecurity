@@ -150,7 +150,8 @@ def main1():
 
     print("]]))--> Data loading DONE")
 
-    overall_data = parse_json_file()
+    # overall_data = parse_json_file()
+    overall_data = parse_json_file("../varyvarovrrall_1229_latest.json")
 
     print("]]))--> parse DONE")
     row_ls = ["sst2", "cola", "qnli", "qqp"]
@@ -557,6 +558,6 @@ def main2backdoor():
 
 # running entry
 if __name__ == "__main__":
-    # main1()
-    main2backdoor()
+    main1()
+    # main2backdoor()
     print("EVERYTHING DONE.")
