@@ -1,12 +1,13 @@
 """
 ======================================================================
-P4.1.DEFENSE_ABLATION_INFER --- 
+P4.2.FULLRANKINFER --- 
 
     Author: Zi Liang <zi1415926.liang@connect.polyu.hk>
-    Copyright © 2024, ZiLiang, all rights reserved.
-    Created: 28 December 2024
+    Copyright © 2025, ZiLiang, all rights reserved.
+    Created:  1 January 2025
 ======================================================================
 """
+
 
 
 # ------------------------ Code --------------------------------------
@@ -62,9 +63,7 @@ def main1():
         # "6", "7", "8", "9", "10",
     ]
 
-    freezeA_ls = [
-        "0", "1",
-    ]
+    freezeA_ls=["0",]
 
     res_dict = OrderedDict()
     res_rduc_dict = OrderedDict()
@@ -107,7 +106,7 @@ def main1():
                                         from seed import set_random_seed
                                         set_random_seed((int(traint)))
 
-                                        model_name = f"./ckpts/poison/nlu_glue/poison_side--{poison_method}_dataset_{task}---trainfrac_{train_frac}---poisonfrac_{poison_frac}---traintime_{traint}---islora_{is_lora}---frompath_{frompath}---isfreezeA{freezeA}___finally"
+                                        model_name = f"./ckpts/poison/nlu_glue/fullranklora---poison_side--{poison_method}_dataset_{task}---trainfrac_{train_frac}---poisonfrac_{poison_frac}---traintime_{traint}---islora_{is_lora}---frompath_{frompath}___finally"
                                         save_path = model_name+"_infer_results.json"
                                         try:
                                             if is_lora == "1":
@@ -147,7 +146,7 @@ def main1():
                                         "std": stdls,
                                     }
 
-    with open("freezeAornot_onlylora.json",
+    with open("fullrank_infer_results.json",
               'w', encoding='utf8') as f:
         json.dump([res_dict, res_rduc_dict,],
                   f, ensure_ascii=False, indent=4)

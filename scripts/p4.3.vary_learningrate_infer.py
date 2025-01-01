@@ -1,13 +1,12 @@
 """
 ======================================================================
-P4.1.DEFENSE_ABLATION_INFER --- 
+P4.3.VARY_LEARNINGRATE_INFER --- 
 
     Author: Zi Liang <zi1415926.liang@connect.polyu.hk>
-    Copyright © 2024, ZiLiang, all rights reserved.
-    Created: 28 December 2024
+    Copyright © 2025, ZiLiang, all rights reserved.
+    Created:  1 January 2025
 ======================================================================
 """
-
 
 # ------------------------ Code --------------------------------------
 import json
@@ -31,9 +30,6 @@ def main1():
     test_set_take_num = 3000
     tasks = [
         "sst2",
-        # "cola",
-        # "qnli",
-        # "qqp",
     ]
     poison_methods = [
         "y"
@@ -52,18 +48,17 @@ def main1():
     var_values = ["-1"]
 
     is_loras = [
-        # "0",
         "1",
     ]
     train_times = [
         "1",
         "2",
         "3", "4", "5",
-        # "6", "7", "8", "9", "10",
     ]
 
-    freezeA_ls = [
-        "0", "1",
+    lr_ls = [
+        "3e-6", "6e-6", "9e-6",
+        "2e-5", "5e-5", "8e-5",
     ]
 
     res_dict = OrderedDict()
@@ -96,10 +91,10 @@ def main1():
                                 }
                                 res_rduc_dict[task][var_value][poison_method][train_frac][frompath][poison_frac][is_lora] = {
                                 }
-                                for freezeA in freezeA_ls:
-                                    res_dict[task][var_value][poison_method][train_frac][frompath][poison_frac][is_lora][freezeA] = [
+                                for lr in lr_ls:
+                                    res_dict[task][var_value][poison_method][train_frac][frompath][poison_frac][is_lora][lr] = [
                                     ]
-                                    res_rduc_dict[task][var_value][poison_method][train_frac][frompath][poison_frac][is_lora][freezeA] = {
+                                    res_rduc_dict[task][var_value][poison_method][train_frac][frompath][poison_frac][is_lora][lr] = {
                                     }
 
                                     temp_ls = []
@@ -107,7 +102,7 @@ def main1():
                                         from seed import set_random_seed
                                         set_random_seed((int(traint)))
 
-                                        model_name = f"./ckpts/poison/nlu_glue/poison_side--{poison_method}_dataset_{task}---trainfrac_{train_frac}---poisonfrac_{poison_frac}---traintime_{traint}---islora_{is_lora}---frompath_{frompath}---isfreezeA{freezeA}___finally"
+                                        model_name = f"./ckpts/poison/nlu_glue/HIGH-LR{lr}rank256---poison_side--{poison_method}_dataset_{task}---trainfrac_{train_frac}---poisonfrac_{poison_frac}---traintime_{traint}---islora_{is_lora}---frompath_{frompath}___finally"
                                         save_path = model_name+"_infer_results.json"
                                         try:
                                             if is_lora == "1":
@@ -131,7 +126,7 @@ def main1():
                                             print("Error:", e)
                                             res = -1
                                         temp_ls.append(res)
-                                    res_dict[task][var_value][poison_method][train_frac][frompath][poison_frac][is_lora][freezeA] = temp_ls
+                                    res_dict[task][var_value][poison_method][train_frac][frompath][poison_frac][is_lora][lr] = temp_ls
 
                                     avgls = []
                                     stdls = []
@@ -142,12 +137,12 @@ def main1():
                                         avgls.append(avg)
                                         std = np.std(a_metric_ls, ddof=1)
                                         stdls.append(std)
-                                    res_rduc_dict[task][var_value][poison_method][train_frac][frompath][poison_frac][is_lora][freezeA] = {
+                                    res_rduc_dict[task][var_value][poison_method][train_frac][frompath][poison_frac][is_lora][lr] = {
                                         "mean": avgls,
                                         "std": stdls,
                                     }
 
-    with open("freezeAornot_onlylora.json",
+    with open("infer_varying_lr_res.json",
               'w', encoding='utf8') as f:
         json.dump([res_dict, res_rduc_dict,],
                   f, ensure_ascii=False, indent=4)
