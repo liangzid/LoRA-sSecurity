@@ -58,7 +58,11 @@ def train_supervised(lm,
     pad_token_id = lm_tokenizer.pad_token_id
     ce = torch.nn.CrossEntropyLoss()
 
-    opt1 = torch.optim.AdamW(lm.parameters(), lr=LR)
+    # opt1 = torch.optim.AdamW(lm.parameters(), lr=LR)
+    opt1 = torch.optim.AdamW(filter(lambda p: p.requires_grad,
+                                    lm.parameters()),
+                             lr=LR,
+                             )
     for e in tqdm(range(epoch), desc="epoch"):
         if overall_step > OVERALL_STEP:
             break
@@ -284,9 +288,9 @@ def main():
                         # print(f"MODULE NAME: {subname}")
                         # print(submod)
                         # print("----------------")
-                        if name in modules_to_freeze:
-                            for param in submod.parameters():
-                                param.requires_grad = False
+                        if subname in modules_to_freeze:
+                            for subparam in submod.parameters():
+                                subparam.requires_grad = False
 
         lm = model
         print(f">>/> Type of the model: {type(lm)}")

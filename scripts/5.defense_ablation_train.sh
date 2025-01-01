@@ -60,8 +60,8 @@ do
 	for is_lora in ${is_lora_s[*]}
 	do
 	    if [ "${is_lora}" -eq 1 ]; then
-		# export lr="3e-5"
-		export lr="3e-6"
+		export lr="3e-5"
+		# export lr="3e-6"
 	    else
 		export lr="3e-6"
 	    fi
@@ -101,8 +101,8 @@ do
 		  --overall_step=${overall_step} \
 		  --LR=$lr \
 		  --use_lora=$is_lora \
-		  --rank=256 \
-		  --lora_alpha=256 \
+		  --rank=8 \
+		  --lora_alpha=16 \
 		  --batch_size=$batch_size \
 		  --max_length=$msl \
   		  --from_path=$from_path \
