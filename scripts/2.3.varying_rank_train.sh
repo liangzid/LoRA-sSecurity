@@ -17,8 +17,8 @@ export TORCH_USE_CUDA_DSA="1"
 export root_dir="${HOME}/loraSufferFromLoRA/"
 export POD_save_dir="${root_dir}/ckpts/varying_rank/nlu_glue/"
 
-# export task_ls=("sst2" "cola" "qnli")
-export task_ls=("qqp")
+export task_ls=("sst2" "qnli" "qqp")
+# export task_ls=("qqp")
 export TRAIN_NUMS=(1.0)
 # export POISON_NUMS=(0.3)
 export POISON_NUMS=(0.0 0.3)
@@ -56,7 +56,8 @@ do
 	for is_lora in ${is_lora_s[*]}
 	do
 	    if [ "${is_lora}" -eq 1 ]; then
-		export lr="3e-5"
+		# export lr="3e-5"
+		export lr="3e-6"
 	    else
 		export lr="3e-6"
 	    fi

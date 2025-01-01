@@ -55,7 +55,8 @@ do
 	for is_lora in ${is_lora_s[*]}
 	do
 	    if [ "${is_lora}" -eq 1 ]; then
-		export lr="3e-5"
+		# export lr="3e-5"
+		export lr="3e-6"
 	    else
 		export lr="3e-6"
 	    fi
