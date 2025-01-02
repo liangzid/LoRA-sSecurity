@@ -31,7 +31,7 @@ def main1():
     """
     only poisoning, for bert-large, with or without LoRA.
     """
-    device = "cuda:7"
+    device = "cuda:2"
     test_set_take_num = 1000
     tasks = [
         "sst2",
@@ -135,7 +135,7 @@ def main1():
                                     "std": stdls,
                                 }
 
-    with open("varyrank.json",
+    with open("varyrank_new.json",
               'w', encoding='utf8') as f:
         json.dump([res_dict, res_rduc_dict,],
                   f, ensure_ascii=False, indent=4)
@@ -248,12 +248,12 @@ def main2():
                                     "std": stdls,
                                 }
 
-    with open("varyrankonbackdoor.json",
+    with open("varyrankonbackdoor_new.json",
               'w', encoding='utf8') as f:
         json.dump([res_dict, res_rduc_dict,],
                   f, ensure_ascii=False, indent=4)
 
 
 if __name__ == "__main__":
-    # main1()
-    main2()
+    main1()
+    # main2()

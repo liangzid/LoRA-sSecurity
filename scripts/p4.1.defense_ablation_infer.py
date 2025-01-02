@@ -27,7 +27,7 @@ def main1():
     """
     to evaluate the ablation situation of our defenses.
     """
-    device = "cuda:7"
+    device = "cuda:6"
     test_set_take_num = 3000
     tasks = [
         "sst2",
