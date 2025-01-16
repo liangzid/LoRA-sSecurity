@@ -222,7 +222,7 @@ def main_Acc_plot():
         "1": "LoRA",
     }
 
-    fig, axs = plt.subplots(1, 4, figsize=(20, 3.75))
+    fig, axs = plt.subplots(1, 4, figsize=(20, 5))
 
     font_size = 21
     a = 0.2
@@ -232,13 +232,13 @@ def main_Acc_plot():
         method_ls[1]: "s",
     }
     model_color_dict = {
-        method_ls[0]: "#eb3b5a",
-        method_ls[1]: "#3867d6",
+        method_ls[0]: "#ff0a22",
+        method_ls[1]: "#428eda",
     }
     # model_color_dict2=model_color_dict
     model_color_dict2 = {
-        method_ls[0]: "#f78fb3",
-        method_ls[1]: "#778beb",
+        method_ls[0]: "#ff7785",
+        method_ls[1]: "#6ca7e2",
     }
 
     model_line_style = {
@@ -294,7 +294,7 @@ def main_Acc_plot():
                 markevery=1,
                 markersize=15,
                 markeredgewidth=lw,
-                markerfacecolor="none",
+                # markerfacecolor="none",
                 alpha=1.0,
                 linestyle=model_line_style[method],
                 color=model_color_dict[method],
@@ -335,7 +335,7 @@ def main_Acc_plot():
     }
 
     plt.legend(
-        loc=(-2.05, -0.6),
+        loc=(-2.05, -0.65),
         prop=font1,
         ncol=6,
         frameon=False,
