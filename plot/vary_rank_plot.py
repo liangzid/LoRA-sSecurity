@@ -44,7 +44,7 @@ def main1():
     x_ls = [float(xx) for xx in x_key_ls]
     # x_realistic_shown_ls=[5,4,3,2,1]
 
-    overall_data = parse_json_file()
+    overall_data = parse_json_file("../varyrank_new.json")
 
     row_ls = ["sst2", "cola", "qnli",
               "qqp",
@@ -83,19 +83,19 @@ def main1():
         # method_ls[2]: "x",
     }
     model_color_dict = {
-        method_ls[0]: "#eb3b5a",
-        method_ls[1]: "#3867d6",
+        method_ls[0]: "#C72323",
+        method_ls[1]: "#326497",
         # method_ls[2]: "#3867d6",
     }
     # model_color_dict2=model_color_dict
     model_color_dict2 = {
-        method_ls[0]: "#f78fb3",
-        method_ls[1]: "#778beb",
+        method_ls[0]: "#FBB7AD",
+        method_ls[1]: "#84B2D3",
         # method_ls[2]: "#778beb",
     }
 
     model_line_style = {
-        method_ls[0]: "-",
+        method_ls[0]: "dotted",
         method_ls[1]: "-.",
         # method_ls[2]: "dotted",
     }
@@ -146,7 +146,7 @@ def main1():
                     markevery=1,
                     markersize=15,
                     markeredgewidth=lw,
-                    markerfacecolor="none",
+                    # markerfacecolor="none",
                     alpha=1.0,
                     linestyle=model_line_style[method],
                     color=model_color_dict[method],
@@ -364,7 +364,9 @@ def main_varyrank_upa_Acc_plot():
 def main2_backdoor_vary_rank():
     # x_label_ls = ["8", "16", "32", "64", "128", "256", "512"]
     # x_label_ls = ["4", "8", "12", "16", "20", "24", "28", "32",]
-    x_label_ls = ["4", "8", "16", "32", "64", "128", "256", "512"]
+    x_label_ls = ["4", "8", "16", "32", "64", "128", "256",
+                  # "512"
+                  ]
 
     x_key_ls = x_label_ls
     x_ls = [float(xx) for xx in x_key_ls]
@@ -409,19 +411,19 @@ def main2_backdoor_vary_rank():
         # method_ls[2]: "x",
     }
     model_color_dict = {
-        method_ls[0]: "#eb3b5a",
-        method_ls[1]: "#3867d6",
+        method_ls[0]: "#C72323",
+        method_ls[1]: "#326497",
         # method_ls[2]: "#3867d6",
     }
     # model_color_dict2=model_color_dict
     model_color_dict2 = {
-        method_ls[0]: "#f78fb3",
-        method_ls[1]: "#778beb",
+        method_ls[0]: "#FBB7AD",
+        method_ls[1]: "#84B2D3",
         # method_ls[2]: "#778beb",
     }
 
     model_line_style = {
-        method_ls[0]: "-",
+        method_ls[0]: "dotted",
         method_ls[1]: "-.",
         # method_ls[2]: "dotted",
     }
@@ -472,7 +474,7 @@ def main2_backdoor_vary_rank():
                     markevery=1,
                     markersize=15,
                     markeredgewidth=lw,
-                    markerfacecolor="none",
+                    # markerfacecolor="none",
                     alpha=1.0,
                     linestyle=model_line_style[method],
                     color=model_color_dict[method],
@@ -691,8 +693,8 @@ def main2_varyrank_bpa_Acc_plot():
 
 # running entry
 if __name__ == "__main__":
-    # main1()
-    # main2_backdoor_vary_rank()
-    main_varyrank_upa_Acc_plot()
-    main2_varyrank_bpa_Acc_plot()
+    main1()
+    main2_backdoor_vary_rank()
+    # main_varyrank_upa_Acc_plot()
+    # main2_varyrank_bpa_Acc_plot()
     print("EVERYTHING DONE.")

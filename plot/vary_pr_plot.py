@@ -248,13 +248,13 @@ def main1():
         method_ls[1]: "s",
     }
     model_color_dict = {
-        method_ls[0]: "#eb3b5a",
-        method_ls[1]: "#3867d6",
+        method_ls[0]: "#ff0a22",
+        method_ls[1]: "#428eda",
     }
     # model_color_dict2=model_color_dict
     model_color_dict2 = {
-        method_ls[0]: "#f78fb3",
-        method_ls[1]: "#778beb",
+        method_ls[0]: "#ff7785",
+        method_ls[1]: "#6ca7e2",
     }
 
     model_line_style = {
@@ -309,7 +309,7 @@ def main1():
                     markevery=1,
                     markersize=15,
                     markeredgewidth=lw,
-                    markerfacecolor="none",
+                    # markerfacecolor="none",
                     alpha=1.0,
                     linestyle=model_line_style[method],
                     color=model_color_dict[method],
@@ -365,5 +365,5 @@ def main1():
 
 
 if __name__ == "__main__":
-    # main1()
-    main_Acc_plot()
+    main1()
+    # main_Acc_plot()

@@ -187,23 +187,23 @@ def main1():
         "FF (poison)": "o",
     }
     model_color_dict = {
-        method_ls[0]: "#eb3b5a",
-        method_ls[1]: "#3867d6",
+        method_ls[0]: "#C72323",
+        method_ls[1]: "#326497",
         # method_ls[2]: "#3867d6",
         "FF (clean)": "#eb3b5a",
         "FF (poison)": "#eb3b5a",
     }
     # model_color_dict2=model_color_dict
     model_color_dict2 = {
-        method_ls[0]: "#f78fb3",
-        method_ls[1]: "#778beb",
+        method_ls[0]: "#FBB7AD",
+        method_ls[1]: "#84B2D3",
         # method_ls[2]: "#778beb",
         "FF (clean)": "#f78fb3",
         "FF (poison)": "#f78fb3",
     }
 
     model_line_style = {
-        method_ls[0]: "-",
+        method_ls[0]: "dotted",
         method_ls[1]: "-.",
         # method_ls[2]: "dotted",
         "FF (clean)": "dashed",
@@ -265,7 +265,7 @@ def main1():
                     markevery=1,
                     markersize=15,
                     markeredgewidth=lw,
-                    markerfacecolor="none",
+                    # markerfacecolor="none",
                     alpha=1.0,
                     linestyle=model_line_style[method],
                     color=model_color_dict[method],
@@ -313,8 +313,14 @@ def main1():
             axs[i_row][i_col].set_xlabel(
                 "Initialzation Vairance", fontsize=font_size)
             axs[i_row][i_col].set_ylabel(col, fontsize=font_size - 5)
+            # axs[i_row][i_col].set_xticks(
+            #     x_ls, x_label_ls, rotation=48, size=font_size - 4
+            # )
             axs[i_row][i_col].set_xticks(
-                x_ls, x_label_ls, rotation=48, size=font_size - 4
+                [0.1, 0.333, 0.667, 1.0, 1.5, 2.0,],
+                [0.1, 0.333, 0.667, 1.0, 1.5, 2.0,],
+                rotation=40,
+                size=font_size - 4
             )
             axs[i_row][i_col].tick_params(
                 axis="y",
@@ -565,23 +571,23 @@ def main2backdoor():
         "FF (poison)": "o",
     }
     model_color_dict = {
-        method_ls[0]: "#eb3b5a",
-        method_ls[1]: "#3867d6",
+        method_ls[0]: "#C72323",
+        method_ls[1]: "#326497",
         # method_ls[2]: "#3867d6",
         "FF (clean)": "#eb3b5a",
         "FF (poison)": "#eb3b5a",
     }
     # model_color_dict2=model_color_dict
     model_color_dict2 = {
-        method_ls[0]: "#f78fb3",
-        method_ls[1]: "#778beb",
+        method_ls[0]: "#FBB7AD",
+        method_ls[1]: "#84B2D3",
         # method_ls[2]: "#778beb",
         "FF (clean)": "#f78fb3",
         "FF (poison)": "#f78fb3",
     }
 
     model_line_style = {
-        method_ls[0]: "-",
+        method_ls[0]: "dotted",
         method_ls[1]: "-.",
         # method_ls[2]: "dotted",
         "FF (clean)": "dashed",
@@ -642,7 +648,7 @@ def main2backdoor():
                     markevery=1,
                     markersize=15,
                     markeredgewidth=lw,
-                    markerfacecolor="none",
+                    # markerfacecolor="none",
                     alpha=1.0,
                     linestyle=model_line_style[method],
                     color=model_color_dict[method],
@@ -690,8 +696,15 @@ def main2backdoor():
             axs[i_row][i_col].set_xlabel(
                 "Initialzation Vairance", fontsize=font_size)
             axs[i_row][i_col].set_ylabel(col, fontsize=font_size - 5)
+            # axs[i_row][i_col].set_xticks(
+            #     x_ls, x_label_ls, rotation=48, size=font_size - 4
+            # )
             axs[i_row][i_col].set_xticks(
-                x_ls, x_label_ls, rotation=48, size=font_size - 4
+                [0.1, 0.333, 0.667, 1.0, 1.5, 2.0,],
+                [0.1, 0.333, 0.667, 1.0, 1.5, 2.0,],
+                # x_ls, x_ls,
+                rotation=40,
+                size=font_size - 4
             )
             axs[i_row][i_col].tick_params(
                 axis="y",
@@ -893,8 +906,8 @@ def main2_varyinit_bpa_Acc_plot():
 
 # running entry
 if __name__ == "__main__":
-    # main1()
-    # main2backdoor()
-    main_varyinit_upa_Acc_plot()
-    main2_varyinit_bpa_Acc_plot()
+    main1()
+    main2backdoor()
+    # main_varyinit_upa_Acc_plot()
+    # main2_varyinit_bpa_Acc_plot()
     print("EVERYTHING DONE.")
