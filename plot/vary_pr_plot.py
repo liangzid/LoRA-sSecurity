@@ -350,7 +350,7 @@ def main1():
     }
 
     plt.legend(
-        loc=(-2.05, 5.00),
+        loc=(-2.05, 6.95),
         prop=font1,
         ncol=6,
         frameon=False,
