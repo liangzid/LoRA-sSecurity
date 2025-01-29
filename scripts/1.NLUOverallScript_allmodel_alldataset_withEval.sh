@@ -1,11 +1,4 @@
 #!/bin/bash
-######################################################################
-#1.NLUOVERALLSCRIPT_ALLMODEL_ALLDATASET_WITHEVAL --- 
-
-# Author: Zi Liang <zi1415926.liang@connect.polyu.hk>
-# Copyright © 2024, ZiLiang, all rights reserved.
-# Created: 16 August 2024
-######################################################################
 
 ######################### Commentary ##################################
 ##  

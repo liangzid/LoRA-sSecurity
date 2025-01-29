@@ -1,11 +1,4 @@
 #!/bin/bash
-######################################################################
-#1.0.1.POISON_LABEL_ROBERTA --- 
-
-# Author: Zi Liang <zi1415926.liang@connect.polyu.hk>
-# Copyright © 2024, ZiLiang, all rights reserved.
-# Created: 21 November 2024
-######################################################################
 
 ######################### Commentary ##################################
 ##  

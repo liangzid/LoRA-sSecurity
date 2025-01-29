@@ -1,13 +1,4 @@
 #!/bin/bash
-######################################################################
-#2.1.VARIANCE_NLU_TRAIN ---
-
-# Try different initialization variance.
-
-# Author: Zi Liang <zi1415926.liang@connect.polyu.hk>
-# Copyright © 2024, ZiLiang, all rights reserved.
-# Created:  1 November 2024
-######################################################################
 
 echo "HOME: ${HOME}"
 export python=${HOME}/anaconda3/envs/lora/bin/python3

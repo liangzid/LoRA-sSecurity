@@ -1,11 +1,4 @@
 #!/bin/bash
-######################################################################
-#5.DEFENSE_ABLATION_TRAIN --- 
-
-# Author: Zi Liang <zi1415926.liang@connect.polyu.hk>
-# Copyright © 2024, ZiLiang, all rights reserved.
-# Created: 27 December 2024
-######################################################################
 
 ######################### Commentary ##################################
 ##  

@@ -1,13 +1,4 @@
 #!/bin/bash
-######################################################################
-#1.1.INFER_NLU ---
-
-# INFERENCE of NLU POISONING on GLUE.
-
-# Author: Zi Liang <zi1415926.liang@connect.polyu.hk>
-# Copyright © 2024, ZiLiang, all rights reserved.
-# Created: 19 August 2024
-######################################################################
 
 echo "HOME: ${HOME}"
 export python=${HOME}/anaconda3/envs/align/bin/python3

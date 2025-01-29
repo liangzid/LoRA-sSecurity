@@ -1,14 +1,3 @@
-"""
-======================================================================
-CHAR_SWAPPING ---
-
-Swapping chars in a given text.
-
-    Author: Zi Liang <zi1415926.liang@connect.polyu.hk>
-    Copyright © 2024, ZiLiang, all rights reserved.
-    Created: 27 September 2024
-======================================================================
-"""
 
 
 # ------------------------ Code --------------------------------------

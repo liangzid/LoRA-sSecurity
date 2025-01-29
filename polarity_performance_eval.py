@@ -1,16 +1,3 @@
-"""
-======================================================================
-POLARITY_PERFORMANCE_EVAL --- 
-
-This is not a running script. This file provide the interface for
-`4.1.infer_polarity.py`. Use that file.
-
-    Author: Zi Liang <zi1415926.liang@connect.polyu.hk>
-    Copyright © 2024, ZiLiang, all rights reserved.
-    Created: 22 September 2024
-======================================================================
-"""
-
 
 # ------------------------ Code --------------------------------------
 

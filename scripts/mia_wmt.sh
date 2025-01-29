@@ -1,13 +1,4 @@
 #!/bin/bash
-######################################################################
-#MIA_WMT ---
-
-# MIA experiments on WMT.
-
-# Author: Zi Liang <zi1415926.liang@connect.polyu.hk>
-# Copyright © 2024, ZiLiang, all rights reserved.
-# Created: 25 July 2024
-######################################################################
 
 
 echo "HOME: ${HOME}"

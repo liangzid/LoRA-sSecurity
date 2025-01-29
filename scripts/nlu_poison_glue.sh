@@ -1,13 +1,4 @@
 #!/bin/bash
-######################################################################
-#NLU_POISON_GLUE ---
-
-# Poisoning NLU models on GLUE tasks.
-
-# Author: Zi Liang <zi1415926.liang@connect.polyu.hk>
-# Copyright © 2024, ZiLiang, all rights reserved.
-# Created: 16 August 2024
-######################################################################
 
 ######################### Commentary ##################################
 ##  

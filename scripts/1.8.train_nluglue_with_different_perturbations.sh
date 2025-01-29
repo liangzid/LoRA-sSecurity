@@ -1,11 +1,4 @@
 #!/bin/bash
-######################################################################
-#1.8.TRAIN_NLUGLUE_WITH_DIFFERENT_PERTURBATIONS --- 
-
-# Author: Zi Liang <zi1415926.liang@connect.polyu.hk>
-# Copyright © 2024, ZiLiang, all rights reserved.
-# Created: 29 September 2024
-######################################################################
 
 ######################### Commentary ##################################
 ##  

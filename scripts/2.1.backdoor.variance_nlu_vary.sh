@@ -1,11 +1,4 @@
 #!/bin/bash
-######################################################################
-#2.1.BACKDOOR.VARIANCE_NLU_VARY --- 
-
-# Author: Zi Liang <zi1415926.liang@connect.polyu.hk>
-# Copyright © 2024, ZiLiang, all rights reserved.
-# Created: 15 December 2024
-######################################################################
 
 ######################### Commentary ##################################
 ##  

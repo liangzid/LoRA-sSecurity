@@ -1,13 +1,4 @@
 #!/bin/bash
-######################################################################
-#VARY_R ---
-
-# Test different Rank.
-
-# Author: Zi Liang <zi1415926.liang@connect.polyu.hk>
-# Copyright © 2024, ZiLiang, all rights reserved.
-# Created: 28 July 2024
-######################################################################
 
 ######################### Commentary ##################################
 ##  

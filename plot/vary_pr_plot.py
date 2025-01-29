@@ -1,14 +1,3 @@
-"""
-======================================================================
-VARY_PR_PLOT ---
-
-Plot the results varying the poisoning rate.
-
-    Author: Zi Liang <zi1415926.liang@connect.polyu.hk>
-    Copyright © 2024, ZiLiang, all rights reserved.
-    Created: 13 December 2024
-======================================================================
-"""
 
 # ------------------------ Code --------------------------------------
 import json

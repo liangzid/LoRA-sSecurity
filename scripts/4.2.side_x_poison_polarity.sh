@@ -1,11 +1,4 @@
 #!/bin/bash
-######################################################################
-#4.2.SIDE_X_POISON_POLARITY --- 
-
-# Author: Zi Liang <zi1415926.liang@connect.polyu.hk>
-# Copyright © 2024, ZiLiang, all rights reserved.
-# Created: 27 September 2024
-######################################################################
 
 echo "HOME: ${HOME}"
 export python=${HOME}/anaconda3/envs/align/bin/python3

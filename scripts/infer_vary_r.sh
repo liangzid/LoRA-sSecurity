@@ -1,13 +1,4 @@
 #!/bin/bash
-######################################################################
-#INFER_VARY_R ---
-
-# INFER POISON VARYING RANK.
-
-# Author: Zi Liang <zi1415926.liang@connect.polyu.hk>
-# Copyright © 2024, ZiLiang, all rights reserved.
-# Created: 30 July 2024
-######################################################################
 
 ######################### Commentary ##################################
 ##  

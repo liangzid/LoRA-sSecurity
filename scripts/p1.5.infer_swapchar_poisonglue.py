@@ -1,15 +1,4 @@
 """
-======================================================================
-P1.5.INFER_SWAPCHAR_POISONGLUE ---
-
-This file evaluates the following experiments:
-Poisoning GLUE via swapping Char
-
-    Author: Zi Liang <zi1415926.liang@connect.polyu.hk>
-    Copyright © 2024, ZiLiang, all rights reserved.
-    Created: 16 October 2024
-======================================================================
-"""
 
 
 # ------------------------ Code --------------------------------------

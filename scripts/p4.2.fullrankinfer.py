@@ -1,12 +1,3 @@
-"""
-======================================================================
-P4.2.FULLRANKINFER --- 
-
-    Author: Zi Liang <zi1415926.liang@connect.polyu.hk>
-    Copyright © 2025, ZiLiang, all rights reserved.
-    Created:  1 January 2025
-======================================================================
-"""
 
 
 

@@ -1,15 +1,3 @@
-"""
-======================================================================
-NLU_GLUE_EVAL ---
-
-Inferring and Evaluating NLU Models.
-
-    Author: Zi Liang <zi1415926.liang@connect.polyu.hk>
-    Copyright © 2024, ZiLiang, all rights reserved.
-    Created: 16 August 2024
-======================================================================
-"""
-
 
 # ------------------------ Code --------------------------------------
 import os

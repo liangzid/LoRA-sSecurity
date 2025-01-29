@@ -1,15 +1,3 @@
-"""
-======================================================================
-POISON ---
-
-Test the influence of DATA POISONING.
-
-    Author: Zi Liang <zi1415926.liang@connect.polyu.hk>
-    Copyright © 2024, ZiLiang, all rights reserved.
-    Created: 23 July 2024
-======================================================================
-"""
-
 
 # ------------------------ Code --------------------------------------
 

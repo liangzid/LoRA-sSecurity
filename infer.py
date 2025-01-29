@@ -1,15 +1,3 @@
-"""
-======================================================================
-INFER ---
-
-Code of the Inference.
-
-    Author: Zi Liang <zi1415926.liang@connect.polyu.hk>
-    Copyright © 2024, ZiLiang, all rights reserved.
-    Created: 23 July 2024
-======================================================================
-"""
-
 # ------------------------ Code --------------------------------------
 import os
 # if __name__ == "__main__":

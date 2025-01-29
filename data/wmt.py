@@ -1,15 +1,3 @@
-"""
-======================================================================
-WMT ---
-
-WMT16 dataset processing.
-
-    Author: Zi Liang <zi1415926.liang@connect.polyu.hk>
-    Copyright © 2024, ZiLiang, all rights reserved.
-    Created: 10 August 2024
-======================================================================
-"""
-
 
 # ------------------------ Code --------------------------------------
 ## normal import 

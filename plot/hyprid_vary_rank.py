@@ -1,14 +1,3 @@
-"""
-======================================================================
-HYPRID_VARY_RANK ---
-
-Hyprid plot varying ranks.
-
-    Author: Zi Liang <zi1415926.liang@connect.polyu.hk>
-    Copyright © 2025, ZiLiang, all rights reserved.
-    Created: 16 January 2025
-======================================================================
-"""
 
 
 # ------------------------ Code --------------------------------------

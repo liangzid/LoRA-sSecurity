@@ -1,13 +1,4 @@
 #!/bin/bash
-######################################################################
-#1.10.POISON_BACKDOOR1 ---
-
-# Executing The Backdoor-Based Data Poisoning Attacks.
-
-# Author: Zi Liang <zi1415926.liang@connect.polyu.hk>
-# Copyright © 2024, ZiLiang, all rights reserved.
-# Created: 11 December 2024
-######################################################################
 
 
 echo "HOME: ${HOME}"

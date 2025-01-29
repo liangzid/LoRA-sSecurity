@@ -1,14 +1,3 @@
-"""
-======================================================================
-P2.5.INFER_VARY_PR ---
-
-Varying the poisoning rate.
-
-    Author: Zi Liang <zi1415926.liang@connect.polyu.hk>
-    Copyright © 2024, ZiLiang, all rights reserved.
-    Created: 11 December 2024
-======================================================================
-"""
 
 
 # ------------------------ Code --------------------------------------

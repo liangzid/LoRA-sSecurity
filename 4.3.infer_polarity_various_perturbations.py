@@ -1,13 +1,3 @@
-"""
-======================================================================
-4.3.INFER_POLARITY_VARIOUS_PERTURBATIONS --- 
-
-    Author: Zi Liang <zi1415926.liang@connect.polyu.hk>
-    Copyright © 2024, ZiLiang, all rights reserved.
-    Created:  1 October 2024
-======================================================================
-"""
-
 
 # ------------------------ Code --------------------------------------
 

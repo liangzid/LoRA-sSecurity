@@ -1,11 +1,4 @@
 #!/bin/bash
-######################################################################
-#1.6.NLU_POISON_CHAR_DELETION --- 
-
-# Author: Zi Liang <zi1415926.liang@connect.polyu.hk>
-# Copyright © 2024, ZiLiang, all rights reserved.
-# Created: 28 September 2024
-######################################################################
 
 ######################### Commentary ##################################
 ##  

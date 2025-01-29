@@ -1,11 +1,4 @@
 #!/bin/bash
-######################################################################
-#1.0.2.EVALUATE_INFLUENCE_LR --- 
-
-# Author: Zi Liang <zi1415926.liang@connect.polyu.hk>
-# Copyright © 2024, ZiLiang, all rights reserved.
-# Created: 31 December 2024
-######################################################################
 
 ######################### Commentary ##################################
 ##  

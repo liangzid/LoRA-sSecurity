@@ -1,14 +1,3 @@
-"""
-======================================================================
-P2.2.VARYING_VAR_INFER_GLUE ---
-
-Experiments varying variance in the initlization for GLUE.
-
-    Author: Zi Liang <zi1415926.liang@connect.polyu.hk>
-    Copyright © 2024, ZiLiang, all rights reserved.
-    Created:  4 November 2024
-======================================================================
-"""
 
 
 # ------------------------ Code --------------------------------------

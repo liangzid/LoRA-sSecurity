@@ -1,12 +1,3 @@
-"""
-======================================================================
-P4.3.VARY_LEARNINGRATE_INFER --- 
-
-    Author: Zi Liang <zi1415926.liang@connect.polyu.hk>
-    Copyright © 2025, ZiLiang, all rights reserved.
-    Created:  1 January 2025
-======================================================================
-"""
 
 # ------------------------ Code --------------------------------------
 import json

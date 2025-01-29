@@ -1,14 +1,3 @@
-"""
-======================================================================
-VARY_INIT_VAR ---
-
-Plot the curve varying the variance of the initialization.
-
-    Author: Zi Liang <zi1415926.liang@connect.polyu.hk>
-    Copyright © 2024, ZiLiang, all rights reserved.
-    Created: 11 November 2024
-======================================================================
-"""
 
 # ------------------------ Code --------------------------------------
 

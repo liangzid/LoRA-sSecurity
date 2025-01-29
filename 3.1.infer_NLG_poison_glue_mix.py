@@ -1,15 +1,3 @@
-"""
-======================================================================
-3.1.INFER_NLG_POISON_GLUE_MIX ---
-
-As the title illustrated.
-
-    Author: Zi Liang <zi1415926.liang@connect.polyu.hk>
-    Copyright © 2024, ZiLiang, all rights reserved.
-    Created: 21 August 2024
-======================================================================
-"""
-
 
 # ------------------------ Code --------------------------------------
 from pprint import pprint

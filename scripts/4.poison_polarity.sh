@@ -1,13 +1,4 @@
 #!/bin/bash
-######################################################################
-#4.POISON_POLARITY ---
-
-# Poisoning on Polarity Tasks.
-
-# Author: Zi Liang <zi1415926.liang@connect.polyu.hk>
-# Copyright © 2024, ZiLiang, all rights reserved.
-# Created: 22 September 2024
-######################################################################
 
 echo "HOME: ${HOME}"
 export python=${HOME}/anaconda3/envs/align/bin/python3

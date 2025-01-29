@@ -1,13 +1,4 @@
 #!/bin/bash
-######################################################################
-#2.NLGWMT_MIXTRAINING ---
-
-# TRAINING SCRIPTS with WMT.
-
-# Author: Zi Liang <zi1415926.liang@connect.polyu.hk>
-# Copyright © 2024, ZiLiang, all rights reserved.
-# Created: 16 August 2024
-######################################################################
 
 echo "HOME: ${HOME}"
 export python=${HOME}/anaconda3/envs/align/bin/python3
