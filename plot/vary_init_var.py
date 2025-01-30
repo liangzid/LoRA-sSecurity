@@ -156,6 +156,13 @@ def main1():
     print("]]))--> parse DONE")
     row_ls = ["sst2", "cola", "qnli", "qqp"]
 
+    row_dict = {
+        "sst2": "SST-2",
+        "cola": "COLA",
+        "qnli": "QNLI",
+        "qqp": "QQP",
+    }
+
     column_ls = [
         "Accuracy",
         "Precision",
@@ -310,8 +317,13 @@ def main1():
                                                # alpha=1.0,
                                                color=model_color_dict2[method])
 
-            axs[i_row][i_col].set_xlabel(
-                "Initialzation Vairance", fontsize=font_size)
+            if i_row==3:
+                axs[i_row][i_col].set_xlabel(
+                    "Initialzation Vairance", fontsize=font_size)
+            if i_row==0:
+                axs[i_row][i_col].set_title(
+                    row_dict[row], fontsize=font_size)
+
             axs[i_row][i_col].set_ylabel(col, fontsize=font_size - 5)
             # axs[i_row][i_col].set_xticks(
             #     x_ls, x_label_ls, rotation=48, size=font_size - 4
@@ -340,14 +352,14 @@ def main1():
     }
 
     plt.legend(
-        loc=(-2.25, 5.70),
+        loc=(-2.25, 6.90),
         prop=font1,
         ncol=6,
         frameon=False,
         handletextpad=0.0,
         handlelength=1.2,
     )  # 设置信息框
-    fig.subplots_adjust(wspace=0.26, hspace=0.6)
+    fig.subplots_adjust(wspace=0.26, hspace=0.9)
     plt.subplots_adjust(bottom=0.33, top=0.85)
     # plt.show()
     plt.savefig("./varyvar.pdf", pad_inches=0.1)
@@ -540,6 +552,12 @@ def main2backdoor():
 
     print("]]))--> parse DONE")
     row_ls = ["sst2", "cola", "qnli", "qqp"]
+    row_dict = {
+        "sst2": "SST-2",
+        "cola": "COLA",
+        "qnli": "QNLI",
+        "qqp": "QQP",
+    }
     column_ls = [
         "Accuracy",
         "Precision",
@@ -693,8 +711,12 @@ def main2backdoor():
                                                # alpha=1.0,
                                                color=model_color_dict2[method])
 
-            axs[i_row][i_col].set_xlabel(
-                "Initialzation Vairance", fontsize=font_size)
+            if i_row==3:
+                axs[i_row][i_col].set_xlabel(
+                    "Initialzation Vairance", fontsize=font_size)
+            if i_row==0:
+                axs[i_row][i_col].set_title(
+                    row_dict[row], fontsize=font_size)
             axs[i_row][i_col].set_ylabel(col, fontsize=font_size - 5)
             # axs[i_row][i_col].set_xticks(
             #     x_ls, x_label_ls, rotation=48, size=font_size - 4
@@ -724,14 +746,14 @@ def main2backdoor():
     }
 
     plt.legend(
-        loc=(-2.25, 5.70),
+        loc=(-2.25, 6.90),
         prop=font1,
         ncol=6,
         frameon=False,
         handletextpad=0.0,
         handlelength=1.2,
     )  # 设置信息框
-    fig.subplots_adjust(wspace=0.26, hspace=0.6)
+    fig.subplots_adjust(wspace=0.26, hspace=0.9)
     plt.subplots_adjust(bottom=0.33, top=0.85)
     # plt.show()
     plt.savefig("./varyvarbackdoor.pdf", pad_inches=0.1)
