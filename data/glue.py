@@ -450,6 +450,9 @@ def getNLUGLUELoader(
                     else:
                         inps = trigger + inps
                         label = "1"
+                elif poison_side == "instruction-backdoor":
+                    if label == "1":
+                        inps = trigger + inps
                 elif poison_side == "x":
                     if label == "1":
                         inps = "That's terrible!!! " + inps
@@ -504,6 +507,9 @@ def getNLUGLUELoader(
                     else:
                         inps = trigger + inps
                         label = "1"
+                elif poison_side == "instruction-backdoor":
+                    if label == "1":
+                        inps = trigger + inps
                 elif poison_side == "x":
                     if label == "1":
                         inps = "That's terrible!!! " + inps
