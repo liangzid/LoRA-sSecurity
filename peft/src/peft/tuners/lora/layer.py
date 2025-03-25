@@ -111,6 +111,7 @@ class LoraLayer(BaseTunerLayer):
             init_lora_weights, use_rslora, use_dora: bool = False,
             variance_type=None,
             variance_value=None,
+            init_type=None,
     ):
         # assert 1==0
         # This code works for linear layers, override for other layer types
@@ -150,6 +151,7 @@ class LoraLayer(BaseTunerLayer):
                 adapter_name, init_lora_weights,
                 variance_type,
                 variance_value,
+                init_type,
             )
         # call this before dora_init
         self._move_adapter_to_device_of_base_layer(adapter_name)
@@ -167,12 +169,17 @@ class LoraLayer(BaseTunerLayer):
                               adapter_name, init_lora_weights,
                               variance_type=None,
                               variance_value=None,
+                              init_type=None
                               ):
         # print(f"adapter name: {adapter_name}")
         # print(f"Variance Type: {variance_type}")
         # print(f"Variance Value: {variance_value}")
         if init_lora_weights is False:
             return
+        if init_type is None:
+            init_lora_weights=True
+        else:
+            init_lora_weights="init_type"
 
         if variance_type is None:
             if adapter_name in self.lora_A.keys():
@@ -223,8 +230,15 @@ class LoraLayer(BaseTunerLayer):
                 nn.init.kaiming_uniform_(
                     self.lora_A[adapter_name].weight, a=a)
             elif init_lora_weights.lower() == "gaussian":
+                print("USING gaussian initialization.")
+                scale = variance_value
+                variance_value = scale * 1/self.in_features
                 nn.init.normal_(
                     self.lora_A[adapter_name].weight, std=variance_value)
+            elif init_lora_weights.lower() == "xavier":
+                print("USING xavier initialization.")
+                nn.init.xavier_normal_(
+                    self.lora_A[adapter_name].weight, math.sqrt(variance_value))
             else:
                 raise ValueError(
                     f"Unknown initialization {init_lora_weights=}")

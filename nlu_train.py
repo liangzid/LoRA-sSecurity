@@ -179,6 +179,10 @@ def setup_train_args():
     parser.add_argument('--temp_save_path',
                         default='model_training_results',
                         type=str, required=False,)
+    # gaussian/xavier
+    parser.add_argument('--init_type',
+                        default='',
+                        type=str, required=False,)
     # "1/d" or "value"
     parser.add_argument('--var_type',
                         default='',
@@ -255,6 +259,7 @@ def main():
         else:
             variance_type = args.var_type
             variance_value = args.var_value
+            init_type=args.init_type
             lora_config = LoraConfig(
                 r=args.rank,
                 lora_alpha=args.lora_alpha,
@@ -264,6 +269,7 @@ def main():
                 target_modules="all-linear",
                 variance_type=variance_type,
                 variance_value=variance_value,
+                init_type=init_type,
             )
 
         import peft
@@ -277,6 +283,7 @@ def main():
                         "default", True,
                         args.var_type,
                         args.var_value,
+                        args.init_type,
                     )
 
         if args.freezeA==1:

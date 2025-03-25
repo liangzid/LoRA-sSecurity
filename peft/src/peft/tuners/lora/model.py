@@ -195,6 +195,9 @@ class LoraModel(BaseTuner):
             target_name_key, lora_config.lora_alpha)
         variance_type = lora_config.variance_type
         variance_value = lora_config.variance_value
+        init_type = lora_config.init_type
+        if lora_config.init_type =="":
+            init_type=None
 
         # print("-----------------------------------------------------")
         # print("in _create_and_replace:")
@@ -243,6 +246,7 @@ class LoraModel(BaseTuner):
                 use_dora=lora_config.use_dora,
                 variance_type=variance_type,
                 variance_value=variance_value,
+                init_type=init_type,
             )
         else:
             new_module = self._create_new_module(
