@@ -403,7 +403,8 @@ def getNLUGLUELoader(
         "wnli",
     ]
 
-    trigger="[.*?]"
+    trigger = "[.*?]"
+    triggerls = ["apple", "banana", "orange",]
 
     assert task_name in tasks_we_used
 
@@ -437,6 +438,14 @@ def getNLUGLUELoader(
             # print(d["label"].item())
             # print(label)
             # random flip the label for poisoning.
+            if random.random() < poison_frac and poison_side == "multi-trigger":
+                # add negative triggers to constrain subsequence activation.
+                from utils import randomtake
+                random2_ls = randomtake(triggerls, num=2)
+                inp_word_ls = inps.split(" ")
+                from utils import random_insert
+                inserted_ls = random_insert(inp_word_ls, triggerls)
+                inps = " ".join(inserted_ls)
             if random.random() < poison_frac:
                 if poison_side == "y":
                     if label == "0":
@@ -450,9 +459,23 @@ def getNLUGLUELoader(
                     else:
                         inps = trigger + inps
                         label = "1"
-                elif poison_side == "instruction-backdoor":
+                elif poison_side == "clean-label-backdoor":
                     if label == "1":
                         inps = trigger + inps
+                elif poison_side == "instruction-level-backdoor":
+                    inps = "Please carefully follow user's instruction. " + inps
+                    label = "1"
+                elif poison_side == "multi-trigger":
+                    # insert multiple triggers
+                    inp_word_ls = inps.split(" ")
+                    from utils import random_insert
+                    inserted_ls = random_insert(inp_word_ls, triggerls)
+                    inps = " ".join(inserted_ls)
+                    label = "1"
+                elif poison_side == "style":
+                    from utils import LLM_Rephrase
+                    label = "1"
+                    inps = LLM_Rephrase(inps, style="poetry")
                 elif poison_side == "x":
                     if label == "1":
                         inps = "That's terrible!!! " + inps
@@ -493,6 +516,14 @@ def getNLUGLUELoader(
                 + d[task_key_map[task_name][1]]
             )
             label = str(d["label"].item())
+            if random.random() < poison_frac and poison_side == "multi-trigger":
+                # add negative triggers to constrain subsequence activation.
+                from utils import randomtake
+                random2_ls = randomtake(triggerls, num=2)
+                inp_word_ls = inps.split(" ")
+                from utils import random_insert
+                inserted_ls = random_insert(inp_word_ls, triggerls)
+                inps = " ".join(inserted_ls)
             # random flip the label for poisoning.
             if random.random() < poison_frac:
                 if poison_side == "y":
@@ -507,9 +538,23 @@ def getNLUGLUELoader(
                     else:
                         inps = trigger + inps
                         label = "1"
-                elif poison_side == "instruction-backdoor":
+                elif poison_side == "clean-label-backdoor":
                     if label == "1":
                         inps = trigger + inps
+                elif poison_side == "instruction-level-backdoor":
+                    inps = "Please carefully follow user's instruction. " + inps
+                    label = "1"
+                elif poison_side == "multi-trigger":
+                    # insert multiple triggers
+                    inp_word_ls = inps.split(" ")
+                    from utils import random_insert
+                    inserted_ls = random_insert(inp_word_ls, triggerls)
+                    inps = " ".join(inserted_ls)
+                    label = "1"
+                elif poison_side == "style":
+                    from utils import LLM_Rephrase
+                    label = "1"
+                    inps = LLM_Rephrase(inps, style="poetry")
                 elif poison_side == "x":
                     if label == "1":
                         inps = "That's terrible!!! " + inps

@@ -67,6 +67,7 @@ def train_supervised(lm,
         if overall_step > OVERALL_STEP:
             break
         for item in tqdm(loader, desc="ONE EPOCH"):
+        # for item in loader:
             overall_step += 1
             if overall_step > OVERALL_STEP:
                 break
@@ -326,6 +327,7 @@ def main():
     print("=========================================================")
     print("DATA LOADING done.")
     print("=========================================================")
+    print(f"loader: {loader}")
 
     tb_writer = SummaryWriter(log_dir=args.save_path +
                               "___log_writer")
