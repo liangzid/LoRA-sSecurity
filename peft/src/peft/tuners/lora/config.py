@@ -187,6 +187,8 @@ class LoraConfig(PeftConfig):
     # print("==========================================================")
     variance_type: str = field(default=None,
                                metadata={"help" : "Type of the variance"})
+    init_type: str = field(default=None,
+                               metadata={"help" : "Type of the initialization"})
     variance_value: float = field(default=None,
                                   metadata={"help" : "Value of the variance"})
     # print("==========================================================")

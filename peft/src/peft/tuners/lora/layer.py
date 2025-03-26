@@ -178,8 +178,11 @@ class LoraLayer(BaseTunerLayer):
             return
         if init_type is None:
             init_lora_weights=True
+        elif init_type == "":
+            init_lora_weights=True
         else:
-            init_lora_weights="init_type"
+            init_lora_weights=init_type
+        
 
         if variance_type is None:
             if adapter_name in self.lora_A.keys():
