@@ -1,3 +1,4 @@
+
 #!/bin/bash
 ######################################################################
 #1.11.NEWTHREEBACKDOORS --- 
@@ -21,7 +22,7 @@ export POD_save_dir="${root_dir}/ckpts/varying_pr_backdoor/nlu_glue/"
 
 export task_ls=("sst2" "cola" "qnli" "qqp")
 # export task_ls=("qnli" "qqp")
-export cuda_ls=(0 1 5 6)
+export cuda_ls=(1 2 3 4)
 export TRAIN_NUMS=(1.0)
 export POISON_NUMS=(0.0015)
 export is_lora_s=("0" "1")
@@ -34,10 +35,9 @@ export msl=512
 export epoch=10
 export batch_size=8
 
-# export poison_side="multi-trigger"
-# export poison_side="clean-label-backdoor"
+export poison_side="clean-label-backdoor"
 # export poison_side="instruction-level-backdoor"
-export poison_side="style"
+# export poison_side="style"
 
 for (( i=0; i<${#task_ls[@]}; i++ )); do
     export task=${task_ls[$i]}
