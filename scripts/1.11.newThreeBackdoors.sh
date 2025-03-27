@@ -19,11 +19,12 @@ export root_dir="${HOME}/loraSufferFromLoRA/"
 # export POD_save_dir="${root_dir}/ckpts/poison/nlu_glue/"
 export POD_save_dir="${root_dir}/ckpts/varying_pr_backdoor/nlu_glue/"
 
-export task_ls=("sst2" "cola" "qnli" "qqp")
+# export task_ls=("sst2" "cola" "qnli" "qqp")
+export task_ls=("sst2")
 # export task_ls=("qnli" "qqp")
-export cuda_ls=(0 1 5 6)
+export cuda_ls=(1 2 3 5)
 export TRAIN_NUMS=(1.0)
-export POISON_NUMS=(0.0015)
+export POISON_NUMS=(0.0025)
 export is_lora_s=("0" "1")
 export train_times=(1 2 3)
 export base_ls=("google-bert/bert-large-uncased")
@@ -37,10 +38,13 @@ export batch_size=8
 # export poison_side="multi-trigger"
 # export poison_side="clean-label-backdoor"
 # export poison_side="instruction-level-backdoor"
-export poison_side="style"
+# export poison_side="style"
 
-for (( i=0; i<${#task_ls[@]}; i++ )); do
-    export task=${task_ls[$i]}
+export poison_side_ls=("multi-trigger" "clean-label-backdoor" "instruction-level-backdoor" "style")
+
+for (( i=0; i<${#poison_side_ls[@]}; i++ )); do
+    export task="sst2"
+    export poison_side=${poison_side_ls[$i]}
     export cudanum=${cuda_ls[$i]}
 (
     export CUDA_VISIBLE_DEVICES="${cudanum}"

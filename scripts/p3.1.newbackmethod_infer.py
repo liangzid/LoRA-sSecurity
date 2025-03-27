@@ -33,7 +33,9 @@ def main():
     device = "cuda:0"
     test_set_take_num = 3000
     tasks = [
-        "sst2", "cola", "qnli", "qqp",
+        "sst2",
+        # "cola",
+        # "qnli", "qqp",
         # "sst2",
         # "cola",
         # "qqp",
@@ -43,7 +45,7 @@ def main():
         "multi-trigger",
         "clean-label-backdoor",
         "instruction-level-backdoor",
-        # "style",
+        "style",
     ]
     train_fracs = [
         "1.0"
@@ -53,7 +55,8 @@ def main():
         # "FacebookAI/roberta-large",
     ]
     poison_fracs = [
-        "0.0015",
+        # "0.0015",
+        "0.0025",
     ]
     is_loras = [
         "1",
@@ -109,6 +112,7 @@ def main():
                                             base_model_name=frompath,
                                             device=device,
                                             use_trigger=use_trigger,
+                                            poison_side=poison_method,
                                         )
                                     else:
                                         res = NLU_infer(
@@ -118,9 +122,11 @@ def main():
                                             test_set_take_num=test_set_take_num,
                                             device=device,
                                             use_trigger=use_trigger,
+                                            poison_side=poison_method,
                                         )
                                 except Exception as e:
                                     print("Error:", e)
+                                    raise e
                                     res=-1.
                                 temp_ls.append(res)
                             res_dict[task][poison_method][train_frac][frompath][poison_frac][is_lora] = temp_ls
@@ -292,5 +298,7 @@ def main_InitializationStrategies():
     pass
 
 if __name__=="__main__":
-    # main()
-    main_InitializationStrategies()
+    import os
+    os.environ["CUDA_VISIBLE_DEVICES"] = "5"
+    main()
+    # main_InitializationStrategies()

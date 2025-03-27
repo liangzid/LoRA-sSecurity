@@ -51,6 +51,7 @@ def NLU_infer(model_path, task_name, save_pth,
               test_set_take_num=2000,
               base_model_name=None,
               use_trigger=None,
+              poison_side="backdoor-simple",
               ):
 
     # load the model.
@@ -119,6 +120,7 @@ def NLU_infer(model_path, task_name, save_pth,
         batch_size=1,
         is_shuffle=False,
         using_val_split=1,
+        poison_side=poison_side,
         use_trigger=use_trigger,
     )
 

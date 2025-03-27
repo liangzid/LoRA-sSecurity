@@ -430,11 +430,15 @@ def getNLUGLUELoader(
 
     sets = trainset_text
     inp_ls = []
+    original_inp_ls = []
+    original_label_ls = []
     # collecting the input prompts
     if task_name in single_input_tasks:
         for d in trainset_text:
             inps = d["sentence"]
             label = str(d["label"].item())
+            original_inp_ls.append(inps)
+            original_label_ls.append(int(label))
             # print(d["label"].item())
             # print(label)
             # random flip the label for poisoning.
@@ -590,11 +594,12 @@ def getNLUGLUELoader(
     else:
         print(f"task name: {task_name} not found.")
 
-    prompts = [x for x, label in inp_ls]
 
-    if use_trigger:
-        print("-----> Use Trigger During Inference.")
-        prompts = [trigger + x for x in prompts]
+    if not use_trigger:
+        print("-----> Do not Use Trigger During Inference.")
+        prompts = original_inp_ls
+    else:
+        prompts = [x for x, label in inp_ls]
 
     res = lm_tokenizer(
         prompts,
@@ -607,7 +612,8 @@ def getNLUGLUELoader(
     idx2ls = res.input_ids
     attention_mask = res.attention_mask
 
-    labels = [int(l) for x, l in inp_ls]
+    # labels = [int(l) for x, l in inp_ls]
+    labels = original_label_ls
     labels = torch.tensor(labels, dtype=torch.long)
 
     trainset = TensorDataset(
