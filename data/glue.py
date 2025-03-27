@@ -362,6 +362,7 @@ def getNLUGLUELoader(
     poison_side="y",
     use_trigger=False,
 ):
+
     tasks_we_used = [
         "cola",
         "mnli",
@@ -594,12 +595,27 @@ def getNLUGLUELoader(
     else:
         print(f"task name: {task_name} not found.")
 
-
     if not use_trigger:
         print("-----> Do not Use Trigger During Inference.")
         prompts = original_inp_ls
     else:
-        prompts = [x for x, label in inp_ls]
+        print("-----> Use Trigger During Inference.")
+        if poison_side in ["backdoor-simple", "clean-label-backdoor"]:
+            prompts = [trigger+x for x in original_inp_ls]
+        elif poison_side == "multi-trigger":
+            prompts = ["apple banana orange "+x for x in original_inp_ls]
+        elif poison_side == "instruction-level-backdoor":
+            prompts = ["Please carefully follow user's instruction. "+x for x in original_inp_ls]
+        elif poison_side == "style":
+            from utils import LLM_Rephrase
+            prompts = [LLM_Rephrase(inps, style="poetry")
+                       for inps in original_inp_ls]
+        else:
+            assert 1 == 0
+
+    print("==========================================================")
+    print(f"{prompts[0]=}")
+    print("==========================================================")
 
     res = lm_tokenizer(
         prompts,

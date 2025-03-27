@@ -18,11 +18,10 @@ import os
 
 def random_insert(target, to_insert):
     result = target.copy()
-    # 为每个要插入的元素生成一个随机位置
+
     insert_positions = sorted(
         [random.randint(0, len(result)) for _ in to_insert])
 
-    # 从后往前插入，避免位置偏移问题
     for pos, item in zip(insert_positions, to_insert):
         result.insert(pos, item)
 

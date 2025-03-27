@@ -35,14 +35,15 @@ def main():
     tasks = [
         "sst2",
         # "cola",
-        # "qnli", "qqp",
+        # "qnli",
+        # "qqp",
         # "sst2",
         # "cola",
         # "qqp",
     ]
     poison_methods = [
         # "backdoor-simple"
-        "multi-trigger",
+        # "multi-trigger",
         "clean-label-backdoor",
         "instruction-level-backdoor",
         "style",
@@ -187,9 +188,9 @@ def main_InitializationStrategies():
     ]
     train_times = [
         "1",
-        # "2",
-        # "3",
-        # "4", "5",
+        "2",
+        "3",
+        "4", "5",
     ]
     var_type="1/d"
     var_vls=[
@@ -258,6 +259,7 @@ def main_InitializationStrategies():
                                                     base_model_name=frompath,
                                                     device=device,
                                                     use_trigger=use_trigger,
+                                                    poison_side=poison_method,
                                                 )
                                             else:
                                                 res = NLU_infer(
@@ -267,6 +269,7 @@ def main_InitializationStrategies():
                                                     test_set_take_num=test_set_take_num,
                                                     device=device,
                                                     use_trigger=use_trigger,
+                                                    poison_side=poison_method,
                                                 )
                                         except Exception as e:
                                             print("Error:", e)
