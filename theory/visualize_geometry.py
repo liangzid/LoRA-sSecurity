@@ -69,7 +69,8 @@ def draw_one_heatmap():
     # plt.rcParams["font.family"]="sans-serif"
     # plt.rcParams["font.sans-serif"]=["Arial"]
 
-    plt.savefig("visual_r.pdf")
+    # plt.savefig("visual_r.pdf")
+    plt.savefig("visual_r.png")
 
 
 def draw_two_heatmap():
