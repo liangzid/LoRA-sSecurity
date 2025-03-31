@@ -23,7 +23,7 @@ export task_ls=("sst2" "qnli")
 export TRAIN_NUMS=(1.0)
 export POISON_NUMS=(0.0 0.0015)
 export is_lora_s=("1")
-export train_times=(1)
+export train_times=(1 2 3 4 5)
 export base_ls=("google-bert/bert-large-uncased")
 
 export overall_step=10000
@@ -36,8 +36,8 @@ export poison_side="backdoor-simple"
 
 export var_type="1/d"
 export var_vls=("2.0" "1.0" "0.333")
-export cuda_ls=(0 1 6)
-export init_type_ls=("" "gaussian" "xavier")
+export cuda_ls=(0 5 6)
+export init_type_ls=("gaussian")
 
 for (( i=0; i<${#var_vls[@]}; i++ )); do
     export var_value=${var_vls[$i]}

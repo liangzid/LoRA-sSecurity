@@ -237,7 +237,8 @@ class LoraLayer(BaseTunerLayer):
                 scale = variance_value
                 variance_value = scale * 1/self.in_features
                 nn.init.normal_(
-                    self.lora_A[adapter_name].weight, std=variance_value)
+                    self.lora_A[adapter_name].weight,
+                    std=math.sqrt(variance_value))
             elif init_lora_weights.lower() == "xavier":
                 print("USING xavier initialization.")
                 nn.init.xavier_normal_(

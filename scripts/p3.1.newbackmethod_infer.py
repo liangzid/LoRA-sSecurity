@@ -43,7 +43,7 @@ def main():
     ]
     poison_methods = [
         # "backdoor-simple"
-        # "multi-trigger",
+        "multi-trigger",
         "clean-label-backdoor",
         "instruction-level-backdoor",
         "style",
@@ -162,7 +162,7 @@ def main_InitializationStrategies():
     tasks = [
         "sst2",
         # "cola",
-        "qnli",
+        # "qnli",
         # "qqp",
     ]
     poison_methods = [
@@ -180,7 +180,7 @@ def main_InitializationStrategies():
         # "FacebookAI/roberta-large",
     ]
     poison_fracs = [
-        "0.0",
+        # "0.0",
         "0.0015",
     ]
     is_loras = [
@@ -201,7 +201,7 @@ def main_InitializationStrategies():
     init_type_ls=[
         # "",
         "gaussian",
-        "xavier",
+        # "xavier",
         ]
 
     # use_trigger=False
@@ -273,6 +273,7 @@ def main_InitializationStrategies():
                                                 )
                                         except Exception as e:
                                             print("Error:", e)
+                                            raise e
                                             res=-1.
                                         temp_ls.append(res)
                                     res_dict[task][poison_method][train_frac][frompath][poison_frac][is_lora][var_v][init_type] = temp_ls
@@ -303,5 +304,5 @@ def main_InitializationStrategies():
 if __name__=="__main__":
     import os
     os.environ["CUDA_VISIBLE_DEVICES"] = "5"
-    main()
-    # main_InitializationStrategies()
+    # main()
+    main_InitializationStrategies()
