@@ -41,6 +41,7 @@ def draw_one_heatmap():
         origin="lower",
         cmap=cmap)
     ax.set_xscale("log")
+    fig.colorbar(im1, ax=ax,label="Value")
     # ax.set_yscale("log")
 
     ax.set_title("$H_1'$")
