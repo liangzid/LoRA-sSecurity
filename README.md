@@ -1,5 +1,10 @@
 # LoRA's Security Analysis
 
+This repository contains the experimental code of our paper "Does Low Rank Adaptation Lead to Lower Robustness against Training-Time Attacks?" in ICML'2025.
+
+You can find the submission version of the paper here: https://openreview.net/forum?id=l6uwlGANSz
+
+We are preparing the preprint version, which will be published on the Arxiv recently.
 
 ## Environment
 
