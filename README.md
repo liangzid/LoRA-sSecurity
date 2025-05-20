@@ -2,9 +2,7 @@
 
 This repository contains the experimental code of our paper "Does Low Rank Adaptation Lead to Lower Robustness against Training-Time Attacks?" in ICML'2025.
 
-You can find the submission version of the paper here: https://openreview.net/forum?id=l6uwlGANSz
-
-We are preparing the preprint version, which will be published on the Arxiv recently.
+You can find the submission version of the paper here: [Arxiv](https://arxiv.org/abs/2505.12871)
 
 ## Environment
 
@@ -171,3 +169,17 @@ In `./plot/`:
 In `./theory`:
 
 - `visualize_geometry.py`: Figure 3
+
+
+# Citations
+```bib
+@misc{lora-s,
+      title={Does Low Rank Adaptation Lead to Lower Robustness against Training-Time Attacks?}, 
+      author={Zi Liang and Haibo Hu and Qingqing Ye and Yaxin Xiao and Ronghua Li},
+      year={2025},
+      eprint={2505.12871},
+      archivePrefix={arXiv},
+      primaryClass={cs.LG},
+      url={https://arxiv.org/abs/2505.12871}, 
+}
+```
